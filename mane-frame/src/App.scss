@@ -1,0 +1,190 @@
+@import "../src/index.scss";
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+a {
+	color: $blue;
+}
+a:hover {
+	color: $blue-hover;
+}
+a:active {
+	color: $blue-active;
+}
+a:visited {
+	color: $blue;
+}
+
+button {
+	background-color: $blue;
+	border: none;
+	padding: 1% 2%;
+	margin: 2%;
+	@include borderRadius();
+}
+button:hover {
+	background-color: $blue-hover;
+}
+button:active {
+	background-color: $blue-active;
+}
+
+.navbar {
+	background-color: $darkbrown;
+	a {
+		color: $color;
+		cursor: pointer;
+	}
+	a:hover {
+		color: #9c9c9c;
+	}
+	img {
+		max-width: 70px;
+	}
+	img:hover {
+		opacity: 0.6;
+	}
+	border-bottom: 2px solid $borderbrown;
+	box-shadow: 2px 2px $borderbrown;
+}
+
+body {
+	color: $color;
+	font-family: "Source Sans Pro", sans-serif;
+	width: 100%;
+	font-size: 1.2em;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+h1,
+h2 {
+	font-family: "Satisfy", cursive;
+	color: $yellow;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+.carousel {
+	display: flex;
+	align-self: center;
+	justify-self: center;
+}
+
+.layout {
+	padding-bottom: 100px;
+}
+
+footer {
+	background-color: $darkbrown;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	padding: 0.5%;
+	border-top: 2px solid $borderbrown;
+	box-shadow: 2px 2px $borderbrown;
+	b {
+		color: $error;
+	}
+}
+
+.intro-txt {
+	@include flex-center;
+	margin-top: 2%;
+	div {
+		@include border();
+		background-color: $lightBrown;
+		padding: 0.5% 1%;
+		max-width: 70%;
+	}
+}
+
+.services,
+.events {
+	margin: 1%;
+	padding: 0.5%;
+	div {
+		@include flex-center;
+		li {
+			list-style-type: none;
+		}
+	}
+}
+
+.about-txt {
+	@include flex-center();
+
+	div {
+		@include border();
+		background-color: $lightBrown;
+		padding: 1%;
+		margin: 1%;
+	}
+}
+
+.flex {
+	margin-top: 3%;
+	display: flex;
+	flex-direction: row;
+	margin-left: 15%;
+	margin-right: auto;
+	.form {
+		@include border-brown();
+		margin-left: 15%;
+		width: 25%;
+		background-color: $darkbrown;
+		padding: 2%;
+		div {
+			h3 {
+				text-align: center;
+				color: $yellow;
+			}
+			form {
+				margin: 1%;
+			}
+			input,
+			textarea {
+				margin: 2%;
+				width: 100%;
+				@include borderRadius();
+			}
+			button {
+				width: 100%;
+			}
+			h4 {
+				margin-top: 2%;
+				text-align: center;
+				a {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
+
+.row {
+	width: 100%;
+}
+.card {
+	margin-top: 3%;
+	background-color: $lightBrown;
+	color: $color;
+	h5 {
+		color: $yellow;
+	}
+	.card-body {
+		height: 333.333px;
+	}
+	img {
+		max-height: 259px;
+	}
+	button {
+		margin-left: 35%;
+	}
+}

@@ -1,0 +1,53 @@
+$color: #e5e5e5ff;
+$blue: #185d5eff;
+$yellow: #e5cd75ff;
+$lightBrown: #50473D ;
+$darkbrown: #2C261F;
+$error: #FF0000;
+$blue-hover: #40797a;
+$blue-active: #518586;
+$borderbrown: #242019;
+
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Source+Sans+Pro&display=swap');
+
+html,
+body {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+body{
+  background-image: url("../src/background.jpg");
+}
+
+::selection{
+  background-color: $blue;
+  color: black;
+}
+
+@mixin flex-center{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+@mixin flex-between{
+  display: flex;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+@mixin border{
+  border: 5px solid $darkbrown;
+  border-radius: 5px;
+}
+
+@mixin border-brown{
+  border: 5px solid $borderbrown;
+  border-radius: 5px;
+}
+
+@mixin borderRadius{
+  border-radius: 4px;
+}
