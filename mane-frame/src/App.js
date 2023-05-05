@@ -5,6 +5,7 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
+import Team from "./pages/Team";
 
 function App() {
 	return (
@@ -49,9 +50,9 @@ function App() {
 											</Link>
 										</li>
 										<li className="nav-item">
-											<a href="" className="nav-link">
+											<Link to='/team' className="nav-link">
 												Team
-											</a>
+											</Link>
 										</li>
 										<li className="nav-item">
 											<a href="" className="nav-link">
@@ -85,6 +86,10 @@ function App() {
 								{" "}
 								/
 							</Route>
+              <Route path="/team" element={<Team />}>
+								{" "}
+								/
+							</Route>
 						</Routes>
 					</div>
 				</BrowserRouter>
@@ -93,7 +98,7 @@ function App() {
 				<div className="container">
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 					<br />
-					All text generated with ChatGPT <br />
+					All text generated with ChatGPT - All images from <a href="https://www.pexels.com/">Pexels</a><br />
 					<b>
 						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
 						INFORMATION ON THIS WEBSITE

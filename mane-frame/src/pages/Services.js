@@ -40,7 +40,7 @@ const Services = () => {
         {
 			id: 6,
 			name: "Equine lifestyle photography",
-			txt: "Our equine lifestyle photography service is ideal for horse owners who want to capture the magic of their equine companion in a natural setting. We work closely with our clients to create a personalized experience that captures the unique personality of their horse. Whether it's a serene sunset shot, a majestic gallop, or an intimate moment between a horse and its owner, our goal is to create stunning, timeless images that will be treasured for years to come.",
+			txt: "Our equine lifestyle photography service is ideal for horse owners who want to capture the magic of their equine companion in a natural setting. We work closely with our clients to create a personalized experience that captures the unique personality of their horse. Our goal is to create stunning, timeless images that will be treasured for years to come.",
 			img: "/assets/Equine lifestyle photography.jpg",
             price: ""
 		},
