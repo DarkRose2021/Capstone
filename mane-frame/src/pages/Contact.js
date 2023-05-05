@@ -88,7 +88,7 @@ const Contact = () => {
 					<div>
 						<h3>Email Us</h3>
 						<form>
-							<label for="name">Name:</label>
+							<label htmlFor="name">Name:</label>
 							<br />
 							<input
 								id="name"
@@ -99,7 +99,7 @@ const Contact = () => {
 							/>
 							<br />
 
-							<label for="email">Email:</label>
+							<label htmlFor="email">Email:</label>
 							<br />
 							<input
 								id="email"
@@ -109,7 +109,7 @@ const Contact = () => {
 								required
 							/>
 
-							<label for="message">Message:</label>
+							<label htmlFor="message">Message:</label>
 							<br />
 							<textarea
 								id="message"

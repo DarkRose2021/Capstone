@@ -1,10 +1,10 @@
 $color: #e5e5e5ff;
-$blue: #185d5eff;
+$blue: #40797A;
 $yellow: #e5cd75ff;
 $lightBrown: #50473D ;
 $darkbrown: #2C261F;
 $error: #FF0000;
-$blue-hover: #40797a;
+$blue-hover: #619091;
 $blue-active: #518586;
 $borderbrown: #242019;
 
@@ -43,11 +43,30 @@ body{
   border-radius: 5px;
 }
 
-@mixin border-brown{
-  border: 5px solid $borderbrown;
+@mixin borderRadius{
   border-radius: 5px;
 }
 
-@mixin borderRadius{
-  border-radius: 4px;
+@mixin borderRadiusContainers{
+  border-radius: 10px;
+}
+
+@mixin border-brown{
+  border: 5px solid $borderbrown;
+}
+
+@mixin button{
+  button {
+    background-color: $blue;
+    border: none;
+    padding: 1% 2%;
+    margin: 2%;
+    @include borderRadius();
+  }
+  button:hover {
+    background-color: $blue-hover;
+  }
+  button:active {
+    background-color: $blue-active;
+  }
 }

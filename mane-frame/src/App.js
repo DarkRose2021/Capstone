@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import Team from "./pages/Team";
+import Login from "./pages/Login";
 
 function App() {
 	return (
@@ -34,6 +35,11 @@ function App() {
 								</button>
 								<div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 									<ul className="navbar-nav flex-grow-1">
+                  <li className="nav-item">
+											<Link to="/" className="nav-link">
+												Home
+											</Link>
+										</li>
 										<li className="nav-item">
 											<Link to="/about" className="nav-link">
 												About
@@ -87,6 +93,10 @@ function App() {
 								/
 							</Route>
               <Route path="/team" element={<Team />}>
+								{" "}
+								/
+							</Route>
+              <Route path="/login" element={<Login />}>
 								{" "}
 								/
 							</Route>

@@ -14,20 +14,6 @@ a:visited {
 	color: $blue;
 }
 
-button {
-	background-color: $blue;
-	border: none;
-	padding: 1% 2%;
-	margin: 2%;
-	@include borderRadius();
-}
-button:hover {
-	background-color: $blue-hover;
-}
-button:active {
-	background-color: $blue-active;
-}
-
 .navbar {
 	background-color: $darkbrown;
 	a {
@@ -73,6 +59,10 @@ h2 {
 	display: flex;
 	align-self: center;
 	justify-self: center;
+	margin: 3%;
+	img {
+		height: 50%;
+	}
 }
 
 .layout {
@@ -99,6 +89,7 @@ footer {
 	margin-top: 2%;
 	div {
 		@include border();
+		@include borderRadiusContainers;
 		background-color: $lightBrown;
 		padding: 0.5% 1%;
 		max-width: 70%;
@@ -117,20 +108,26 @@ footer {
 	}
 }
 
+.servicesPage {
+	@include button;
+}
+
 .about-txt {
 	@include flex-center();
 	div {
-    @include flex-center();
+		@include flex-center();
 		@include border();
+		@include borderRadiusContainers;
 		background-color: $lightBrown;
 		padding: 1%;
 		margin: 1%;
 	}
-  img{
-    max-width: 35%;
-    margin-right: 2%;
-    @include border();
-  }
+	img {
+		max-width: 35%;
+		margin-right: 2%;
+		@include border();
+		@include borderRadiusContainers;
+	}
 }
 
 .flex {
@@ -140,11 +137,13 @@ footer {
 	margin-left: 15%;
 	margin-right: auto;
 	.form {
-		@include border-brown();
+		@include border();
+		@include borderRadiusContainers;
 		margin-left: 15%;
 		width: 25%;
-		background-color: $darkbrown;
+		background-color: $lightBrown;
 		padding: 2%;
+		@include button;
 		div {
 			h3 {
 				text-align: center;
@@ -191,35 +190,59 @@ footer {
 	}
 	button {
 		margin-left: 35%;
+		@include button;
 	}
 }
 
-.team{
-  .info{
-    display: flex;
-    p{
-      margin-top: 5%;
-      margin-left: 2%;
-      
-    }
-  }
-  h2{
-    text-align: left;
-  }
-  img{
-    max-width: 500px;
-    max-height: 500px;
-    @include border;
-  }
-  .teammember{
-    background-color: $lightBrown;
-    @include border;
-    margin: 3%;
-    padding: 1%;
-    width: 65%;
-    margin-left: 20%;
-  }
-  .name{
-    margin-left: 5%;
-  }
+.team {
+	.info {
+		display: flex;
+		p {
+			margin-top: 5%;
+			margin-left: 2%;
+		}
+	}
+	h2 {
+		text-align: left;
+	}
+	img {
+		max-width: 500px;
+		max-height: 500px;
+		@include border;
+		@include borderRadiusContainers;
+	}
+	.teammember {
+		background-color: $lightBrown;
+		@include border;
+		@include borderRadiusContainers;
+		margin: 3%;
+		padding: 1%;
+		width: 65%;
+		margin-left: 20%;
+	}
+	.name {
+		margin-left: 5%;
+	}
+}
+
+.login {
+	.form {
+		margin: 5%;
+		@include flex-center;
+		@include button;
+		div {
+			background-color: $lightBrown;
+			padding: 3%;
+			@include border;
+			@include borderRadiusContainers;
+		}
+		input {
+			@include borderRadius;
+			margin: 1%;
+		}
+		button {
+			width: 100%;
+			margin: 1%;
+		}
+	}
 }

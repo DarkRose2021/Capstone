@@ -11,75 +11,52 @@ const Home = () => {
 	return (
 		<div>
 			<h1>Mane Frame Photography</h1>
-			{/* <br />
-			<br />
-			<br />
 			<div className="container">
-				carousel format from bootstrap 
 				<div
-					id="carouselExampleIndicators"
-					className="carousel slide"
-					data-bs-ride="true"
+					id="carouselExampleInterval"
+					class="carousel slide"
+					data-bs-ride="carousel"
 				>
-					<div className="carousel-indicators">
-						<button
-							type="button"
-							data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="0"
-							className="active"
-							aria-current="true"
-							aria-label="Slide 1"
-						></button>
-						<button
-							type="button"
-							data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="1"
-							aria-label="Slide 2"
-						></button>
-						<button
-							type="button"
-							data-bs-target="#carouselExampleIndicators"
-							data-bs-slide-to="2"
-							aria-label="Slide 3"
-						></button>
-					</div>
-					<div className="carousel-inner">
-						<div className="carousel-item active">
-							<img src="" className="d-block w-100" alt="" />
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-bs-interval="10000">
+							<img src="/assets/home1.jpg" class="d-block w-100" alt="..." />
 						</div>
-						<div className="carousel-item">
-							<img src="" className="d-block w-100" alt="" />
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/assets/home2.jpg" class="d-block w-100" alt="..." />
 						</div>
-						<div className="carousel-item">
-							<img src="" className="d-block w-100" alt="" />
+						<div class="carousel-item" data-bs-interval="3000">
+							<img src="/assets/home3.jpg" class="d-block w-100" alt="..." />
+						</div>
+						<div class="carousel-item" data-bs-interval="4000">
+							<img src="/assets/home4.jpg" class="d-block w-100" alt="..." />
+						</div>
+						<div class="carousel-item" data-bs-interval="5000">
+							<img src="/assets/home5.jpg" class="d-block w-100" alt="..." />
+						</div>
+						<div class="carousel-item">
+							<img src="/assets/home6.jpg" class="d-block w-100" alt="..." />
 						</div>
 					</div>
 					<button
-						className="carousel-control-prev"
+						class="carousel-control-prev"
 						type="button"
-						data-bs-target="#carouselExampleIndicators"
+						data-bs-target="#carouselExampleInterval"
 						data-bs-slide="prev"
 					>
-						<span
-							className="carousel-control-prev-icon"
-							aria-hidden="true"
-						></span>
-						<span className="visually-hidden">Previous</span>
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
 					</button>
 					<button
-						className="carousel-control-next"
+						class="carousel-control-next"
 						type="button"
-						data-bs-target="#carouselExampleIndicators"
+						data-bs-target="#carouselExampleInterval"
 						data-bs-slide="next"
 					>
-						<span
-							className="carousel-control-next-icon"
-							aria-hidden="true"
-						></span>
-						<span className="visually-hidden">Next</span>
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
 					</button>
 				</div>
-			</div> */}
+			</div>
 			<div className="intro-txt">
 				<div>
 					<p>
@@ -102,11 +79,17 @@ const Home = () => {
 				<div>
 					<ul>
 						<li>
-							<h3>Spring Fling Horse Show - May 21-23 - Sacramento, California</h3>
+							<h3>
+								Spring Fling Horse Show - May 21-23 - Sacramento, California
+							</h3>
 						</li>
-						<li><h3>Reno Rodeo - Jun 15-24 - Reno, Nevada</h3></li>
 						<li>
-							<h3>Wrangler National Finals Rodeo - Dec 1-10 - Las Vegas, Nevada</h3>
+							<h3>Reno Rodeo - Jun 15-24 - Reno, Nevada</h3>
+						</li>
+						<li>
+							<h3>
+								Wrangler National Finals Rodeo - Dec 1-10 - Las Vegas, Nevada
+							</h3>
 						</li>
 					</ul>
 				</div>
@@ -116,9 +99,15 @@ const Home = () => {
 				<h2>Popular Services</h2>
 				<div>
 					<ul>
-						<li><h3>Equine portraiture</h3></li>
-						<li><h3>Event photography</h3></li>
-						<li><h3>Equine lifestyle photography</h3></li>
+						<li>
+							<h3>Equine portraiture</h3>
+						</li>
+						<li>
+							<h3>Event photography</h3>
+						</li>
+						<li>
+							<h3>Equine lifestyle photography</h3>
+						</li>
 					</ul>
 				</div>
 			</div>

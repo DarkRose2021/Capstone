@@ -46,7 +46,7 @@ const Services = () => {
 		},
 	];
 	return (
-		<div>
+		<div className="servicesPage">
 			<h1>Services</h1>
 			{/* eventually put in to something that I can loop over */}
 			<div class="album py-5 highlight-color">
