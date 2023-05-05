@@ -119,13 +119,18 @@ footer {
 
 .about-txt {
 	@include flex-center();
-
 	div {
+    @include flex-center();
 		@include border();
 		background-color: $lightBrown;
 		padding: 1%;
 		margin: 1%;
 	}
+  img{
+    max-width: 35%;
+    margin-right: 2%;
+    @include border();
+  }
 }
 
 .flex {
@@ -187,4 +192,34 @@ footer {
 	button {
 		margin-left: 35%;
 	}
+}
+
+.team{
+  .info{
+    display: flex;
+    p{
+      margin-top: 5%;
+      margin-left: 2%;
+      
+    }
+  }
+  h2{
+    text-align: left;
+  }
+  img{
+    max-width: 500px;
+    max-height: 500px;
+    @include border;
+  }
+  .teammember{
+    background-color: $lightBrown;
+    @include border;
+    margin: 3%;
+    padding: 1%;
+    width: 65%;
+    margin-left: 20%;
+  }
+  .name{
+    margin-left: 5%;
+  }
 }
