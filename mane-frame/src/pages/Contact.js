@@ -123,7 +123,7 @@ const Contact = () => {
 							<button type="submit">Send Email</button>
 						</form>
 						<h4>
-							Call Me at <a href="tel:6066881018">(606)-688-1018</a>
+							Call Me at <a href="tel:3853550184">(385)355-0184</a>
 						</h4>
 					</div>
 				</div>

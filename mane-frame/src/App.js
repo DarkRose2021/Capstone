@@ -7,8 +7,14 @@ import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import Team from "./pages/Team";
 import Login from "./pages/Login";
+import Signin from "./pages/Signin";
+import AdminLogin from "./pages/AdminLogin";
+import userEvent from "@testing-library/user-event";
+import { useEffect } from "react";
+import Checkout from "./pages/Checkout";
 
 function App() {
+  
 	return (
 		<div>
 			<div className="layout">
@@ -97,6 +103,18 @@ function App() {
 								/
 							</Route>
               <Route path="/login" element={<Login />}>
+								{" "}
+								/
+							</Route>
+              <Route path="/signup" element={<Signin />}>
+								{" "}
+								/
+							</Route>
+              <Route path="/admin" element={<AdminLogin />}>
+								{" "}
+								/
+							</Route>
+              <Route path="/checkout" element={<Checkout />}>
 								{" "}
 								/
 							</Route>
