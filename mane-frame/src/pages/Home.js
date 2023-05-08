@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import logo from "../logo.png";
 
 const Home = () => {
-	function disclaimer() {
-		alert(
-			"This website is for a fake business. \n Do not put any personal information on this website"
-		);
-	}
+	// function disclaimer() {
+	// 	alert(
+	// 		"This website is for a fake business. \n Do not put any personal information on this website"
+	// 	);
+	// }
 
-	useEffect(() => {
-		disclaimer();
-	}, []);
+	// useEffect(() => {
+	// 	disclaimer();
+	// }, []);
 
 	return (
 		<div>
