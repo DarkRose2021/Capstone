@@ -31,6 +31,13 @@ a:visited {
 	}
 	border-bottom: 2px solid $borderbrown;
 	box-shadow: 2px 2px $borderbrown;
+	.navbar-toggler:focus{
+		color: $color;
+	}
+	.navbar-toggler{
+		border: 3px $color solid;
+		background-color: $color;
+	}
 }
 
 body {
@@ -253,5 +260,17 @@ footer {
 .signup{
 	div{
 		margin: -2%;
+	}
+}
+
+.checkout{
+	@include button;
+	form{
+		background-color: $lightBrown;
+		padding: 2%;
+		margin: 2%;
+	}
+	.container{
+		display: flex;
 	}
 }

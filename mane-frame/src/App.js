@@ -14,7 +14,6 @@ import { useEffect } from "react";
 import Checkout from "./pages/Checkout";
 
 function App() {
-  
 	return (
 		<div>
 			<div className="layout">
@@ -41,7 +40,7 @@ function App() {
 								</button>
 								<div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 									<ul className="navbar-nav flex-grow-1">
-                  <li className="nav-item">
+										<li className="nav-item">
 											<Link to="/" className="nav-link">
 												Home
 											</Link>
@@ -62,7 +61,7 @@ function App() {
 											</Link>
 										</li>
 										<li className="nav-item">
-											<Link to='/team' className="nav-link">
+											<Link to="/team" className="nav-link">
 												Team
 											</Link>
 										</li>
@@ -72,9 +71,9 @@ function App() {
 											</a>
 										</li>
 										<li className="nav-item">
-											<a href="" className="nav-link">
+											<Link to="/checkout" className="nav-link">
 												Checkout
-											</a>
+											</Link>
 										</li>
 									</ul>
 									{/* <a className="nav-link" >Sign Up</a> <br />
@@ -98,23 +97,23 @@ function App() {
 								{" "}
 								/
 							</Route>
-              <Route path="/team" element={<Team />}>
+							<Route path="/team" element={<Team />}>
 								{" "}
 								/
 							</Route>
-              <Route path="/login" element={<Login />}>
+							<Route path="/login" element={<Login />}>
 								{" "}
 								/
 							</Route>
-              <Route path="/signup" element={<Signin />}>
+							<Route path="/signup" element={<Signin />}>
 								{" "}
 								/
 							</Route>
-              <Route path="/admin" element={<AdminLogin />}>
+							<Route path="/admin" element={<AdminLogin />}>
 								{" "}
 								/
 							</Route>
-              <Route path="/checkout" element={<Checkout />}>
+							<Route path="/checkout" element={<Checkout />}>
 								{" "}
 								/
 							</Route>
@@ -126,7 +125,9 @@ function App() {
 				<div className="container">
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 					<br />
-					All text generated with ChatGPT - All images from <a href="https://www.pexels.com/">Pexels</a><br />
+					All text generated with ChatGPT - All images from{" "}
+					<a href="https://www.pexels.com/">Pexels</a>
+					<br />
 					<b>
 						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
 						INFORMATION ON THIS WEBSITE
