@@ -8,7 +8,6 @@ import Services from "./pages/Services";
 import Team from "./pages/Team";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
-import AdminLogin from "./pages/AdminLogin";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
 import Checkout from "./pages/Checkout";
@@ -109,7 +108,7 @@ function App() {
 								{" "}
 								/
 							</Route>
-							<Route path="/admin" element={<AdminLogin />}>
+							<Route path="/admin" element={<Login />}>
 								{" "}
 								/
 							</Route>

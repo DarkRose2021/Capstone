@@ -1,10 +1,15 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Login = () => {
-
+  const location = useLocation();
+  
   return (
     <div className='login'>
-      <h1>Login</h1>
+      {
+        location.pathname.toLowerCase()=="/admin"? <h1>Admin Login</h1>:<h1>Login</h1>
+      }
+      
       <div className='form'>
         <div>
           <form>

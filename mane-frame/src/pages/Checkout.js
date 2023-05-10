@@ -1,6 +1,8 @@
 import React from "react";
 
+
 const Checkout = () => {
+	
 	return (
 		<div className="checkout">
 			<h1>Checkout</h1>
@@ -8,30 +10,30 @@ const Checkout = () => {
 				<div className="shipaddressform">
 					<h2>Shipping Address</h2>
 					<form>
-						<label for="name">Full Name:</label> <br />
+						<label htmlFor="name">Full Name:</label> <br />
 						<input type="text" id="name" name="name" required />
 						<br />
-						<label for="address">Street address:</label>
+						<label htmlFor="address">Street address:</label>
 						<br />
 						<input type="text" id="address" name="address" required />
 						<br />
-						<label for="address 2">Apt, Suite, etc (optional)</label>
+						<label htmlFor="address 2">Apt, Suite, etc (optional)</label>
 						<br />
 						<input type="text" id="address2" name="address2" />
 						<br />
-						<label for="city">City:</label>
+						<label htmlFor="city">City:</label>
 						<br />
 						<input type="text" id="city" name="city" required />
 						<br />
-						<label for="state">State:</label>
+						<label htmlFor="state">State:</label>
 						<br />
 						<input type="text" id="state" name="state" required />
 						<br />
-						<label for="zip">ZIP Code:</label>
+						<label htmlFor="zip">ZIP Code:</label>
 						<br />
 						<input type="text" id="zip" name="zip" required />
 						<br />
-						<label for="country">Country:</label>
+						<label htmlFor="country">Country:</label>
 						<br />
 						<select id="country" name="country" required>
 							<option value="">Select Country</option>
@@ -44,7 +46,7 @@ const Checkout = () => {
 						name="sameaddress"
 						value="True"
 					/>
-					<label for="sameaddress">
+					<label htmlFor="sameaddress">
 						Billing address is the same as Shipping Address
 					</label><br />
 						<button type="submit">Submit</button>
@@ -54,7 +56,7 @@ const Checkout = () => {
 				<div className="billaddress">
 					<h2>Billing Address</h2>
 					<form>
-						<label for="name">Full Name:</label> <br />
+						<label htmlFor="name">Full Name:</label> <br />
 						<input
 							className="focus-ring"
 							type="text"
@@ -63,27 +65,27 @@ const Checkout = () => {
 							required
 						/>
 						<br />
-						<label for="address">Street address:</label>
+						<label htmlFor="address">Street address:</label>
 						<br />
 						<input type="text" id="address" name="address" required />
 						<br />
-						<label for="address 2">Apt, Suite, etc (optional)</label>
+						<label htmlFor="address 2">Apt, Suite, etc (optional)</label>
 						<br />
 						<input type="text" id="address2" name="address2" />
 						<br />
-						<label for="city">City:</label>
+						<label htmlFor="city">City:</label>
 						<br />
 						<input type="text" id="city" name="city" required />
 						<br />
-						<label for="state">State:</label>
+						<label htmlFor="state">State:</label>
 						<br />
 						<input type="text" id="state" name="state" required />
 						<br />
-						<label for="zip">ZIP Code:</label>
+						<label htmlFor="zip">ZIP Code:</label>
 						<br />
 						<input type="text" id="zip" name="zip" required />
 						<br />
-						<label for="country">Country:</label>
+						<label htmlFor="country">Country:</label>
 						<br />
 						<select id="country" name="country" required>
 							<option value="">Select Country</option>
@@ -97,18 +99,18 @@ const Checkout = () => {
 				<div className="cardInfo">
 					<h2>Card Information</h2>
 					<form>
-						<label for="name">Name on card:</label> <br />
+						<label htmlFor="name">Name on card:</label> <br />
 						<input type="text" id="name" name="name" required />
 						<br />
-						<label for="cardnum">Card number:</label>
+						<label htmlFor="cardnum">Card number:</label>
 						<br />
 						<input type="number" id="cardnum" name="cardnum" required />
 						<br />
-						<label for="cvc">CVC:</label>
+						<label htmlFor="cvc">CVC:</label>
 						<br />
 						<input type="number" id="cvc" name="cvc" required />
 						<br />
-						<label for="exp">Exp. date:</label>
+						<label htmlFor="exp">Exp. date:</label>
 						<br />
 						<input type="number" id="exp" name="exp" required />
 						<br />
