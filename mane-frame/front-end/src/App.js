@@ -11,6 +11,7 @@ import Signin from "./pages/Signin";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
 import Checkout from "./pages/Checkout";
+import Products from "./pages/Products";
 
 function App() {
 	return (
@@ -65,9 +66,9 @@ function App() {
 											</Link>
 										</li>
 										<li className="nav-item">
-											<a href="" className="nav-link">
+											<Link to="/products" className="nav-link">
 												Products
-											</a>
+											</Link>
 										</li>
 										<li className="nav-item">
 											<Link to="/checkout" className="nav-link">
@@ -113,6 +114,10 @@ function App() {
 								/
 							</Route>
 							<Route path="/checkout" element={<Checkout />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/products" element={<Products />}>
 								{" "}
 								/
 							</Route>
