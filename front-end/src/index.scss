@@ -1,0 +1,87 @@
+$color: #e5e5e5;
+$blue: #40797A;
+$yellow: #e5cd75;
+$lightBrown: #4f473d;
+$darkbrown: #2C261F;
+$error: #FF0000;
+$blue-hover: #619091;
+$blue-active: #518586;
+$borderbrown: #242019;
+
+// <FontAwesomeIcon icon={regular("cart-shopping")} style={{color: "#e5e5e5",}} />
+// <FontAwesomeIcon icon="fa-regular fa-cart-plus" style={{color: "#e5e5e5",}} />
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Source+Sans+Pro&display=swap');
+
+html,
+body {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+body{
+  background-image: url("../src/background.jpg");
+}
+
+::selection{
+  background-color: $blue;
+  color: black;
+}
+// from W3Schools
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+@mixin flex-center{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+@mixin flex-between{
+  display: flex;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+@mixin border{
+  border: 5px solid $darkbrown;
+  border-radius: 5px;
+}
+
+@mixin borderRadius{
+  border-radius: 5px;
+}
+
+@mixin borderRadiusContainers{
+  border-radius: 10px;
+}
+
+@mixin border-brown{
+  border: 5px solid $borderbrown;
+}
+
+@mixin button{
+  button {
+    background-color: $blue;
+    border: none;
+    padding: 1% 2%;
+    margin: 2%;
+    @include borderRadius();
+  }
+  button:hover {
+    background-color: $blue-hover;
+  }
+  button:active {
+    background-color: $blue-active;
+  }
+}
