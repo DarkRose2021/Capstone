@@ -10,6 +10,9 @@ const Admin = () => {
 					<div>
 						<button>List Clients</button>
 						<button>Edit Client Pictures</button>
+						<button>List Users</button>
+						<button>Edit Clients</button>
+						<button>Add Clients</button>
 					</div>
 				</div>
 				{/* show the clients when either button is clicked (might change to showing clients by default)*/}

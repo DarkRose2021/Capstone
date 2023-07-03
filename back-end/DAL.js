@@ -1,12 +1,14 @@
 const { mongoose, Schema } = require("mongoose");
 var mongodb = require("mongodb");
 var ObjectID = require('mongodb').ObjectID;
-require("dotenv").config()
+const path = require('path')
+require('dotenv').config()
 //process.env.CONNECTION_STRING
 
 const connectionString = process.env.CONNECTION_STRING
 const testingCollection = "Testing"
 const idTestCollection = "GrabIDTest"
+const userCollection = "Users"
 
 mongoose.connect(connectionString, {
     useUnifiedTopology: true,
@@ -34,6 +36,15 @@ const test = new Schema ({
 
 const testModel = mongoose.model("test", test)
 
+const user = new Schema ({
+    Email: String,
+    Name: String,
+    Password: String,
+    IsClient: Boolean,
+}, {collection: userCollection})
+
+const userModel = mongoose.model("user", user)
+
 exports.dal = {
     createTestId: (name, price) => {
         let data = {
@@ -52,6 +63,15 @@ exports.dal = {
         }
         console.log(data)
         testModel.collection.insertOne(data)
+        console.log(name+ " added")
+    },
+    createUser: (email, name, password) => {
+        let user = {
+            Email: email,
+            Name: name,
+            Password: password
+        }
+        userModel.collection.insertOne(user)
         console.log(name+ " added")
     }
 }
