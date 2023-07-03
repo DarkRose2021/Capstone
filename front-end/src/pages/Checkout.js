@@ -1,6 +1,7 @@
 import React from "react";
 
 const Checkout = () => {
+	// Form is from Bootstrap
 	(function () {
 		"use strict";
 
@@ -23,7 +24,9 @@ const Checkout = () => {
 			);
 		});
 	})();
+	// add logic for shipping address to show or hide if the checkmark is clicked
 	return (
+		// add shipping address form
 		<div class="container">
 			<main>
 				<div class="py-5 text-center">

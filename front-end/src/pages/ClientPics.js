@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ClientPics = () => {
+  // will change to come from the database
   //testing pictures
   const pics = [
     "/assets/Equineportraiture.jpg",
@@ -12,6 +13,8 @@ const ClientPics = () => {
   ]
   return (
     <div>
+      {/* might make the images clickable to view a larger one */}
+      {/* make images downloadable */}
       <h1>Your Pictures</h1>
       <div className='pics'>
         {

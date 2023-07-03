@@ -8,11 +8,14 @@ import Services from "./pages/Services";
 import Team from "./pages/Team";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
-import userEvent from "@testing-library/user-event";
-import { useEffect } from "react";
 import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import ClientPics from "./pages/ClientPics";
+import Admin from "./pages/Admin";
+import Cart from "./pages/Cart";
+import Logout from "./pages/Logout";
+import ClientStories from "./pages/ClientStories";
+import Confirm from "./pages/Confirm";
 
 function App() {
 	return (
@@ -67,27 +70,49 @@ function App() {
 											</Link>
 										</li>
 										<li className="nav-item">
+											<Link to="/clientStories" className="nav-link">
+												Client Stories
+											</Link>
+										</li>
+										{/* lock */}
+										<li className="nav-item">
 											<Link to="/client-pictures" className="nav-link">
 												Your Pictures
 											</Link>
 										</li>
+										{/* lock */}
 										<li className="nav-item">
 											<Link to="/products" className="nav-link">
 												Products
 											</Link>
 										</li>
+										{/* lock */}
 										<li className="nav-item">
 											<Link to="/checkout" className="nav-link">
 												Checkout
 											</Link>
 										</li>
-										{/* <li className="nav-item">
-											<Link to="/login" className="nav-link" >Login</Link>
-										</li> */}
-										
+										{/* remove later */}
+										<li className="nav-item">
+											<Link to="/adminHome" className="nav-link">
+												AdminHome
+											</Link>
+										</li>
+										{/* lock & change to an icon */}
+										<li className="nav-item">
+											<Link to="/cart" className="nav-link">
+												Cart
+											</Link>
+										</li>
 									</ul>
-                    				
-									
+
+									<Link to="/login" className="nav-link">
+										Login/Signup
+									</Link>
+									{/* only show when a user is logged in */}
+									<Link to="/logout" className="nav-link">
+										Logout
+									</Link>
 								</div>
 							</div>
 						</nav>
@@ -132,6 +157,26 @@ function App() {
 								/
 							</Route>
 							<Route path="/client-pictures" element={<ClientPics />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/adminHome" element={<Admin />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/cart" element={<Cart />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/logout" element={<Logout />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/clientStories" element={<ClientStories />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/confirm" element={<Confirm />}>
 								{" "}
 								/
 							</Route>

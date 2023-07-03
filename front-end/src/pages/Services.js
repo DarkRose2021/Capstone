@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Services = () => {
 	const services = [
@@ -85,7 +86,7 @@ const Services = () => {
 										{/* <p>Prices: <br /> {service.price?.map((pr) =>(
 											{pr}
 										))}</p> */}
-										<button>Book Now!</button>
+										<Link to={'/contact'}><button>Book Now!</button></Link>
 									</div>
 								</div>
 							</div>

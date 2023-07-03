@@ -20,6 +20,30 @@ app.post("/test", async (req, res) => {
     res.json(name + age)
 })
 
+app.get("/clientPics", async (req, res) => {
+
+})
+
+app.get("/clients", async (req, res) => {
+    
+})
+
+app.get("/login", async (req, res) => {
+    
+})
+
+app.get("/signup", async (req, res) => {
+    
+})
+
+app.get("/cart", async (req, res) => {
+    
+})
+
+app.get("/products", async (req, res) => {
+    
+})
+
 app.listen(port, () =>{
     console.log("Listening on port " +port)
 })

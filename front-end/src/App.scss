@@ -269,15 +269,37 @@ footer {
 
 .container {
 	max-width: 960px;
-
 	h4 {
 		color: $yellow;
 	}
-
 	.checkoutform {
 		@include button;
 		@include border();
 		@include borderRadiusContainers;
 		background-color: $lightBrown;
+	}
+}
+
+.pics{
+	@include flex-center;
+	flex-wrap: wrap;
+	margin-bottom: 1%;
+	img{
+		max-width: 500px;
+		margin: .5%;
+	}
+}
+
+.admincontainer{
+	@include flex-center;
+	@include button;
+	flex-direction: row;
+	.adminbtns{
+		width: 100vb;
+		button{
+			font-size: 1.3em;
+			padding: 1%;
+			margin: 0%, 7%;
+		}
 	}
 }
