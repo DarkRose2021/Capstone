@@ -7,7 +7,7 @@ const Login = () => {
   return (
     <div className='login'>
       {
-        location.pathname.toLowerCase()=="/admin"? <h1>Admin Login</h1>:<h1>Login</h1>
+        location.pathname.toLowerCase()==="/admin"? <h1>Admin Login</h1>:<h1>Login</h1>
       }
       
       <div className='form'>
