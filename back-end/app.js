@@ -6,12 +6,12 @@ const dal = require("./DAL").dal;
 const port = 5000
 const app = express()
 
-// var bodyParser = require('body-parser')
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
-
-const testUserAPI = "https://randomuser.me/api/?results=50"
+// const bodyParser = require('body-parser');
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(cors());
 
 app.get("/", (req, res) => {
     res.json("Welcome to the backend of my website")
@@ -35,7 +35,7 @@ app.get("/clients", async (req, res) => {
 })
 
 app.get("/login", async (req, res) => {
-    
+    await dal.populateTestData()
 })
 
 app.get("/signup", async (req, res) => {
@@ -43,6 +43,7 @@ app.get("/signup", async (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
+    console.log(req.body)
     let email = req.body.email
     let name = req.body.name
     let password = req.body.password

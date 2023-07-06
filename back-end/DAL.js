@@ -73,5 +73,21 @@ exports.dal = {
         }
         userModel.collection.insertOne(user)
         console.log(name+ " added")
+    },
+    populateTestData: () =>{
+        let url = "https://randomuser.me/api/?results=5"
+        let people = []
+        fetch(url)
+			.then((resp) => resp.json())
+			.then((data) => {
+				console.log(data.results);
+				people = data.results;
+			})
+			.catch((err) => console.log(err));
+
+        // console.log(people)
+        people.forEach(person => {
+            userModel.collection.insertOne(person.email, person.name.first, person.login.password)
+        });
     }
 }
