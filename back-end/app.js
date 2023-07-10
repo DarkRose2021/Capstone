@@ -8,10 +8,7 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// app.use(cors());
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.json("Welcome to the backend of my website")
@@ -35,7 +32,16 @@ app.get("/clients", async (req, res) => {
 })
 
 app.get("/login", async (req, res) => {
-    await dal.populateTestData()
+    // await dal.populateTestData()
+})
+
+app.post("/login", async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    console.log(req.body)
+    let found = await dal.checkUser(email, password)
+    let name = found.Name
+    res.json({Message: `${name} found`})
 })
 
 app.get("/signup", async (req, res) => {
@@ -43,7 +49,7 @@ app.get("/signup", async (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
-    console.log(req.body)
+    //TODO: check that the email doesn't already exist
     let email = req.body.email
     let name = req.body.name
     let password = req.body.password
@@ -59,6 +65,8 @@ app.get("/cart", async (req, res) => {
 app.get("/products", async (req, res) => {
     
 })
+
+
 
 app.listen(port, () =>{
     console.log("Listening on port " +port)
