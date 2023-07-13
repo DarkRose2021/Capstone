@@ -1,11 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react";
 import { useLocation } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-
-
 	const {
 		register,
 		formState: { errors },
@@ -13,7 +11,26 @@ const Login = () => {
 	} = useForm({
 		criteriaMode: "all",
 	});
+
 	const location = useLocation();
+
+	const onSubmit = (data) => {
+		console.log(data);
+		fetch(`http://localhost:5000/login`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				console.log(result);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
 
 	return (
 		<div className="login">
@@ -25,7 +42,7 @@ const Login = () => {
 
 			<div className="form">
 				<div>
-					<form onSubmit={handleSubmit((data) => console.log(data))}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<label htmlFor="email">Email:</label>
 						<br />
 						<input
@@ -48,16 +65,15 @@ const Login = () => {
 						<ErrorMessage
 							errors={errors}
 							name="email"
-							render={({ messages }) => {
-								console.log("messages", messages);
-								return messages
+							render={({ messages }) =>
+								messages
 									? Object.entries(messages).map(([type, message]) => (
 											<p key={type} className="error">
 												{message}
 											</p>
 									))
-									: null;
-							}}
+									: null
+							}
 						/>
 						<br />
 
@@ -72,7 +88,23 @@ const Login = () => {
 								required: "Password is required",
 							})}
 						/>
-						
+						<ErrorMessage
+							errors={errors}
+							name="password"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p
+												key={type}
+												className="error"
+												style={{ whiteSpace: "pre-line" }}
+											>
+												{message}
+											</p>
+									))
+									: null
+							}
+						/>
 						<br />
 						<button type="submit">Login</button>
 					</form>

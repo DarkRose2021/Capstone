@@ -40,8 +40,9 @@ app.post("/login", async (req, res) => {
     const password = req.body.password
     console.log(req.body)
     let found = await dal.checkUser(email, password)
-    let name = found.Name
-    res.json({Message: `${name} found`})
+    console.log(found[0])
+    let found_email = found[0].Email
+    res.json({Message: `${found_email} found`, User: found[0]})
 })
 
 app.get("/signup", async (req, res) => {
@@ -55,7 +56,7 @@ app.post("/signup", (req, res) => {
     let password = req.body.password
 
     dal.createUser(email, name, password)
-    return res.json({Message: `${name} was added!`})
+    return res.json({Message: `${email} was added!`})
 })
 
 app.get("/cart", async (req, res) => {
