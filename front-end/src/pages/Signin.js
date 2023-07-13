@@ -1,6 +1,25 @@
 import React, { useState } from "react";
+import { ErrorMessage } from "@hookform/error-message";
+import { useForm } from "react-hook-form";
 
 const Signin = () => {
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm({
+		criteriaMode: "all",
+	});
+
+	const passwordPattern =
+		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{8,}$/;
+	const validatePassword = (value) => {
+		if (passwordPattern.test(value)) {
+			return true;
+		}
+		return `Password must contain: \n 1 uppercase letter \n1 lowercase letter \n 1 number \n 1 special character`;
+	};
+
 	const initialFormData = {
 		email: "",
 		name: "",
@@ -12,7 +31,6 @@ const Signin = () => {
 
 	const handleFormData = (event) => {
 		event.preventDefault();
-
 		let url = `http://localhost:5000/signup`;
 		fetch(url, {
 			method: "POST",
@@ -79,9 +97,24 @@ const Signin = () => {
 							type="password"
 							placeholder="Password"
 						/>
+						<ErrorMessage
+							errors={errors}
+							name="password"
+							render={({ messages }) => {
+								console.log("messages", messages);
+								return messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error" style={{whiteSpace: 'pre-line'}}>
+												{message}
+											</p>
+									))
+									: null;
+							}}
+						/>
 						<br />
 						{/* <label htmlFor="password">Confirm Password:</label><br />
             <input value={formData.password} id='password' name='password' type='password' placeholder='Password' /><br /> */}
+
 						<button type="submit">Login</button>
 					</form>
 				</div>

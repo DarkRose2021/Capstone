@@ -106,8 +106,11 @@ function App() {
 										</li>
 									</ul>
 
-									<Link to="/login" className="nav-link">
-										Login/Signup
+									<Link to="/login" className="nav-link signin">
+										Login
+									</Link>
+									<Link to="/signup" className="nav-link signin">
+										SignUp
 									</Link>
 									{/* only show when a user is logged in */}
 									<Link to="/logout" className="nav-link">

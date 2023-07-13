@@ -13,6 +13,11 @@ a:visited {
 	color: $blue;
 }
 
+.error {
+	color: $error;
+	font-weight: bold;
+}
+
 .navbar {
 	background-color: $darkbrown;
 	a {
@@ -36,6 +41,9 @@ a:visited {
 	.navbar-toggler {
 		border: 3px $color solid;
 		background-color: $color;
+	}
+	.signin{
+		margin-right: 15px;
 	}
 }
 
@@ -64,7 +72,7 @@ h2 {
 .carousel {
 	@include flex-center();
 	margin: 3%;
-	
+
 	img {
 		// height: 20%;
 		@include border();
@@ -183,38 +191,38 @@ footer {
 	width: 100%;
 }
 
-.album{
+.album {
 	@include flex-center();
 }
 
-.s-container{
+.s-container {
 	width: 90%;
 
-.card {
-	margin-top: 3%;
-	background-color: $lightBrown;
-	color: $color;
-	max-height: 100%;
-	@include border();
+	.card {
+		margin-top: 3%;
+		background-color: $lightBrown;
+		color: $color;
+		max-height: 100%;
+		@include border();
 		@include borderRadiusContainers;
-	h5 {
-		color: $yellow;
-		font-weight: bold;
-	}
-	.card-body {
-		max-height: 500px;
-		ul {
-			list-style: none;
+		h5 {
+			color: $yellow;
+			font-weight: bold;
+		}
+		.card-body {
+			max-height: 500px;
+			ul {
+				list-style: none;
+			}
+		}
+		img {
+			max-height: 365px;
+		}
+		button {
+			margin-left: 35%;
+			@include button;
 		}
 	}
-	img {
-		max-height: 365px;
-	}
-	button {
-		margin-left: 35%;
-		@include button;
-	}
-}
 }
 
 .team {
@@ -248,28 +256,29 @@ footer {
 	}
 }
 
-	.login,
-	.signup {
-		.form {
-			margin: 5%;
-			@include flex-center;
-			@include button;
-			div {
-				background-color: $lightBrown;
-				padding: 3%;
-				@include border;
-				@include borderRadiusContainers;
-			}
-			input {
-				@include borderRadius;
-				margin: 1%;
-			}
-			button {
-				width: 100%;
-				margin: 1%;
-			}
+.login,
+.signup {
+	.form {
+		margin: 5%;
+		@include flex-center;
+		@include button;
+		div {
+			background-color: $darkbrown;
+			padding: 3%;
+			border: 5px solid $borderbrown;
+			border-radius: 5px;
+			@include borderRadiusContainers;
+		}
+		input {
+			@include borderRadius;
+			margin: 1%;
+		}
+		button {
+			width: 100%;
+			margin: 1%;
 		}
 	}
+}
 
 .signup {
 	div {
@@ -290,23 +299,23 @@ footer {
 	}
 }
 
-.pics{
+.pics {
 	@include flex-center;
 	flex-wrap: wrap;
 	margin-bottom: 1%;
-	img{
+	img {
 		max-width: 500px;
-		margin: .5%;
+		margin: 0.5%;
 	}
 }
 
-.admincontainer{
+.admincontainer {
 	@include flex-center;
 	@include button;
 	flex-direction: row;
-	.adminbtns{
+	.adminbtns {
 		width: 100vb;
-		button{
+		button {
 			font-size: 1.3em;
 			padding: 1%;
 			margin: 0%, 7%;
