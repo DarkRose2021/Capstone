@@ -1,5 +1,4 @@
 @import "../src/index.scss";
-@import "../node_modules/bootstrap/scss/bootstrap";
 
 a {
 	color: $blue;
@@ -63,12 +62,11 @@ h2 {
 }
 
 .carousel {
-	display: flex;
-	align-self: center;
-	justify-self: center;
+	@include flex-center();
 	margin: 3%;
+	
 	img {
-		width: 50%;
+		// height: 20%;
 		@include border();
 		@include borderRadiusContainers;
 	}
@@ -132,7 +130,7 @@ footer {
 		margin: 1%;
 	}
 	img {
-		max-width: 35%;
+		max-width: 35% !important;
 		margin-right: 2%;
 		@include border();
 		@include borderRadiusContainers;
@@ -238,28 +236,28 @@ footer {
 	}
 }
 
-.login,
-.signup {
-	.form {
-		margin: 5%;
-		@include flex-center;
-		@include button;
-		div {
-			background-color: $lightBrown;
-			padding: 3%;
-			@include border;
-			@include borderRadiusContainers;
-		}
-		input {
-			@include borderRadius;
-			margin: 1%;
-		}
-		button {
-			width: 100%;
-			margin: 1%;
+	.login,
+	.signup {
+		.form {
+			margin: 5%;
+			@include flex-center;
+			@include button;
+			div {
+				background-color: $lightBrown;
+				padding: 3%;
+				@include border;
+				@include borderRadiusContainers;
+			}
+			input {
+				@include borderRadius;
+				margin: 1%;
+			}
+			button {
+				width: 100%;
+				margin: 1%;
+			}
 		}
 	}
-}
 
 .signup {
 	div {

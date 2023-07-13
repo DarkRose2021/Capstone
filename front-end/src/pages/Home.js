@@ -18,7 +18,7 @@ const Home = () => {
 			<div className="container">
 				<div
 					id="carouselExampleInterval"
-					class="carousel slide"
+					class="carousel slide w-70"
 					data-bs-ride="carousel"
 				>
 					<div class="carousel-inner">
