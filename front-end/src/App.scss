@@ -182,27 +182,39 @@ footer {
 .row {
 	width: 100%;
 }
+
+.album{
+	@include flex-center();
+}
+
+.s-container{
+	width: 90%;
+
 .card {
 	margin-top: 3%;
 	background-color: $lightBrown;
 	color: $color;
 	max-height: 100%;
-	
+	@include border();
+		@include borderRadiusContainers;
 	h5 {
 		color: $yellow;
+		font-weight: bold;
 	}
 	.card-body {
-		height: 100%;
-		width: 100%;
-		padding: 2%;
+		max-height: 500px;
+		ul {
+			list-style: none;
+		}
 	}
 	img {
-		max-width: 100%;
+		max-height: 365px;
 	}
 	button {
 		margin-left: 35%;
 		@include button;
 	}
+}
 }
 
 .team {

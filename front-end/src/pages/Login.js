@@ -5,14 +5,14 @@ import { useForm, Form, useController } from "react-hook-form";
 
 const Login = () => {
 	const { register,handleSubmit,formState: { errors }, } = useForm();
-	const { field } = useController({
-		control: control,
-		name: "email",
-		rules: {
-		  required: true,
-		  pattern: /^[a-zA-Z0-9]+$/i
-		}
-	});
+	// const { field } = useController({
+	// 	control: control,
+	// 	name: "email",
+	// 	rules: {
+	// 	  required: true,
+	// 	  pattern: /^[a-zA-Z0-9]+$/i
+	// 	}
+	// });
 	const location = useLocation();
 	// const initialFormData = {
 	// 	email: "",
