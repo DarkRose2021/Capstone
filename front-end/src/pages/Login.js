@@ -52,14 +52,10 @@ const Login = () => {
 							type="email"
 							placeholder="Email"
 							{...register("email", {
-								required: "You must enter an email address",
+								required: "Email is required",
 								pattern: {
 									value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
 									message: "Email address is invalid",
-								},
-								minLength: {
-									value: 5,
-									message: "Email must be more than 5 characters long",
 								},
 							})}
 						/>
@@ -77,7 +73,6 @@ const Login = () => {
 							}
 						/>
 						<br />
-
 						<label htmlFor="password">Password:</label>
 						<br />
 						<input

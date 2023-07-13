@@ -53,11 +53,14 @@ app.post("/signup", async (req, res) => {
 	let email = req.body.email;
 	let name = req.body.name;
 	let password = req.body.password;
+	console.log(req.body)
 	let user = await dal.createUser(email, name, password);
-	if (user != "") {
-		return res.json({ Message: `${email} was added!` });
+	console.log("user: " +user)
+	if (user == "") {
+		return res.json({ Message: "Email already in use", User: null});
 	} else {
-		return res.json({ Message: "Email already in use", User: user });
+		
+		return res.json({ Message: `${user.email} was added!`, User: user  });
 	}
 });
 

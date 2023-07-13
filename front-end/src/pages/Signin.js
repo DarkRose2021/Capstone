@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 
@@ -7,6 +7,7 @@ const Signin = () => {
 		register,
 		formState: { errors },
 		handleSubmit,
+		watch,
 	} = useForm({
 		criteriaMode: "all",
 	});
@@ -20,102 +21,215 @@ const Signin = () => {
 		return `Password must contain: \n 1 uppercase letter \n1 lowercase letter \n 1 number \n 1 special character`;
 	};
 
-	const initialFormData = {
-		email: "",
-		name: "",
-		password: "",
+	const namePattern = /^[A-Za-z\s]+$/;
+	const validateName = (value) => {
+		if (namePattern.test(value)) {
+			return true;
+		}
+		return "Name must only contain letters";
 	};
 
-	const [formData, setFormData] = useState(initialFormData);
-	const [msg, setMsg] = useState("");
+	const [user, setUser] = useState({});
+	const [passwordMatch, setPasswordMatch] = useState();
+	const [emailMatch, setEmailMatch] = useState();
 
-	const handleFormData = (event) => {
-		event.preventDefault();
-		let url = `http://localhost:5000/signup`;
-		fetch(url, {
+	useEffect(() => {
+		setPasswordMatch(watch("password", "") === watch("confirmPassword", ""));
+		setEmailMatch(watch("email", "") === watch("confirmEmail", ""));
+	}, [watch]);
+
+	const onSubmit = (data) => {
+		console.log(data);
+		fetch("http://localhost:5000/signup", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(formData),
+			body: JSON.stringify(data),
 		})
-			.then((data) => data.json())
-			.then((data) => {
-				console.log(data);
-				setMsg(data.Message);
-				console.log(msg);
+			.then((response) => response.json())
+			.then((result) => {
+				console.log(result);
+				setUser(result);
 			})
-			.catch((err) => console.log(err));
-
-		setFormData(initialFormData);
-	};
-
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setFormData((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
+			.catch((error) => {
+				console.error(error);
+			});
 	};
 	return (
 		<div className="signup">
 			<h1>Signup</h1>
 			<div className="form">
 				<div>
-					<form onSubmit={handleFormData}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<label htmlFor="email">Email:</label>
 						<br />
 						<input
-							value={formData.email}
-							onChange={handleInputChange}
 							id="email"
 							name="email"
 							type="email"
 							placeholder="Email"
+							{...register("email", {
+								required: "Email is required",
+								pattern: {
+									value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+									message: "Email address is invalid",
+								},
+								minLength: {
+									value: 5,
+									message: "Email must be longer than 5 characters",
+								},
+							})}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="email"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
 						/>
 						<br />
-						{/* <label htmlFor="email">Confirm Email:</label><br />
-            <input value={formData.email} id='email' name='email' type='email' placeholder='Email' /><br /> */}
+
+						<label htmlFor="confirmEmail">Confirm Email:</label>
+						<br />
+						<input
+							id="confirmEmail"
+							name="confirmEmail"
+							type="email"
+							placeholder="Confirm Email"
+							{...register("confirmEmail", {
+								required: "Email is required",
+								validate: (value) =>
+									value === watch("email", "") || "Emails do not match",
+							})}
+						/>
+						{emailMatch ? null : <p className="error">Emails do not match</p>}
+						<ErrorMessage
+							errors={errors}
+							name="confirmEmail"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
+						<br />
+
 						<label htmlFor="name">Name:</label>
 						<br />
 						<input
 							id="name"
-							value={formData.name}
-							onChange={handleInputChange}
 							name="name"
 							type="text"
 							placeholder="Name"
+							{...register("name", {
+								required: "Name is required",
+								validate: validateName,
+								minLength: {
+									value: 2,
+									message: "Name can't be shorter than 2 characters",
+								},
+								maxLength: {
+									value: 100,
+									message: "Name cannot exceed 100 characters",
+								},
+							})}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="name"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
 						/>
 						<br />
+
 						<label htmlFor="password">Password:</label>
 						<br />
 						<input
 							id="password"
-							value={formData.password}
-							onChange={handleInputChange}
 							name="password"
 							type="password"
 							placeholder="Password"
+							{...register("password", {
+								required: "Password is required",
+								validate: validatePassword,
+								minLength: {
+									value: 8,
+									message: "Must be longer than 8 characters",
+								},
+							})}
 						/>
 						<ErrorMessage
 							errors={errors}
 							name="password"
-							render={({ messages }) => {
-								console.log("messages", messages);
-								return messages
+							render={({ messages }) =>
+								messages
 									? Object.entries(messages).map(([type, message]) => (
-											<p key={type} className="error" style={{whiteSpace: 'pre-line'}}>
+											<p
+												key={type}
+												className="error"
+												style={{ whiteSpace: "pre-line" }}
+											>
 												{message}
 											</p>
-									))
-									: null;
-							}}
+									  ))
+									: null
+							}
 						/>
 						<br />
-						{/* <label htmlFor="password">Confirm Password:</label><br />
-            <input value={formData.password} id='password' name='password' type='password' placeholder='Password' /><br /> */}
-
-						<button type="submit">Login</button>
+						<label htmlFor="confirmPassword">Confirm Password:</label>
+						<br />
+						<input
+							id="confirmPassword"
+							name="confirmPassword"
+							type="password"
+							placeholder="Confirm Password"
+							{...register("confirmPassword", {
+								required: "Confirm Password is required",
+								validate: (value) =>
+									value === watch("password", "") || "Passwords do not match",
+							})}
+						/>
+						{passwordMatch ? null : (
+							<p className="error">Passwords do not match</p>
+						)}
+						<ErrorMessage
+							errors={errors}
+							name="confirmPassword"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
+						<br />
+						{(user.User === "" || user.User === null) && user.Message ? (
+							<p className="error">{user.Message}</p>
+						) : (
+							<></>
+						)}
+						<button type="submit">Sign Up</button>
 					</form>
 				</div>
 			</div>
