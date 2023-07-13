@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+	const [user, SetUser] = useState([])
 	const {
 		register,
 		formState: { errors },
@@ -25,7 +26,7 @@ const Login = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
+				SetUser(result)
 			})
 			.catch((error) => {
 				console.error(error);
@@ -106,6 +107,9 @@ const Login = () => {
 							}
 						/>
 						<br />
+						{user.Users === "" && user.Message ? (
+							<p className="error">{user.Message}</p>
+						):<></>}
 						<button type="submit">Login</button>
 					</form>
 				</div>

@@ -74,14 +74,23 @@ exports.dal = {
 		testModel.collection.insertOne(data);
 		console.log(name + " added");
 	},
-	createUser: (email, name, password) => {
+	createUser: async (email, name, password) => {
+		let check = {
+			Email: email,
+		};
 		let user = {
 			Email: email,
 			Name: name,
 			Password: password,
 		};
-		userModel.collection.insertOne(user);
-		console.log(name + " added");
+		let existingUser = await userModel.collection.find(check);
+		if (existingUser) {
+            console.log("user found")
+			return "";
+		} else {
+			userModel.collection.insertOne(user);
+			console.log(name + " added");
+		}
 	},
 	checkUser: async (email, password) => {
 		try {
