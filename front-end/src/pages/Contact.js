@@ -10,7 +10,7 @@ const Contact = () => {
 				<div className="calender">
 					<div>
 						{/* Temp until I actually get the calender working */}
-						<table bgcolor="black" cellspacing="21" cellpadding="21">
+						<table bgcolor="black" cellSpacing="21" cellPadding="21">
 							<thead>
 								<tr>
 									<th>Sun</th>
