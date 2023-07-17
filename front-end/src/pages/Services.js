@@ -84,7 +84,7 @@ const Services = () => {
 										<p className="card-text">{service.txt}</p>
 										<div>
 											<h5>Prices:</h5>
-											<ul className='fa-ul'>
+											<ul className="fa-ul">
 												{service.price?.map((price, index) => (
 													<li key={index}>{price}</li>
 												))}

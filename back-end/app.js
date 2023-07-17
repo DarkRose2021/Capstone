@@ -27,9 +27,7 @@ app.get("/clientPics", async (req, res) => {});
 
 app.get("/clients", async (req, res) => {});
 
-app.get("/login", async (req, res) => {
-	// await dal.populateTestData()
-});
+app.get("/login", async (req, res) => {});
 
 app.post("/login", async (req, res) => {
 	const email = req.body.email;
@@ -53,13 +51,12 @@ app.post("/signup", async (req, res) => {
 	let email = req.body.email;
 	let name = req.body.name;
 	let password = req.body.password;
-	console.log(req.body)
+	console.log(req.body);
 	let user = await dal.createUser(email, name, password);
 	if (user == "") {
-		return res.json({ Message: "Email already in use", User: null});
+		return res.json({ Message: "Email already in use", User: null });
 	} else {
-		
-		return res.json({ Message: `${email} was added!`, User: user  });
+		return res.json({ Message: `${email} was added!`, User: user });
 	}
 });
 
@@ -68,13 +65,13 @@ app.get("/cart", async (req, res) => {});
 app.get("/products", async (req, res) => {});
 
 app.get("/listUsers", async (req, res) => {
-	users = await dal.listUsers()
-	res.json(users)
+	users = await dal.listUsers();
+	res.json(users);
 });
 
 app.get("/listClients", async (req, res) => {
-	users = await dal.listClients()
-	res.json(users)
+	clients = await dal.listClients();
+	res.json(clients);
 });
 
 app.listen(port, () => {

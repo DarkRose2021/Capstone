@@ -4,7 +4,6 @@ const Admin = () => {
 	//logic to grab user data from database
 	//put it in a list
 	const [allUsers, setAllUsers] = useState([]);
-	const [allClients, setAllClients] = useState([]);
 
 	function listUsers() {
 		fetch("http://localhost:5000/listUsers")
@@ -20,7 +19,7 @@ const Admin = () => {
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result);
-				setAllClients(result);
+				setAllUsers(result);
 			});
 	}
 
@@ -30,7 +29,6 @@ const Admin = () => {
 				<div className="adminbtns">
 					<div>
 						<button onClick={listClients}>List Clients</button>
-						<button>Edit Client Pictures</button>
 						<button onClick={listUsers}>List Users</button>
 						<button>Edit Clients</button>
 						<button>Add Clients</button>
@@ -44,23 +42,20 @@ const Admin = () => {
 						<div key={user._id}>
 							<h3>Name: {user.Name}</h3>
 							<h3>Email: {user.Email}</h3>
-							<h3>Roles: {user.Roles}</h3>
-						</div>
-					))
-				) : (
-					<h3>No Users Found</h3>
-				)}
+							<h3>
+								Roles:{" "}
+								{user.Roles?.map((role, index) => (
+									<>{role}, </>
+								))}
+							</h3>
 
-				{allClients.length > 0 ? (
-					allClients.map((user) => (
-						<div key={user._id}>
-							<h3>Name: {user.Name}</h3>
-							<h3>Email: {user.Email}</h3>
-							<h3>Roles: {user.Roles}</h3>
+							<button>Edit Roles</button>
+							{user.Roles?.includes("Client") ? (<button>Edit Pictures</button>):(<></>)}
+							
 						</div>
 					))
 				) : (
-					<h3>No Clients Found</h3>
+					<></>
 				)}
 			</div>
 		</div>

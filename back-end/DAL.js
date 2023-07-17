@@ -7,7 +7,6 @@ require("dotenv").config();
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
-const clientCollection = "Client";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -31,18 +30,6 @@ const user = new Schema(
 );
 
 const userModel = mongoose.model("user", user);
-
-const client = new Schema(
-	{
-		Email: String,
-		Name: String,
-		Password: String,
-		Roles: Array,
-	},
-	{ collection: userCollection }
-);
-
-const clientModel = mongoose.model("client", client);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -83,6 +70,14 @@ exports.dal = {
     },
 
 	listClients: async () =>{
-        return await clientModel.find({}).exec()
-    }
+		clients = {
+			Roles: 'Client'
+		}
+        return await userModel.find(clients).exec()
+    },
+
+	editRoles: async (id, roles) =>{
+		let values = {Roles: roles}
+		userModel.collection.updateOne({_id: new mongodb.ObjectId(id)}, {$set: values})
+	}
 };
