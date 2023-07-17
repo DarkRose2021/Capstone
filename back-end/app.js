@@ -67,6 +67,16 @@ app.get("/cart", async (req, res) => {});
 
 app.get("/products", async (req, res) => {});
 
+app.get("/listUsers", async (req, res) => {
+	users = await dal.listUsers()
+	res.json(users)
+});
+
+app.get("/listClients", async (req, res) => {
+	users = await dal.listClients()
+	res.json(users)
+});
+
 app.listen(port, () => {
 	console.log("Listening on port " + port);
 });

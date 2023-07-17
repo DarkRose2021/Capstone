@@ -6,9 +6,8 @@ require("dotenv").config();
 //process.env.CONNECTION_STRING
 
 const connectionString = process.env.CONNECTION_STRING;
-const testingCollection = "Testing";
-const idTestCollection = "GrabIDTest";
 const userCollection = "Users";
+const clientCollection = "Client";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -21,38 +20,29 @@ connection.once("open", () => {
 	console.log("mongoose connected");
 });
 
-const idTest = new Schema(
-	{
-		Name: String,
-		Price: Number,
-	},
-	{ collection: idTestCollection }
-);
-
-const idTestModel = mongoose.model("idTest", idTest);
-
-const test = new Schema(
-	{
-		Name: String,
-		Age: Number,
-		TestId: [String],
-	},
-	{ collection: testingCollection }
-);
-
-const testModel = mongoose.model("test", test);
-
 const user = new Schema(
 	{
 		Email: String,
 		Name: String,
 		Password: String,
-		IsClient: Boolean,
+		Roles: Array,
 	},
 	{ collection: userCollection }
 );
 
 const userModel = mongoose.model("user", user);
+
+const client = new Schema(
+	{
+		Email: String,
+		Name: String,
+		Password: String,
+		Roles: Array,
+	},
+	{ collection: userCollection }
+);
+
+const clientModel = mongoose.model("client", client);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -63,6 +53,7 @@ exports.dal = {
 			Email: email,
 			Name: name,
 			Password: password,
+			Roles: []
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		console.log("Existing User ", existingUser)
@@ -87,4 +78,11 @@ exports.dal = {
 			throw error;
 		}
 	},
+	listUsers: async () =>{
+        return await userModel.find({}).exec()
+    },
+
+	listClients: async () =>{
+        return await clientModel.find({}).exec()
+    }
 };

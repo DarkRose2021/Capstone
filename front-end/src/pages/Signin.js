@@ -38,10 +38,6 @@ const Signin = () => {
 		setEmailMatch(watch("email", "") === watch("confirmEmail", ""));
 	}, [watch]);
 
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
-
 	const onSubmit = (data) => {
 		console.log(data);
 		fetch("http://localhost:5000/signup", {
