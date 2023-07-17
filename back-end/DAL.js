@@ -55,25 +55,6 @@ const user = new Schema(
 const userModel = mongoose.model("user", user);
 
 exports.dal = {
-	createTestId: (name, price) => {
-		let data = {
-			Name: name,
-			Price: price,
-		};
-		console.log(data);
-		idTestModel.collection.insertOne(data);
-		console.log(name + " added");
-	},
-	grabTestId: (name, age, id) => {
-		let data = {
-			Name: name,
-			Age: age,
-			TestId: id,
-		};
-		console.log(data);
-		testModel.collection.insertOne(data);
-		console.log(name + " added");
-	},
 	createUser: async (email, name, password) => {
 		let check = {
 			Email: email,
@@ -83,9 +64,9 @@ exports.dal = {
 			Name: name,
 			Password: password,
 		};
-		let existingUser = await userModel.collection.find(check);
-		console.log(existingUser)
-		if (existingUser) {
+		let existingUser = await userModel.collection.find(check).toArray();
+		console.log("Existing User ", existingUser)
+		if (existingUser.length > 0) {
             console.log("user found")
 			return "";
 		} else {

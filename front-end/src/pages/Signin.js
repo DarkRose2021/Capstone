@@ -38,6 +38,10 @@ const Signin = () => {
 		setEmailMatch(watch("email", "") === watch("confirmEmail", ""));
 	}, [watch]);
 
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
+
 	const onSubmit = (data) => {
 		console.log(data);
 		fetch("http://localhost:5000/signup", {
@@ -226,6 +230,12 @@ const Signin = () => {
 						<br />
 						{(user.User === "" || user.User === null) && user.Message ? (
 							<p className="error">{user.Message}</p>
+						) : (
+							<></>
+						)}
+
+						{user.Users !== "" && user.Message ? (
+							<p>Successfully Signed Up</p>
 						) : (
 							<></>
 						)}
