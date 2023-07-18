@@ -25,11 +25,11 @@ app.post("/login", async (req, res) => {
 	const password = req.body.password;
 	try {
 		let found = await dal.checkUser(email, password);
-		console.log(found[0]);
+		// console.log(found[0]);
 		let found_email = found[0].Email;
 		res.json({ Message: `${found_email} found`, User: found[0] });
 	} catch {
-		res.json({ Message: "Invalid Email or password" });
+		res.json({ Message: "Invalid Email or password", User: null });
 	}
 });
 
@@ -38,7 +38,6 @@ app.get("/signup", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-	//TODO: check that the email doesn't already exist
 	let email = req.body.email;
 	let name = req.body.name;
 	let password = req.body.password;

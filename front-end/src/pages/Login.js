@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-	const [user, SetUser] = useState([]);
+	const [user, SetUser] = useState(null);
 	const {
 		register,
 		formState: { errors },
@@ -27,13 +27,20 @@ const Login = () => {
 			.then((response) => response.json())
 			.then((result) => {
 				SetUser(result);
-				console.log(result)
+				console.log(result);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	};
 
+	useEffect(() => {
+		if (user && user.Message && user.User) {
+			localStorage.setItem("Valid Email", JSON.stringify(user.User.Email));
+		} else {
+			localStorage.removeItem("Valid Email");
+		}
+	}, [user]);
 	return (
 		<div className="login">
 			{location.pathname.toLowerCase() === "/admin" ? (
@@ -103,13 +110,9 @@ const Login = () => {
 							}
 						/>
 						<br />
-						{user.Users === "" && user.Message ? (
-							<p className="error">{user.Message}</p>
-						) : (
-							<></>
-						)}
-
-						{user.Users !== "" && user.Message ? (
+						{!user?.Users && user?.Message ? (
+							<p className="error">{user?.Message}</p>
+						) : user?.Users !== null && user?.Message ? (
 							<p>Successfully logged in</p>
 						) : (
 							<></>

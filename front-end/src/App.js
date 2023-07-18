@@ -1,6 +1,8 @@
 import logo from "./logo.png";
 import "./App.scss";
-import { BrowserRouter, Link, Route, Routes, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+
 // import { ReactSession } from "react-client-session";
 
 import Home from "./pages/Home";
@@ -116,9 +118,9 @@ function App() {
 										SignUp
 									</Link>
 									{/* only show when a user is logged in */}
-									<Link to="/logout" className="nav-link">
+									<a href="#" className="nav-link">
 										Logout
-									</Link>
+									</a>
 								</div>
 							</div>
 						</nav>
