@@ -30,8 +30,6 @@ const Admin = () => {
 					<div>
 						<button onClick={listClients}>List Clients</button>
 						<button onClick={listUsers}>List Users</button>
-						<button>Edit Clients</button>
-						<button>Add Clients</button>
 					</div>
 				</div>
 				{/* show the clients when either button is clicked (might change to showing clients by default)*/}
