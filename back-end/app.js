@@ -70,16 +70,17 @@ app.get("/editRoles/", async (req, res) => {
 
 app.post("/editRoles/:id", async (req, res) => {
 	let id = req.params.id
-	let roles = req.body.roles
+	let roles = req.body
+	const trueKeys = Object.keys(roles).filter(key => roles[key]);
 
-	// dal.editRoles(id, roles)
-	res.json({id: id, roles: roles})
+	dal.editRoles(id, trueKeys)
+	res.json({Message: "updated", id: id, roles: roles})
 });
 
 app.get("/findUser/:id", async (req, res) => {
 	let id = req.params.id
 	let user = await dal.findUser(id)
-	res.json(user)
+	res.json({User: user})
 });
 
 app.listen(port, () => {

@@ -4,14 +4,13 @@ import { useParams, Navigate } from "react-router-dom";
 
 const EditRoles = () => {
 	const [checkboxes, setCheckboxes] = useState({
-		client: false,
-		admin: false,
-		user: false,
+		Client: false,
+		Admin: false,
+		User: true,
 	});
 	let { id } = useParams();
-	const [user, setUser] = useState([]);
-
-	console.log("id: " + id);
+	const [user, setUser] = useState(null);
+	const [msg, setMsg] = useState(null);
 
 	function loadAPI() {
 		let getUrl = `http://localhost:5000/findUser/${id}`;
@@ -26,10 +25,12 @@ const EditRoles = () => {
 
 	useEffect(() => {
 		loadAPI();
-        console.log(user)
+		console.log(user);
 	}, []);
 
 	useEffect(() => {
+		if (!user) return;
+
 		if (user.Roles.includes("Client") && !user.Roles.includes("Admin")) {
 			setCheckboxes({
 				client: true,
@@ -55,30 +56,46 @@ const EditRoles = () => {
 				user: true,
 			});
 		}
-        console.log(checkboxes)
+		console.log(checkboxes);
 	}, [user]);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		let url = `http://localhost:5000/editRoles/${id}`;
+		fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(checkboxes),
+		})
+			.then((data) => data.json())
+			.then((data) => {
+				setMsg(data.Message);
+				
+			})
+			.catch((err) => console.log(err));
+	};
 
 	const handleCheckboxChange = (event) => {
 		const { name, checked } = event.target;
+		// if (name === "User" && checked === false) {
+		// 	return;
+		// }
 		setCheckboxes((prevCheckboxes) => ({
 			...prevCheckboxes,
 			[name]: checked,
 		}));
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		console.log(checkboxes);
-	};
-
 	return (
 		<div>
-			<h1>Editing {user.Name} Roles</h1>
+			{user ? <h1>Editing {user.Name}'s Roles</h1> : <></>}
 			<form onSubmit={handleSubmit}>
 				<label>
 					<input
 						type="checkbox"
-						name="client"
+						name="Client"
 						checked={checkboxes.client}
 						onChange={handleCheckboxChange}
 					/>{" "}
@@ -88,7 +105,7 @@ const EditRoles = () => {
 				<label>
 					<input
 						type="checkbox"
-						name="admin"
+						name="Admin"
 						checked={checkboxes.admin}
 						onChange={handleCheckboxChange}
 					/>{" "}
@@ -98,7 +115,7 @@ const EditRoles = () => {
 				<label>
 					<input
 						type="checkbox"
-						name="user"
+						name="User"
 						checked={checkboxes.user}
 						onChange={handleCheckboxChange}
 						disabled
