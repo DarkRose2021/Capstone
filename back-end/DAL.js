@@ -25,6 +25,7 @@ const user = new Schema(
 		Name: String,
 		Password: String,
 		Roles: Array,
+		Images: Array
 	},
 	{ collection: userCollection }
 );
@@ -40,7 +41,8 @@ exports.dal = {
 			Email: email,
 			Name: name,
 			Password: password,
-			Roles: []
+			Roles: ["User"],
+			Images: []
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		console.log("Existing User ", existingUser)
@@ -79,5 +81,9 @@ exports.dal = {
 	editRoles: async (id, roles) =>{
 		let values = {Roles: roles}
 		userModel.collection.updateOne({_id: new mongodb.ObjectId(id)}, {$set: values})
+	},
+	
+	findUser: async (id) =>{
+		return await userModel.find({_id: new mongodb.ObjectId(id)}).exec()
 	}
 };

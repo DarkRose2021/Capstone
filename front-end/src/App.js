@@ -18,6 +18,7 @@ import Cart from "./pages/Cart";
 import Logout from "./pages/Logout";
 import ClientStories from "./pages/ClientStories";
 import Confirm from "./pages/Confirm";
+import EditRoles from "./pages/EditRoles";
 
 function App() {
 	return (
@@ -182,6 +183,10 @@ function App() {
 								/
 							</Route>
 							<Route path="/confirm" element={<Confirm />}>
+								{" "}
+								/
+							</Route>
+							<Route path="/edit/:id" element={<EditRoles />}>
 								{" "}
 								/
 							</Route>

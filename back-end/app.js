@@ -14,15 +14,6 @@ app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
 });
 
-app.post("/test", async (req, res) => {
-	let name = req.query.name;
-	let age = req.query.age;
-	let id = req.query.id;
-	console.log(name);
-	await dal.grabTestId(name, age, id);
-	res.json(name + age);
-});
-
 app.get("/clientPics", async (req, res) => {});
 
 app.get("/clients", async (req, res) => {});
@@ -72,6 +63,23 @@ app.get("/listUsers", async (req, res) => {
 app.get("/listClients", async (req, res) => {
 	clients = await dal.listClients();
 	res.json(clients);
+});
+
+app.get("/editRoles/", async (req, res) => {
+});
+
+app.post("/editRoles/:id", async (req, res) => {
+	let id = req.params.id
+	let roles = req.body.roles
+
+	// dal.editRoles(id, roles)
+	res.json({id: id, roles: roles})
+});
+
+app.get("/findUser/:id", async (req, res) => {
+	let id = req.params.id
+	let user = await dal.findUser(id)
+	res.json(user)
 });
 
 app.listen(port, () => {
