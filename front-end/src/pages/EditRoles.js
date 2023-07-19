@@ -33,27 +33,27 @@ const EditRoles = () => {
 
 		if (user.Roles.includes("Client") && !user.Roles.includes("Admin")) {
 			setCheckboxes({
-				client: true,
-				admin: false,
-				user: true,
+				Client: true,
+				Admin: false,
+				User: true,
 			});
 		} else if (user.Roles.includes("Admin") && !user.Roles.includes("Client")) {
 			setCheckboxes({
-				client: false,
-				admin: true,
-				user: true,
+				Client: false,
+				Admin: true,
+				User: true,
 			});
 		} else if (user.Roles.includes("Admin") && user.Roles.includes("Client")) {
 			setCheckboxes({
-				client: true,
-				admin: true,
-				user: true,
+				Client: true,
+				Admin: true,
+				User: true,
 			});
 		} else {
 			setCheckboxes({
-				client: false,
-				admin: false,
-				user: true,
+				Client: false,	
+				Admin: false,
+				User: true,
 			});
 		}
 		console.log(checkboxes);
@@ -96,7 +96,7 @@ const EditRoles = () => {
 					<input
 						type="checkbox"
 						name="Client"
-						checked={checkboxes.client}
+						checked={checkboxes.Client}
 						onChange={handleCheckboxChange}
 					/>{" "}
 					Client
@@ -106,7 +106,7 @@ const EditRoles = () => {
 					<input
 						type="checkbox"
 						name="Admin"
-						checked={checkboxes.admin}
+						checked={checkboxes.Admin}
 						onChange={handleCheckboxChange}
 					/>{" "}
 					Admin
@@ -116,7 +116,7 @@ const EditRoles = () => {
 					<input
 						type="checkbox"
 						name="User"
-						checked={checkboxes.user}
+						checked={checkboxes.User}
 						onChange={handleCheckboxChange}
 						disabled
 					/>{" "}
