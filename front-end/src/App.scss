@@ -318,11 +318,29 @@ footer {
 }
 
 .admincontainer {
-	@include flex-center;
 	@include button;
-	flex-direction: row;
+	.user {
+		@include border();
+		@include border-radius();
+		@include borderRadiusContainers();
+		background-color: $lightBrown;
+		width: 30vw;
+		padding: 2%;
+		margin: 2%;
+	}
+	.users {
+		@include flex-center();
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
 	.adminbtns {
-		width: 100vb;
+		@include flex-center;
+
+		flex-direction: row;
+		div {
+			width: 50%;
+			@include flex-center;
+		}
 		button {
 			font-size: 1.3em;
 			padding: 1%;
@@ -361,5 +379,33 @@ footer {
 	}
 	a:active {
 		background-color: $blue-active;
+	}
+}
+
+.role_flex {
+	@include flex-center();
+	margin: 2%;
+	.checkbox_form {
+		@include borderRadiusContainers;
+		@include border-brown;
+		@include button;
+		background-color: $lightBrown;
+		padding: 2%;
+		label, input{
+			cursor: pointer;
+		}
+		.form-check{
+			margin: none !important;
+		}
+		.disabled{
+			cursor: not-allowed;
+		}
+		input:hover{
+			background-color: $yellow;
+		}
+		button{
+			padding: 4%;
+			margin: 4%;
+		}
 	}
 }

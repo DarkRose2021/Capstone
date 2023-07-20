@@ -102,11 +102,14 @@ const EditRoles = () => {
 		<div>
 			{roles?.includes("Admin") ? (
 				<>
+				
 					{user ? <h1>Editing {user.Name}'s Roles</h1> : <></>}
-					<form onSubmit={handleSubmit}>
+					<div className="role_flex">
+					<form onSubmit={handleSubmit} className="checkbox_form">
 						<label>
 							<input
 								type="checkbox"
+								className="form-check-input"
 								name="Client"
 								checked={checkboxes.Client}
 								onChange={handleCheckboxChange}
@@ -116,6 +119,7 @@ const EditRoles = () => {
 						<br />
 						<label>
 							<input
+							className="form-check-input"
 								type="checkbox"
 								name="Admin"
 								checked={checkboxes.Admin}
@@ -124,8 +128,8 @@ const EditRoles = () => {
 							Admin
 						</label>
 						<br />
-						<label>
-							<input
+						<label className="disabled">
+							<input className="disabled form-check-input"
 								type="checkbox"
 								name="User"
 								checked={checkboxes.User}
@@ -145,8 +149,9 @@ const EditRoles = () => {
 							/>
 						</>
 					) : (
-						<br />
+						<></>
 					)}
+					</div>
 				</>
 			) : (
 				<>

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Navigate, useLocation, Link } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [user, SetUser] = useState(null);
 	const [checkStorage, setCheckStorage] = useState(false);
 	const {
@@ -47,6 +49,7 @@ const Login = () => {
 				JSON.stringify(user.User.Email)
 			);
 			window.localStorage.setItem("Roles", JSON.stringify(user.User.Roles));
+				navigate(0);
 		}
 	}, [user]);
 

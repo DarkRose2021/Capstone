@@ -51,9 +51,10 @@ const Admin = () => {
 						{/* show the clients when either button is clicked (might change to showing clients by default)*/}
 						{/* when client is clicked it'll bring up their "page" ie, their images */}
 						{/* options for admin to add or delete imgs from the client's page */}
+						<div className="users">
 						{allUsers.length > 0 ? (
 							allUsers.map((user) => (
-								<div key={user._id}>
+								<div key={user._id} className="user">
 									<h3>Name: {user.Name}</h3>
 									<h3>Email: {user.Email}</h3>
 									<h3>
@@ -76,6 +77,7 @@ const Admin = () => {
 						) : (
 							<></>
 						)}
+						</div>
 					</div>
 				</>
 			) : (

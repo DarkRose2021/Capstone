@@ -46,6 +46,7 @@ function App() {
 	const logout = () => {
 		localStorage.clear();
 		setLoggedIn(false);
+		window.location.reload()
 	};
 
 	return (
