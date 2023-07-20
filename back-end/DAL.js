@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
+const pictureCollection = "Pictures";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -21,16 +22,25 @@ connection.once("open", () => {
 
 const user = new Schema(
 	{
-		Email: String,
+		Email: { type: String, required: true, unique: true},
 		Name: String,
-		Password: String,
+		Password: { type: String, required: true},
 		Roles: Array,
-		Images: Array
+		Images: [{ type: Schema.Types.ObjectId, ref: 'pic' }]
 	},
 	{ collection: userCollection }
 );
 
 const userModel = mongoose.model("user", user);
+
+const pic = new Schema(
+	{
+		name: String,
+		url: String,
+	},
+	{ collection: pictureCollection }
+);
+const picModel = mongoose.model("pic", pic);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -85,5 +95,14 @@ exports.dal = {
 	
 	findUser: async (id) =>{
 		return await userModel.find({_id: new mongodb.ObjectId(id)}).exec()
+	},
+	testImags: async (userId) => {
+		try {
+			const user = await userModel.findById(userId).populate('Images');
+			console.log(user.Images); // This will be an array of picture documents
+		  } catch (err) {
+			// Handle the error
+			console.error(err);
+		  }
 	}
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { saveAs } from "file-saver";
 
 const ClientPics = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -19,13 +20,27 @@ const ClientPics = () => {
 	// will change to come from the database
 	//testing pictures
 	const pics = [
-		"/assets/Equineportraiture.jpg",
-		"/assets/Eventphotography.jpg",
-		"/assets/Fine art photography.jpg",
-		"/assets/Advertising and marketing photography.jpg",
-		"/assets/Editorial and journalistic photography.jpg",
-		"/assets/Equine lifestyle photography.jpg",
+		{ name: "Equine portraiture", url: "/assets/Equineportraiture.jpg" },
+		{ name: "Event photography", url: "/assets/Eventphotography.jpg" },
+		{ name: "Fine art photography", url: "/assets/Fine art photography.jpg" },
+		{
+			name: "Advertising and marketing photography",
+			url: "/assets/Advertising and marketing photography.jpg",
+		},
+		{
+			name: "Editorial and journalistic photography",
+			url: "/assets/Editorial and journalistic photography.jpg",
+		},
+		{
+			name: "Equine lifestyle photography",
+			url: "/assets/Equine lifestyle photography.jpg",
+		},
 	];
+
+	function downloadImage (url, name) {
+		saveAs(url, name); // Put your image url here.
+	};
+
 	return (
 		<div>
 			{/* might make the images clickable to view a larger one */}
@@ -35,7 +50,9 @@ const ClientPics = () => {
 					<h1>Your Pictures</h1>
 					<div className="pics">
 						{pics?.map((pic) => (
-							<img src={pic} />
+							<a onClick={() => downloadImage(pic.url, pic.name)}>
+								<img src={pic.url} />
+							</a>
 						))}
 					</div>
 				</>
