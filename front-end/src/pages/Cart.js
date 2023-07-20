@@ -18,7 +18,7 @@ const Cart = () => {
 	}, []);
 	return (
 		<div className="container">
-			{roles?.includes("Client") ? (
+			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					<main>
 						<div class="py-5 text-center">
@@ -65,7 +65,7 @@ const Cart = () => {
 			) : (
 				<>
 					<h1>You don't have permission to view this page</h1>
-					<Navigate to={"/signup"} />
+					<Navigate to={"/login"} />
 				</>
 			)}
 		</div>
