@@ -19,6 +19,7 @@ import Logout from "./pages/Logout";
 import ClientStories from "./pages/ClientStories";
 import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
+import NotFound from "./pages/NotFound";
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -248,6 +249,7 @@ function App() {
 								{" "}
 								/
 							</Route>
+							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</div>
 				</BrowserRouter>

@@ -42,14 +42,14 @@ a:visited {
 		border: 3px $color solid;
 		background-color: $color;
 	}
-	.signin{
+	.signin {
 		margin-right: 15px;
 	}
-	.welcome{
+	.welcome {
 		margin-right: 15px;
 		cursor: default;
-		a:hover{
-			color: $color
+		a:hover {
+			color: $color;
 		}
 	}
 }
@@ -274,7 +274,8 @@ footer {
 			padding: 3%;
 			border: 5px solid $borderbrown;
 			border-radius: 5px;
-			@include borderRadiusContainers;		}
+			@include borderRadiusContainers;
+		}
 		input {
 			@include borderRadius;
 			margin: 1%;
@@ -327,5 +328,38 @@ footer {
 			padding: 1%;
 			margin: 0%, 7%;
 		}
+	}
+}
+
+.errorpg {
+	@include flex-center();
+	flex-direction: row;
+	h1 {
+		width: fit-content;
+		margin-left: 2%;
+		margin-bottom: 4%;
+	}
+	img {
+		text-align: left;
+		margin: 2%;
+		@include border();
+		@include borderRadiusContainers;
+	}
+	a {
+		background-color: $blue;
+		border: none;
+		padding: 1% 2%;
+		margin: 2%;
+		@include borderRadius();
+		color: black;
+		text-decoration: none;
+		margin-left: 25%;
+		margin-top: 1%;
+	}
+	a:hover {
+		background-color: $blue-hover;
+	}
+	a:active {
+		background-color: $blue-active;
 	}
 }

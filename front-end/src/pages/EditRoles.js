@@ -151,7 +151,7 @@ const EditRoles = () => {
 			) : (
 				<>
 					<h1>You don't have permission to view this page</h1>
-					<Navigate to={"/adminLogin"} />
+					{/* <Navigate to={"/admin"} /> */}
 				</>
 			)}
 		</div>
