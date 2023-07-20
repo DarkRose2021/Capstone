@@ -1,9 +1,7 @@
 import logo from "./logo.png";
 import "./App.scss";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
-
-// import { ReactSession } from "react-client-session";
+import { useEffect, useState } from "react";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -23,6 +21,32 @@ import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
 
 function App() {
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [email, setEmail] = useState(null);
+	const [roles, setRoles] = useState(null);
+	let str = null;
+	let newEmail = null;
+
+	useEffect(() => {
+		const handleStorage = () => {
+			if (localStorage.length > 0) {
+				setLoggedIn(true);
+				str = localStorage.getItem("Valid Email");
+				newEmail = str.replace(/^"(.*)"$/, "$1");
+				setEmail(newEmail);
+				setRoles(localStorage.getItem("Roles"));
+			}
+		};
+
+		window.addEventListener("storage", handleStorage());
+		return () => window.removeEventListener("storage", handleStorage());
+	}, []);
+
+	const logout = () => {
+		localStorage.clear();
+		setLoggedIn(false);
+	};
+
 	return (
 		<div>
 			<div className="layout">
@@ -79,48 +103,80 @@ function App() {
 												Client Stories
 											</Link>
 										</li>
-										{/* lock */}
-										<li className="nav-item">
-											<Link to="/client-pictures" className="nav-link">
-												Your Pictures
-											</Link>
-										</li>
-										{/* lock */}
-										<li className="nav-item">
-											<Link to="/products" className="nav-link">
-												Products
-											</Link>
-										</li>
-										{/* lock */}
-										<li className="nav-item">
-											<Link to="/checkout" className="nav-link">
-												Checkout
-											</Link>
-										</li>
-										{/* remove later */}
-										<li className="nav-item">
-											<Link to="/adminHome" className="nav-link">
-												AdminHome
-											</Link>
-										</li>
-										{/* lock & change to an icon */}
-										<li className="nav-item">
-											<Link to="/cart" className="nav-link">
-												Cart
-											</Link>
-										</li>
-									</ul>
+										{loggedIn === true && roles.includes("Client") ? (
+											<li className="nav-item">
+												<Link to="/client-pictures" className="nav-link">
+													Your Pictures
+												</Link>
+											</li>
+										) : (
+											<></>
+										)}
+										{loggedIn === true &&
+										(roles.includes("Client") || roles.includes("Admin")) ? (
+											<li className="nav-item">
+												<Link to="/products" className="nav-link">
+													Products
+												</Link>
+											</li>
+										) : (
+											<></>
+										)}
+										{loggedIn === true &&
+										(roles.includes("Client") || roles.includes("Admin")) ? (
+											<li className="nav-item">
+												<Link to="/checkout" className="nav-link">
+													Checkout
+												</Link>
+											</li>
+										) : (
+											<></>
+										)}
 
-									<Link to="/login" className="nav-link signin">
-										Login
-									</Link>
-									<Link to="/signup" className="nav-link signin">
-										SignUp
-									</Link>
+										{loggedIn === true && roles.includes("Admin") ? (
+											<li className="nav-item">
+												<Link to="/adminHome" className="nav-link">
+													AdminHome
+												</Link>
+											</li>
+										) : (
+											<></>
+										)}
+										{loggedIn === true &&
+										(roles.includes("Client") || roles.includes("Admin")) ? (
+											<li className="nav-item">
+												<Link to="/cart" className="nav-link">
+													Cart
+												</Link>
+											</li>
+										) : (
+											<></>
+										)}
+									</ul>
+									{loggedIn === true ? (
+										<></>
+									) : (
+										<>
+											<Link to="/login" className="nav-link signin">
+												Login
+											</Link>
+											<Link to="/signup" className="nav-link signin">
+												SignUp
+											</Link>
+										</>
+									)}
+
 									{/* only show when a user is logged in */}
-									<a href="#" className="nav-link">
-										Logout
-									</a>
+									{loggedIn === true ? (
+										<>
+											<a className="nav-link welcome">Welcome {email}!</a>
+											<a href="#" onClick={logout} className="nav-link">
+												Logout
+											</a>
+										</>
+									) : (
+										<></>
+									)}
 								</div>
 							</div>
 						</nav>

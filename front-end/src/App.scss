@@ -45,6 +45,13 @@ a:visited {
 	.signin{
 		margin-right: 15px;
 	}
+	.welcome{
+		margin-right: 15px;
+		cursor: default;
+		a:hover{
+			color: $color
+		}
+	}
 }
 
 body {
@@ -267,11 +274,11 @@ footer {
 			padding: 3%;
 			border: 5px solid $borderbrown;
 			border-radius: 5px;
-			@include borderRadiusContainers;
-		}
+			@include borderRadiusContainers;		}
 		input {
 			@include borderRadius;
 			margin: 1%;
+			width: 100%;
 		}
 		button {
 			width: 100%;

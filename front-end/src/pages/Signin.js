@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { ErrorMessage } from "@hookform/error-message";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react"
+import { ErrorMessage } from "@hookform/error-message"
+import { Navigate, useLocation } from "react-router-dom"
+import { useForm } from "react-hook-form"
 
 const Signin = () => {
 	const {
@@ -10,36 +11,36 @@ const Signin = () => {
 		watch,
 	} = useForm({
 		criteriaMode: "all",
-	});
+	})
 
 	const passwordPattern =
-		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{8,}$/;
+		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{8,}$/
 	const validatePassword = (value) => {
 		if (passwordPattern.test(value)) {
-			return true;
+			return true
 		}
-		return `Password must contain: \n 1 uppercase letter \n1 lowercase letter \n 1 number \n 1 special character`;
-	};
+		return `Password must contain: \n 1 uppercase letter \n1 lowercase letter \n 1 number \n 1 special character`
+	}
 
-	const namePattern = /^[A-Za-z\s]+$/;
+	const namePattern = /^[A-Za-z\s]+$/
 	const validateName = (value) => {
 		if (namePattern.test(value)) {
-			return true;
+			return true
 		}
-		return "Name must only contain letters";
-	};
+		return "Name must only contain letters"
+	}
 
-	const [user, setUser] = useState({});
-	const [passwordMatch, setPasswordMatch] = useState();
-	const [emailMatch, setEmailMatch] = useState();
+	const [user, setUser] = useState({})
+	const [passwordMatch, setPasswordMatch] = useState()
+	const [emailMatch, setEmailMatch] = useState()
 
 	useEffect(() => {
-		setPasswordMatch(watch("password", "") === watch("confirmPassword", ""));
-		setEmailMatch(watch("email", "") === watch("confirmEmail", ""));
-	}, [watch]);
+		setPasswordMatch(watch("password", "") === watch("confirmPassword", ""))
+		setEmailMatch(watch("email", "") === watch("confirmEmail", ""))
+	}, [watch])
 
 	const onSubmit = (data) => {
-		console.log(data);
+		console.log(data)
 		fetch("http://localhost:5000/signup", {
 			method: "POST",
 			headers: {
@@ -49,13 +50,24 @@ const Signin = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
-				setUser(result);
+				console.log(result)
+				setUser(result)
 			})
 			.catch((error) => {
-				console.error(error);
-			});
-	};
+				console.error(error)
+			})
+	}
+
+	useEffect(() => {
+		if (user && user.Message && user.User) {
+			localStorage.setItem("Valid Email", JSON.stringify(user.User.Email))
+			localStorage.setItem("Roles", JSON.stringify(user.User.Roles))
+		} else {
+			localStorage.removeItem("Valid Email")
+			localStorage.removeItem("Roles")
+		}
+	}, [user])
+
 	return (
 		<div className="signup">
 			<h1>Signup</h1>
@@ -231,7 +243,9 @@ const Signin = () => {
 						)}
 
 						{user.Users !== "" && user.Message ? (
-							<p>Successfully Signed Up</p>
+							<><p>Successfully Signed Up</p>
+							{/* make it redirect to either the admin home or the client pics base on what role they have */}
+							<Navigate to={"/"} /></>
 						) : (
 							<></>
 						)}
@@ -240,7 +254,7 @@ const Signin = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Signin;
+export default Signin
