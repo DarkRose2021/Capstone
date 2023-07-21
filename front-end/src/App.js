@@ -15,7 +15,6 @@ import Products from "./pages/Products";
 import ClientPics from "./pages/ClientPics";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
-import Logout from "./pages/Logout";
 import ClientStories from "./pages/ClientStories";
 import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
@@ -46,7 +45,7 @@ function App() {
 	const logout = () => {
 		localStorage.clear();
 		setLoggedIn(false);
-		window.location.reload()
+		window.location.reload();
 	};
 
 	return (
@@ -198,10 +197,7 @@ function App() {
 								{" "}
 								/
 							</Route>
-							<Route path="/team" element={<Team />}>
-								{" "}
-								/
-							</Route>
+							<Route path="/team" element={<Team />}></Route>
 							<Route path="/login" element={<Login />}>
 								{" "}
 								/
@@ -231,10 +227,6 @@ function App() {
 								/
 							</Route>
 							<Route path="/cart" element={<Cart />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/logout" element={<Logout />}>
 								{" "}
 								/
 							</Route>
