@@ -161,7 +161,7 @@ footer {
 	.form {
 		@include border();
 		@include borderRadiusContainers;
-		margin-left: 15%;
+		margin-left: 10%;
 		width: 25%;
 		background-color: $lightBrown;
 		padding: 2%;
@@ -191,7 +191,68 @@ footer {
 				}
 			}
 		}
+		.calenderDiv {
+			background-color: $lightBrown !important;
+		}
 	}
+}
+
+.fc {
+	@include borderRadiusContainers;
+	@include border;
+	background-color: $lightBrown !important;
+	padding: 2%;
+	width: 40vw;
+	height: 610px;
+	a {
+		color: $color;
+	}
+	th {
+		background-color: $darkbrown;
+		a{
+			color: $blue;
+		}
+		
+	}
+	
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+	border: 1px solid black;
+}
+
+.fc-day-today {
+	background-color: $yellow !important;
+	opacity: 0.6;
+	border: 1px solid black;
+	a{
+		color: $black;
+	}
+}
+
+.fc .fc-button-primary:hover {
+	background-color: $blue-hover;
+	border-color: none;
+	color: black;
+}
+
+.fc .fc-button-primary:active {
+	background-color: $blue-active;
+	border-color: none;
+	color: black;
+}
+
+.fc .fc-button-primary {
+	background-color: $blue;
+	border-color: none;
+	color: black;
+}
+
+.fc .fc-button-primary:disabled {
+	background-color: $blue;
+	border-color: none;
+	color: black;
 }
 
 .row {
@@ -391,19 +452,20 @@ footer {
 		@include button;
 		background-color: $lightBrown;
 		padding: 2%;
-		label, input{
+		label,
+		input {
 			cursor: pointer;
 		}
-		.form-check{
+		.form-check {
 			margin: none !important;
 		}
-		.disabled{
+		.disabled {
 			cursor: not-allowed;
 		}
-		input:hover{
+		input:hover {
 			background-color: $yellow;
 		}
-		button{
+		button {
 			padding: 4%;
 			margin: 4%;
 		}
