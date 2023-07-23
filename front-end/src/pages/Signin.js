@@ -68,9 +68,9 @@ const Signin = () => {
 		if (user && user.Message && user.User) {
 			window.localStorage.setItem(
 				"Valid Email",
-				JSON.stringify(user.User.Email)
+				JSON.stringify(user.User[0].Email)
 			);
-			window.localStorage.setItem("Roles", JSON.stringify(user.User.Roles));
+			window.localStorage.setItem("Roles", JSON.stringify(user.User[0].Roles));
 		}
 	}, [user]);
 

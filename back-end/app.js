@@ -46,7 +46,8 @@ app.post("/signup", async (req, res) => {
 	if (user == "") {
 		return res.json({ Message: "Email already in use", User: null })
 	} else {
-		return res.json({ Message: `${email} was added!`, User: user })
+		sendUser = await dal.findUser(user.insertedId)
+		return res.json({ Message: `${email} was added!`, User: sendUser })
 	}
 })
 
