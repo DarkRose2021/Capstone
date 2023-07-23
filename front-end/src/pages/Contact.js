@@ -50,8 +50,8 @@ const Contact = () => {
 						initialView="dayGridMonth"
 						weekends={true}
 						events={[
-							{ title: "event 1", date: "2023-07-04" },
-							{ title: "event 2", date: "2023-07-07" },
+							{ title: "event 1", date: "2023-07-04", backgroundColor: "#40797A", borderColor: "#40797A" },
+							{ title: "event 2", date: "2023-07-07", backgroundColor: "#40797A", borderColor: "#40797A"},
 						]}
 					/>
 				</div>
