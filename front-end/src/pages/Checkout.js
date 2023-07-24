@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Popup from "./Popup";
 
@@ -9,11 +9,18 @@ const Checkout = () => {
 	const [sameAsBilling, setSameAsBilling] = useState(false);
 	const { register, handleSubmit, errors } = useForm();
 	const [showPopup, setShowPopup] = useState(false);
+	const [sendData, setSendData] = useState(null);
+
+	let navigate = useNavigate();
+	const routeChange = () => {
+		let path = `/confirm`;
+		navigate(path, { state: { data: sendData }});
+	};
 
 	const handleClosePopup = () => {
 		setShowPopup(false);
-		// Set the flag in local storage when the user closes the pop-up
 		localStorage.setItem("popupShown", "true");
+		routeChange();
 	};
 
 	const cardNumberPattern =
@@ -88,8 +95,8 @@ const Checkout = () => {
 					return response.json();
 				})
 				.then((responseData) => {
-					// Handle the response from the backend, e.g., show success message
-					console.log("Response from backend:", responseData);
+					console.log(responseData);
+					setSendData(responseData.Body);
 					setShowPopup(true);
 				})
 				.catch((error) => {
@@ -99,7 +106,6 @@ const Checkout = () => {
 		}
 
 		form.classList.add("was-validated");
-		
 	};
 
 	// add logic htmlFor shipping address to show or hide if the checkmark is clicked
@@ -359,7 +365,7 @@ const Checkout = () => {
 												id="zip"
 												name="zip"
 												required
-												{...register('zip', {
+												{...register("zip", {
 													required: "Zip code is required",
 													pattern: {
 														value: zipPattern,
@@ -628,7 +634,7 @@ const Checkout = () => {
 															id="ship_zip"
 															name="ship_zip"
 															required
-															{...register('ship_zip',{
+															{...register("ship_zip", {
 																required: "Zip code is required",
 																pattern: {
 																	value: zipPattern,
@@ -710,7 +716,7 @@ const Checkout = () => {
 												id="cc-number"
 												name="ccNumber"
 												required
-												{...register('ccNumber',{
+												{...register("ccNumber", {
 													required: "Credit card number is required",
 													pattern: {
 														value: cardNumberPattern,
@@ -755,7 +761,7 @@ const Checkout = () => {
 												id="cc-cvv"
 												name="ccv"
 												required
-												{...register('ccv',{
+												{...register("ccv", {
 													required: "CVV is required",
 													pattern: {
 														value: ccvPattern,
