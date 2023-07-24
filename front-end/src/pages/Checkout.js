@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Popup from "./Popup";
 
 const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [sameAsBilling, setSameAsBilling] = useState(false);
 	const { register, handleSubmit, errors } = useForm();
+	const [showPopup, setShowPopup] = useState(false);
+
+	const handleClosePopup = () => {
+		setShowPopup(false);
+		// Set the flag in local storage when the user closes the pop-up
+		localStorage.setItem("popupShown", "true");
+	};
 
 	const cardNumberPattern =
 		/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
@@ -82,6 +90,7 @@ const Checkout = () => {
 				.then((responseData) => {
 					// Handle the response from the backend, e.g., show success message
 					console.log("Response from backend:", responseData);
+					setShowPopup(true);
 				})
 				.catch((error) => {
 					// Handle any errors that occurred during the fetch request
@@ -90,12 +99,19 @@ const Checkout = () => {
 		}
 
 		form.classList.add("was-validated");
+		
 	};
 
 	// add logic htmlFor shipping address to show or hide if the checkmark is clicked
 	return (
 		// add shipping address form
 		<div className="container">
+			{showPopup && (
+				<Popup
+					message="Form Submitted! This information will not be saved, you will not actually receive a product, and your card won't actually be charged."
+					onClose={handleClosePopup}
+				/>
+			)}
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					<main>
