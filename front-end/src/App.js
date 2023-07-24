@@ -19,6 +19,7 @@ import ClientStories from "./pages/ClientStories";
 import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
 import NotFound from "./pages/NotFound";
+import Popup from "./pages/Popup";
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -29,7 +30,7 @@ function App() {
 
 	useEffect(() => {
 		const handleStorage = () => {
-			if (localStorage.length > 0) {
+			if (localStorage.length > 0 && localStorage.getItem("Valid Email")) {
 				setLoggedIn(true);
 				str = localStorage.getItem("Valid Email");
 				newEmail = str.replace(/^"(.*)"$/, "$1");
@@ -43,13 +44,38 @@ function App() {
 	}, []);
 
 	const logout = () => {
-		localStorage.clear();
+		localStorage.removeItem("Valid Email")
+		localStorage.removeItem("Roles")
 		setLoggedIn(false);
 		window.location.reload();
 	};
 
+	const [showPopup, setShowPopup] = useState(false);
+
+	useEffect(() => {
+		// Check local storage for the flag
+		const popupShown = localStorage.getItem("popupShown");
+
+		// If the flag is not set, show the pop-up
+		if (!popupShown) {
+			setShowPopup(true);
+		}
+	}, []);
+
+	const handleClosePopup = () => {
+		setShowPopup(false);
+		// Set the flag in local storage when the user closes the pop-up
+		localStorage.setItem("popupShown", "true");
+	};
+
 	return (
 		<div>
+			{showPopup && (
+				<Popup
+					message="This is a website for a fake business. DO NOT put any personal information on this site. With that out of the way, Welcome to my Capstone Project!"
+					onClose={handleClosePopup}
+				/>
+			)}
 			<div className="layout">
 				<BrowserRouter>
 					<header>

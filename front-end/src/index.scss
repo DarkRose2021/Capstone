@@ -34,9 +34,19 @@ body{
 }
 
 ::selection{
-  background-color: $blue;
-  color: black;
+  background-color: $blue !important;
+  color: black !important;
 }
+
+::-moz-selection{
+  background-color: $blue !important;
+  color: black !important;
+}
+
+input:focus{
+  outline: 3px solid $blue !important;
+}
+
 // from W3Schools
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

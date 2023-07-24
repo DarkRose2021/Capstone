@@ -53,7 +53,7 @@ const products = new Schema(
 	},
 	{ collection: productCollection }
 );
-const productsModel = mongoose.model("pic", pic);
+const productsModel = mongoose.model("products", products);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -121,4 +121,15 @@ exports.dal = {
 			console.error(err);
 		}
 	},
+	addProducts: async (name, price, des, briefdes, disimg, selectedimg) => {
+		let data = {
+			Name: name,
+			Price: price,
+			Description: des,
+			BriefDescription: briefdes,
+			DisplayImage: disimg,
+		}
+
+		return await productsModel.collection.insertOne(data)
+	}
 };

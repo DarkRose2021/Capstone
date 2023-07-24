@@ -13,7 +13,8 @@ a:visited {
 	color: $blue;
 }
 
-.error, .invalid-feedback{
+.error,
+.invalid-feedback {
 	color: $error !important;
 	font-weight: bold !important;
 	margin-bottom: 1% !important;
@@ -102,6 +103,7 @@ footer {
 	padding: 0.5%;
 	border-top: 2px solid $borderbrown;
 	box-shadow: 2px 2px $borderbrown;
+	z-index: 900;
 	b {
 		color: $error;
 	}
@@ -238,9 +240,8 @@ footer {
 	border: 1px solid black;
 }
 
-.fc-theme-standard .fc-scrollgrid{
+.fc-theme-standard .fc-scrollgrid {
 	border: 1px solid black !important;
-
 }
 
 .fc-day-today {
@@ -355,7 +356,9 @@ footer {
 			border-radius: 5px;
 			@include borderRadiusContainers;
 		}
-		input[type=text], input[type=email], input[type=password] {
+		input[type="text"],
+		input[type="email"],
+		input[type="password"] {
 			@include borderRadius;
 			margin: 1%;
 			width: 100%;
@@ -364,13 +367,13 @@ footer {
 			width: 100%;
 			margin: 1%;
 		}
-		input[type=checkbox]{
+		input[type="checkbox"] {
 			margin: 1%;
 		}
-		.show_pass{
+		.show_pass {
 			width: 100%;
 		}
-		.no-border{
+		.no-border {
 			border: none;
 		}
 	}
@@ -392,8 +395,22 @@ footer {
 		@include border();
 		@include borderRadiusContainers;
 		background-color: $lightBrown;
-		.text-muted{
-			color:#8E8E8E !important;
+		.text-muted {
+			color: #8e8e8e !important;
+		}
+		.cart {
+			background-color: $darkbrown;
+			@include border-brown;
+			@include borderRadiusContainers;
+			@include button;
+		}
+		.list-group-item {
+			background-color: $darkbrown;
+			color: $color;
+			border-color: black;
+		}
+		.total {
+			color: $yellow;
 		}
 	}
 }
@@ -499,5 +516,38 @@ footer {
 			padding: 4%;
 			margin: 4%;
 		}
+	}
+}
+
+.popup-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	@include button();
+	.popup {
+		background-color: $lightBrown;
+		@include border;
+		@include borderRadiusContainers;
+		padding: 20px;
+		border-radius: 5px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		position: relative;
+		width: 300px;
+		max-width: 80%;
+	}
+	.close-button {
+		width: 100%;
+		cursor: pointer;
+		font-size: 18px;
+	}
+	p {
+		margin: 0;
 	}
 }

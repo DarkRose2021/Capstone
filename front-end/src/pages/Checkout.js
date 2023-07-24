@@ -100,38 +100,38 @@ const Checkout = () => {
 				<>
 					<main>
 						<div className="py-5 text-center">
-							<h2>Checkout</h2>
+							<h1>Checkout</h1>
 						</div>
 
 						<div className="row g-5 checkoutform">
-							<div className="col-md-5 col-lg-4 order-md-last">
+							<div className="col-md-5 col-lg-4 order-md-last ">
 								<h4 className="d-flex justify-content-between align-items-center mb-3">
 									<span className="">Your cart</span>
 									<span className="badge bg-primary rounded-pill">3</span>
 								</h4>
-								<ul className="list-group mb-3">
+								<ul className="list-group mb-3 cart">
 									<li className="list-group-item d-flex justify-content-between lh-sm">
 										<div>
 											<h6 className="my-0">Product name</h6>
-											<small className="text-muted">Brief description</small>
+											<small className="">Brief description</small>
 										</div>
-										<span className="text-muted">$12</span>
+										<span className="">$12</span>
 									</li>
 									<li className="list-group-item d-flex justify-content-between lh-sm">
 										<div>
 											<h6 className="my-0">Second product</h6>
-											<small className="text-muted">Brief description</small>
+											<small className="">Brief description</small>
 										</div>
-										<span className="text-muted">$8</span>
+										<span className="">$8</span>
 									</li>
 									<li className="list-group-item d-flex justify-content-between lh-sm">
 										<div>
 											<h6 className="my-0">Third item</h6>
-											<small className="text-muted">Brief description</small>
+											<small className="">Brief description</small>
 										</div>
-										<span className="text-muted">$5</span>
+										<span className="">$5</span>
 									</li>
-									<li className="list-group-item d-flex justify-content-between">
+									<li className="list-group-item d-flex justify-content-between total">
 										<span>Total (USD)</span>
 										<strong>$20</strong>
 									</li>
@@ -488,7 +488,6 @@ const Checkout = () => {
 														</label>
 														<input
 															type="text"
-															required
 															className="form-control"
 															id="ship_address"
 															placeholder="1234 Main St"
