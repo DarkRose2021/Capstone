@@ -26,7 +26,7 @@ const user = new Schema(
 		Name: String,
 		Password: { type: String, required: true },
 		Roles: Array,
-		Images: [{ type: Schema.Types.ObjectId, ref: "pic" }],
+		Images: Array,
 	},
 	{ collection: userCollection }
 );
@@ -49,7 +49,7 @@ const products = new Schema(
 		Description: String,
 		BriefDescription: String,
 		DisplayImage: String,
-		SelectedImage: { type: Schema.Types.ObjectId, ref: "pic" },
+		SelectedImage: String,
 	},
 	{ collection: productCollection }
 );
@@ -108,7 +108,13 @@ exports.dal = {
 			{ $set: values }
 		);
 	},
-
+	editImgs: async (id, images) => {
+		let values = { Images: images };
+		userModel.collection.updateOne(
+			{ _id: new mongodb.ObjectId(id) },
+			{ $set: values }
+		);
+	},
 	findUser: async (id) => {
 		return await userModel.find({ _id: new mongodb.ObjectId(id) }).exec();
 	},

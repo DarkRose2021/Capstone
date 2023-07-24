@@ -1,13 +1,16 @@
 const express = require("express")
 const cors = require("cors")
 const { v4: uuidv4 } = require("uuid")
+const bodyParser = require("body-parser");
 
 const dal = require("./DAL").dal
 const port = 5000
 const app = express()
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
+// app.use(express.json())
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cors())
 
 app.get("/", (req, res) => {
@@ -84,6 +87,23 @@ app.post("/editRoles/:id", async (req, res) => {
 	dal.editRoles(id, trueKeys)
 	res.json({Message: "updated"})
 })
+
+app.get("/editImgs/:id", async (req, res) => {
+	// let id = req.params.id
+	// let images = dal.findUser(id)
+	// res.json({Message: "Images Found", Images: images.Images})
+})
+
+app.post("/editImgs/:id", async (req, res) => {
+	let id = req.params.id
+	let image = req.body.images
+	console.log(image)
+	// const trueKeys = Object.keys(images).filter(key => images[key])
+
+	dal.editRoles(id, image)
+	res.json({Message: "updated"})
+})
+
 
 app.get("/findUser/:id", async (req, res) => {
 	let id = req.params.id

@@ -20,6 +20,7 @@ import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
 import NotFound from "./pages/NotFound";
 import Popup from "./pages/Popup";
+import EditImages from "./pages/EditImages";
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -188,7 +189,7 @@ function App() {
 												Login
 											</Link>
 											<Link to="/signup" className="nav-link signin">
-												SignUp
+												Sign Up
 											</Link>
 										</>
 									)}
@@ -211,63 +212,22 @@ function App() {
 					<div>
 						<Routes>
 							<Route path="/" element={<Home />} />
-							<Route path="/about" element={<About />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/services" element={<Services />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/contact" element={<Contact />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/team" element={<Team />}></Route>
-							<Route path="/login" element={<Login />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/signup" element={<Signin />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/admin" element={<Login />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/checkout" element={<Checkout />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/products" element={<Products />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/client-pictures" element={<ClientPics />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/adminHome" element={<Admin />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/cart" element={<Cart />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/clientStories" element={<ClientStories />}>
-								{" "}
-								/
-							</Route>
-							<Route path="/confirm" element={<Confirm /> }>
-								{" "}
-								/
-							</Route>
-							<Route path="/edit/:id" element={<EditRoles />}>
-								{" "}
-								/
-							</Route>
+							<Route path="/about" element={<About />} />
+							<Route path="/services" element={<Services />} />
+							<Route path="/contact" element={<Contact />} />
+							<Route path="/team" element={<Team />} />
+							<Route path="/login" element={<Login />} />
+							<Route path="/signup" element={<Signin />} />
+							<Route path="/admin" element={<Login />} />
+							<Route path="/checkout" element={<Checkout />} />
+							<Route path="/products" element={<Products />} />
+							<Route path="/client-pictures" element={<ClientPics />} />
+							<Route path="/adminHome" element={<Admin />} />
+							<Route path="/cart" element={<Cart />} />
+							<Route path="/clientStories" element={<ClientStories />} />
+							<Route path="/confirm" element={<Confirm /> } />
+							<Route path="/edit/:id" element={<EditRoles />} />
+							<Route path="/editImages/:id" element={<EditImages />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</div>
