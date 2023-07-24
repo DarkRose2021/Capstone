@@ -53,6 +53,7 @@ const Contact = () => {
 							{ title: "event 1", date: "2023-07-04", backgroundColor: "#40797A", borderColor: "#40797A" },
 							{ title: "event 2", date: "2023-07-07", backgroundColor: "#40797A", borderColor: "#40797A"},
 						]}
+						handleWindowResize={true}
 					/>
 				</div>
 
@@ -63,7 +64,7 @@ const Contact = () => {
 							<input type="hidden" name="contact_number" />
 							<label htmlFor="from_name">Name:</label>
 							<input
-								value={values.from_email}
+								value={values.from_name}
 								onChange={handleInputChange}
 								id="from_name"
 								name="from_name"

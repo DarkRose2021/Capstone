@@ -13,10 +13,10 @@ a:visited {
 	color: $blue;
 }
 
-.error {
-	color: $error;
-	font-weight: bold;
-	margin-bottom: 1%;
+.error, .invalid-feedback{
+	color: $error !important;
+	font-weight: bold !important;
+	margin-bottom: 1% !important;
 }
 
 .navbar {
@@ -355,7 +355,7 @@ footer {
 			border-radius: 5px;
 			@include borderRadiusContainers;
 		}
-		input {
+		input[type=text], input[type=email], input[type=password] {
 			@include borderRadius;
 			margin: 1%;
 			width: 100%;
@@ -363,6 +363,15 @@ footer {
 		button {
 			width: 100%;
 			margin: 1%;
+		}
+		input[type=checkbox]{
+			margin: 1%;
+		}
+		.show_pass{
+			width: 100%;
+		}
+		.no-border{
+			border: none;
 		}
 	}
 }
@@ -383,6 +392,9 @@ footer {
 		@include border();
 		@include borderRadiusContainers;
 		background-color: $lightBrown;
+		.text-muted{
+			color:#8E8E8E !important;
+		}
 	}
 }
 

@@ -3,11 +3,11 @@ var mongodb = require("mongodb");
 var ObjectID = require("mongodb").ObjectID;
 const path = require("path");
 require("dotenv").config();
-//process.env.CONNECTION_STRING
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
 const pictureCollection = "Pictures";
+const productCollection = "Products";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -22,11 +22,11 @@ connection.once("open", () => {
 
 const user = new Schema(
 	{
-		Email: { type: String, required: true, unique: true},
+		Email: { type: String, required: true, unique: true },
 		Name: String,
-		Password: { type: String, required: true},
+		Password: { type: String, required: true },
 		Roles: Array,
-		Images: [{ type: Schema.Types.ObjectId, ref: 'pic' }]
+		Images: [{ type: Schema.Types.ObjectId, ref: "pic" }],
 	},
 	{ collection: userCollection }
 );
@@ -42,6 +42,18 @@ const pic = new Schema(
 );
 const picModel = mongoose.model("pic", pic);
 
+const products = new Schema(
+	{
+		Name: String,
+		Price: Number,
+		Description: String,
+		DisplayImage: String,
+		SelectedImage: { type: Schema.Types.ObjectId, ref: "pic" },
+	},
+	{ collection: productCollection }
+);
+const productsModel = mongoose.model("pic", pic);
+
 exports.dal = {
 	createUser: async (email, name, password) => {
 		let check = {
@@ -52,12 +64,12 @@ exports.dal = {
 			Name: name,
 			Password: password,
 			Roles: ["User"],
-			Images: []
+			Images: [],
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
-		console.log("Existing User ", existingUser)
+		console.log("Existing User ", existingUser);
 		if (existingUser.length > 0) {
-            console.log("user found")
+			console.log("user found");
 			return "";
 		} else {
 			console.log(name + " added");
@@ -77,32 +89,35 @@ exports.dal = {
 			throw error;
 		}
 	},
-	listUsers: async () =>{
-        return await userModel.find({}).exec()
-    },
-
-	listClients: async () =>{
-		clients = {
-			Roles: 'Client'
-		}
-        return await userModel.find(clients).exec()
-    },
-
-	editRoles: async (id, roles) =>{
-		let values = {Roles: roles}
-		userModel.collection.updateOne({_id: new mongodb.ObjectId(id)}, {$set: values})
+	listUsers: async () => {
+		return await userModel.find({}).exec();
 	},
-	
-	findUser: async (id) =>{
-		return await userModel.find({_id: new mongodb.ObjectId(id)}).exec()
+
+	listClients: async () => {
+		clients = {
+			Roles: "Client",
+		};
+		return await userModel.find(clients).exec();
+	},
+
+	editRoles: async (id, roles) => {
+		let values = { Roles: roles };
+		userModel.collection.updateOne(
+			{ _id: new mongodb.ObjectId(id) },
+			{ $set: values }
+		);
+	},
+
+	findUser: async (id) => {
+		return await userModel.find({ _id: new mongodb.ObjectId(id) }).exec();
 	},
 	testImags: async (userId) => {
 		try {
-			const user = await userModel.findById(userId).populate('Images');
+			const user = await userModel.findById(userId).populate("Images");
 			console.log(user.Images); // This will be an array of picture documents
-		  } catch (err) {
+		} catch (err) {
 			// Handle the error
 			console.error(err);
-		  }
-	}
+		}
+	},
 };

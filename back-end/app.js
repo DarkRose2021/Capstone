@@ -55,6 +55,14 @@ app.get("/cart", async (req, res) => {})
 
 app.get("/products", async (req, res) => {})
 
+app.get("/checkout", async (req, res) => {})
+
+app.post("/checkout", async (req, res) => {
+	let body = req.body
+	console.log(body)
+	res.json({Message:"data submitted to the back", Body: body})
+})
+
 app.get("/listUsers", async (req, res) => {
 	users = await dal.listUsers()
 	res.json(users)

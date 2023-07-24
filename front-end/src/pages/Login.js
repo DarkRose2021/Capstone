@@ -8,6 +8,7 @@ const Login = () => {
 	const navigate = useNavigate();
 	const [user, SetUser] = useState(null);
 	const [checkStorage, setCheckStorage] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const {
 		register,
 		formState: { errors },
@@ -49,7 +50,7 @@ const Login = () => {
 				JSON.stringify(user.User.Email)
 			);
 			window.localStorage.setItem("Roles", JSON.stringify(user.User.Roles));
-				navigate(0);
+			navigate(0);
 		}
 	}, [user]);
 
@@ -98,7 +99,7 @@ const Login = () => {
 						<input
 							id="password"
 							name="password"
-							type="password"
+							type={showPassword ? "text" : "password"} // Toggle between text and password type
 							placeholder="Password"
 							{...register("password", {
 								required: "Password is required",
@@ -121,6 +122,16 @@ const Login = () => {
 									: null
 							}
 						/>
+						<br />
+						<label className="form-check-label show_pass">
+							<input
+								type="checkbox"
+								className="form-check-input"
+								checked={showPassword}
+								onChange={() => setShowPassword(!showPassword)} // Toggle the showPassword state on checkbox change
+							/>{" "}
+							Show Password
+						</label>
 						<br />
 						{user?.Users === null && user?.Message ? (
 							<p className="error">{user?.Message}</p>

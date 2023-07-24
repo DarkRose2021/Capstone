@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
+	const [sameAsBilling, setSameAsBilling] = useState(false);
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -17,30 +18,62 @@ const Checkout = () => {
 		return () => window.removeEventListener("storage", handleStorage());
 	}, []);
 
-	// Form is from Bootstrap
-	(function () {
-		"use strict";
+	const handleCheckboxChange = (event) => {
+		setSameAsBilling(event.target.checked);
+	};
 
-		// Fetch all the forms we want to apply custom Bootstrap validation styles to
-		var forms = document.querySelectorAll(".needs-validation");
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
 
-		// Loop over them and prevent submission
-		Array.prototype.slice.call(forms).forEach(function (form) {
-			form.addEventListener(
-				"submit",
-				function (event) {
-					if (!form.checkValidity()) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
+		const form = event.currentTarget;
+		if (form.checkValidity()) {
+			// Collect form data
+			const data = {};
+			const elements = form.elements;
+			for (let i = 0; i < elements.length; i++) {
+			  const element = elements[i];
+			  if (element.tagName === "INPUT" || element.tagName === "SELECT") {
+				if (element.id === "cc-expiration") {
+				  // Convert the date to "mm/yy" format before sending to the back end
+				  const [month, year] = element.value.split("-");
+				  data[element.id] = `${month}/${year.slice(2)}`;
+				} else {
+				  data[element.id] = element.value;
+				}
+			  }
+			}
 
-					form.classList.add("was-validated");
+			const endpoint = `http://localhost:5000/checkout`;
+
+			// Use the fetch API to post the data to the backend
+			fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
 				},
-				false
-			);
-		});
-	})();
-	// add logic for shipping address to show or hide if the checkmark is clicked
+				body: JSON.stringify(data),
+			})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((responseData) => {
+					// Handle the response from the backend, e.g., show success message
+					console.log("Response from backend:", responseData);
+				})
+				.catch((error) => {
+					// Handle any errors that occurred during the fetch request
+					console.error("Error posting form data:", error);
+				});
+		}
+
+		form.classList.add("was-validated");
+	};
+
+	// add logic htmlFor shipping address to show or hide if the checkmark is clicked
 	return (
 		// add shipping address form
 		<div className="container">
@@ -87,18 +120,17 @@ const Checkout = () => {
 							</div>
 							<div className="col-md-7 col-lg-8">
 								<h4 className="mb-3">Billing address</h4>
-								<form className="needs-validation" noValidate>
+								<form className="needs-validation" noValidate onSubmit={handleFormSubmit}>
 									<div className="row g-3">
 										<div className="col-sm-6">
-											<label for="firstName" className="form-label">
+											<label htmlFor="firstName" className="form-label">
 												First name
 											</label>
 											<input
 												type="text"
 												className="form-control"
 												id="firstName"
-												placeholder=""
-												value=""
+												placeholder="First Name"
 												required
 											/>
 											<div className="invalid-feedback">
@@ -107,15 +139,14 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-sm-6">
-											<label for="lastName" className="form-label">
+											<label htmlFor="lastName" className="form-label">
 												Last name
 											</label>
 											<input
 												type="text"
 												className="form-control"
 												id="lastName"
-												placeholder=""
-												value=""
+												placeholder="Last Name"
 												required
 											/>
 											<div className="invalid-feedback">
@@ -124,7 +155,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-12">
-											<label for="email" className="form-label">
+											<label htmlFor="email" className="form-label">
 												Email <span className="text-muted">(Optional)</span>
 											</label>
 											<input
@@ -134,12 +165,13 @@ const Checkout = () => {
 												placeholder="you@example.com"
 											/>
 											<div className="invalid-feedback">
-												Please enter a valid email address for shipping updates.
+												Please enter a valid email address htmlFor shipping
+												updates.
 											</div>
 										</div>
 
 										<div className="col-12">
-											<label for="address" className="form-label">
+											<label htmlFor="address" className="form-label">
 												Address
 											</label>
 											<input
@@ -155,7 +187,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-12">
-											<label for="address2" className="form-label">
+											<label htmlFor="address2" className="form-label">
 												Address 2 <span className="text-muted">(Optional)</span>
 											</label>
 											<input
@@ -167,7 +199,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-5">
-											<label for="country" className="form-label">
+											<label htmlFor="country" className="form-label">
 												Country
 											</label>
 											<select className="form-select" id="country" required>
@@ -180,12 +212,61 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-4">
-											<label for="state" className="form-label">
+											<label htmlFor="state" className="form-label">
 												State
 											</label>
 											<select className="form-select" id="state" required>
 												<option value="">Choose...</option>
+												<option>Alabama</option>
+												<option>Alaska</option>
+												<option>Arizona</option>
+												<option>Arkansas</option>
 												<option>California</option>
+												<option>Colorado</option>
+												<option>Connecticut</option>
+												<option>Delaware</option>
+												<option>Florida</option>
+												<option>Georgia</option>
+												<option>Hawaii</option>
+												<option>Idaho</option>
+												<option>Illinois</option>
+												<option>Indiana</option>
+												<option>Iowa</option>
+												<option>Kansas</option>
+												<option>Kentucky</option>
+												<option>Louisiana</option>
+												<option>Maine</option>
+												<option>Maryland</option>
+												<option>Massachusetts</option>
+												<option>Michigan</option>
+												<option>Minnesota</option>
+												<option>Mississippi</option>
+												<option>Missouri</option>
+												<option>Montana</option>
+												<option>Nebraska</option>
+												<option>Nevada</option>
+												<option>New Hampshire</option>
+												<option>New Jersey</option>
+												<option>New Mexico</option>
+												<option>New York</option>
+												<option>North Carolina</option>
+												<option>North Dakota</option>
+												<option>Ohio</option>
+												<option>Oklahoma</option>
+												<option>Oregon</option>
+												<option>Pennsylvania</option>
+												<option>Rhode Island</option>
+												<option>South Carolina</option>
+												<option>South Dakota</option>
+												<option>Tennessee</option>
+												<option>Texas</option>
+												<option>Utah</option>
+												<option>Vermont</option>
+												<option>Virginia</option>
+												<option>Washington</option>
+												<option>West Virginia</option>
+												<option>Wisconsin</option>
+												<option>Wyoming</option>
 											</select>
 											<div className="invalid-feedback">
 												Please provide a valid state.
@@ -193,11 +274,11 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-3">
-											<label for="zip" className="form-label">
+											<label htmlFor="zip" className="form-label">
 												Zip
 											</label>
 											<input
-												type="text"
+												type="number"
 												className="form-control"
 												id="zip"
 												placeholder=""
@@ -214,16 +295,203 @@ const Checkout = () => {
 											type="checkbox"
 											className="form-check-input"
 											id="same-address"
+											checked={sameAsBilling}
+											onChange={handleCheckboxChange}
 										/>
-										<label className="form-check-label" for="same-address">
+										<label className="form-check-label" htmlFor="same-address">
 											Shipping address is the same as my billing address
 										</label>
 									</div>
-
 									<hr className="my-4" />
 
-									<h4 className="mb-3">Payment</h4>
+									{sameAsBilling ? (
+										<></>
+									) : (
+										// Render the editable billing address fields if sameAsBilling is false
 
+										<>
+											<div className="form-check">
+												<h4 className="mb-3">Shipping address</h4>
+												<div className="row g-3">
+													<div className="col-sm-6">
+														<label htmlFor="ship_FfirstName" className="form-label">
+															First name
+														</label>
+														<input
+															type="text"
+															className="form-control"
+															id="ship_firstName"
+															placeholder="First Name"
+															required
+														/>
+														<div className="invalid-feedback">
+															Valid first name is required.
+														</div>
+													</div>
+
+													<div className="col-sm-6">
+														<label htmlFor="ship_lastName" className="form-label">
+															Last name
+														</label>
+														<input
+															type="text"
+															className="form-control"
+															id="ship_lastName"
+															placeholder="Last Name"
+															required
+														/>
+														<div className="invalid-feedback">
+															Valid last name is required.
+														</div>
+													</div>
+
+													<div className="col-12">
+														<label htmlFor="ship_email" className="form-label">
+															Email{" "}
+															<span className="text-muted">(Optional)</span>
+														</label>
+														<input
+															type="email"
+															className="form-control"
+															id="ship_email"
+															placeholder="you@example.com"
+														/>
+														<div className="invalid-feedback">
+															Please enter a valid email address htmlFor
+															shipping updates.
+														</div>
+													</div>
+
+													<div className="col-12">
+														<label htmlFor="ship_address" className="form-label">
+															Address
+														</label>
+														<input
+															type="text"
+															className="form-control"
+															id="ship_address"
+															placeholder="1234 Main St"
+															required
+														/>
+														<div className="invalid-feedback">
+															Please enter your shipping address.
+														</div>
+													</div>
+
+													<div className="col-12">
+														<label htmlFor="ship_address2" className="form-label">
+															Address 2{" "}
+															<span className="text-muted">(Optional)</span>
+														</label>
+														<input
+															type="text"
+															className="form-control"
+															id="ship_address2"
+															placeholder="Apartment or suite"
+														/>
+													</div>
+
+													<div className="col-md-5">
+														<label htmlFor="ship_country" className="form-label">
+															Country
+														</label>
+														<select
+															className="form-select"
+															id="ship_country"
+															required
+														>
+															<option value="">Choose...</option>
+															<option>United States</option>
+														</select>
+														<div className="invalid-feedback">
+															Please select a valid country.
+														</div>
+													</div>
+
+													<div className="col-md-4">
+														<label htmlFor="ship_state" className="form-label">
+															State
+														</label>
+														<select className="form-select" id="ship_state" required>
+															<option value="">Choose...</option>
+															<option>Alabama</option>
+															<option>Alaska</option>
+															<option>Arizona</option>
+															<option>Arkansas</option>
+															<option>California</option>
+															<option>Colorado</option>
+															<option>Connecticut</option>
+															<option>Delaware</option>
+															<option>Florida</option>
+															<option>Georgia</option>
+															<option>Hawaii</option>
+															<option>Idaho</option>
+															<option>Illinois</option>
+															<option>Indiana</option>
+															<option>Iowa</option>
+															<option>Kansas</option>
+															<option>Kentucky</option>
+															<option>Louisiana</option>
+															<option>Maine</option>
+															<option>Maryland</option>
+															<option>Massachusetts</option>
+															<option>Michigan</option>
+															<option>Minnesota</option>
+															<option>Mississippi</option>
+															<option>Missouri</option>
+															<option>Montana</option>
+															<option>Nebraska</option>
+															<option>Nevada</option>
+															<option>New Hampshire</option>
+															<option>New Jersey</option>
+															<option>New Mexico</option>
+															<option>New York</option>
+															<option>North Carolina</option>
+															<option>North Dakota</option>
+															<option>Ohio</option>
+															<option>Oklahoma</option>
+															<option>Oregon</option>
+															<option>Pennsylvania</option>
+															<option>Rhode Island</option>
+															<option>South Carolina</option>
+															<option>South Dakota</option>
+															<option>Tennessee</option>
+															<option>Texas</option>
+															<option>Utah</option>
+															<option>Vermont</option>
+															<option>Virginia</option>
+															<option>Washington</option>
+															<option>West Virginia</option>
+															<option>Wisconsin</option>
+															<option>Wyoming</option>
+														</select>
+														<div className="invalid-feedback">
+															Please provide a valid state.
+														</div>
+													</div>
+
+													<div className="col-md-3">
+														<label htmlFor="ship_zip" className="form-label">
+															Zip
+														</label>
+														<input
+															type="number"
+															className="form-control"
+															id="ship_zip"
+															placeholder=""
+															required
+														/>
+														<div className="invalid-feedback">
+															Zip code required.
+														</div>
+													</div>
+												</div>
+											</div>
+										</>
+									)}
+
+									<hr className="my-4" />
+									<h4 className="mb-3">Payment</h4>
 									<div className="my-3">
 										<div className="form-check">
 											<input
@@ -234,7 +502,7 @@ const Checkout = () => {
 												checked
 												required
 											/>
-											<label className="form-check-label" for="credit">
+											<label className="form-check-label" htmlFor="credit">
 												Credit card
 											</label>
 										</div>
@@ -246,7 +514,7 @@ const Checkout = () => {
 												className="form-check-input"
 												required
 											/>
-											<label className="form-check-label" for="debit">
+											<label className="form-check-label" htmlFor="debit">
 												Debit card
 											</label>
 										</div>
@@ -254,7 +522,7 @@ const Checkout = () => {
 
 									<div className="row gy-3">
 										<div className="col-md-6">
-											<label for="cc-name" className="form-label">
+											<label htmlFor="cc-name" className="form-label">
 												Name on card
 											</label>
 											<input
@@ -273,11 +541,11 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-6">
-											<label for="cc-number" className="form-label">
+											<label htmlFor="cc-number" className="form-label">
 												Credit card number
 											</label>
 											<input
-												type="text"
+												type="number"
 												className="form-control"
 												id="cc-number"
 												placeholder=""
@@ -289,14 +557,15 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-3">
-											<label for="cc-expiration" className="form-label">
+											<label htmlFor="cc-expiration" className="form-label">
 												Expiration
 											</label>
 											<input
 												type="text"
 												className="form-control"
 												id="cc-expiration"
-												placeholder=""
+												placeholder="mm/yy"
+												pattern="^(0[1-9]|1[0-2])\/\d{2}$"
 												required
 											/>
 											<div className="invalid-feedback">
@@ -305,23 +574,28 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-3">
-											<label for="cc-cvv" className="form-label">
+											<label htmlFor="cc-cvv" className="form-label">
 												CVV
 											</label>
 											<input
-												type="text"
+												type="number"
 												className="form-control"
 												id="cc-cvv"
 												placeholder=""
 												required
 											/>
-											<div className="invalid-feedback">Security code required</div>
+											<div className="invalid-feedback">
+												Security code required
+											</div>
 										</div>
 									</div>
 
 									<hr className="my-4" />
 
-									<button className="w-100 btn btn-primary btn-lg" type="submit">
+									<button
+										className="w-100 btn btn-primary btn-lg"
+										type="submit"
+									>
 										Continue to checkout
 									</button>
 								</form>

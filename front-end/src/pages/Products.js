@@ -19,7 +19,29 @@ const Products = () => {
 	return (
 		<div className="products">
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
-				<></>
+				<>
+					<div className="album py-5 highlight-color">
+						<div class="s-container">
+							<div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+								{/* {clients?.map((client) => ( */}
+									<div className="col">
+										<div className="card shadow-sm">
+											<img
+												src=""
+												className="card-img-top"
+												alt="..."
+											/>
+											<div className="card-body">
+												<h5 className="card-title"></h5>
+												<p className="card-text"></p>
+											</div>
+										</div>
+									</div>
+								{/* ))} */}
+							</div>
+						</div>
+					</div>
+				</>
 			) : (
 				<>
 					<>

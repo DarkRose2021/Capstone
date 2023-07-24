@@ -12,6 +12,7 @@ const Signin = () => {
 	} = useForm({
 		criteriaMode: "all",
 	});
+	const [showPassword, setShowPassword] = useState(false);
 
 	const passwordPattern =
 		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{8,}$/;
@@ -183,7 +184,7 @@ const Signin = () => {
 						<input
 							id="password"
 							name="password"
-							type="password"
+							type={showPassword ? "text" : "password"}
 							placeholder="Password"
 							{...register("password", {
 								required: "Password is required",
@@ -217,7 +218,7 @@ const Signin = () => {
 						<input
 							id="confirmPassword"
 							name="confirmPassword"
-							type="password"
+							type={showPassword ? "text" : "password"}
 							placeholder="Confirm Password"
 							{...register("confirmPassword", {
 								required: "Confirm Password is required",
@@ -241,6 +242,16 @@ const Signin = () => {
 									: null
 							}
 						/>
+						<br />
+						<label className="form-check-label show_pass">
+							<input
+								type="checkbox"
+								className="form-check-input"
+								checked={showPassword}
+								onChange={() => setShowPassword(!showPassword)} // Toggle the showPassword state on checkbox change
+							/>{" "}
+							Show Password
+						</label>
 						<br />
 						{(user.User === "" || user.User === null) && user.Message ? (
 							<p className="error">{user.Message}</p>
