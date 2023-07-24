@@ -47,6 +47,7 @@ const products = new Schema(
 		Name: String,
 		Price: Number,
 		Description: String,
+		BriefDescription: String,
 		DisplayImage: String,
 		SelectedImage: { type: Schema.Types.ObjectId, ref: "pic" },
 	},

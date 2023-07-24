@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [sameAsBilling, setSameAsBilling] = useState(false);
+	const { register, handleSubmit, errors } = useForm();
+
+	const cardNumberPattern =
+		/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+	const ccvPattern = /^[0-9]{3,4}$/;
+	const zipPattern = /^\d{5}$/;
+	const namePattern = /^[A-Za-z\s]+$/;
+	const validateName = (value) => {
+		if (namePattern.test(value)) {
+			return true;
+		}
+		return "Name must only contain letters";
+	};
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -32,16 +46,21 @@ const Checkout = () => {
 			const data = {};
 			const elements = form.elements;
 			for (let i = 0; i < elements.length; i++) {
-			  const element = elements[i];
-			  if (element.tagName === "INPUT" || element.tagName === "SELECT") {
-				if (element.id === "cc-expiration") {
-				  // Convert the date to "mm/yy" format before sending to the back end
-				  const [month, year] = element.value.split("-");
-				  data[element.id] = `${month}/${year.slice(2)}`;
-				} else {
-				  data[element.id] = element.value;
+				const element = elements[i];
+				if (element.tagName === "INPUT" || element.tagName === "SELECT") {
+					if (element.id === "cc-expiration") {
+						// Convert the Date object to "yyyy-mm" format first
+						const expirationDate = new Date(element.value);
+						const month = String(expirationDate.getMonth() + 1).padStart(
+							2,
+							"0"
+						);
+						const year = expirationDate.getFullYear();
+						data[element.id] = `${year}-${month}`;
+					} else {
+						data[element.id] = element.value;
+					}
 				}
-			  }
 			}
 
 			const endpoint = `http://localhost:5000/checkout`;
@@ -120,7 +139,11 @@ const Checkout = () => {
 							</div>
 							<div className="col-md-7 col-lg-8">
 								<h4 className="mb-3">Billing address</h4>
-								<form className="needs-validation" noValidate onSubmit={handleFormSubmit}>
+								<form
+									className="needs-validation"
+									noValidate
+									onSubmit={handleFormSubmit}
+								>
 									<div className="row g-3">
 										<div className="col-sm-6">
 											<label htmlFor="firstName" className="form-label">
@@ -131,7 +154,18 @@ const Checkout = () => {
 												className="form-control"
 												id="firstName"
 												placeholder="First Name"
-												required
+												{...register("firstName", {
+													required: "Name is required",
+													validate: validateName,
+													minLength: {
+														value: 2,
+														message: "Name can't be shorter than 2 characters",
+													},
+													maxLength: {
+														value: 100,
+														message: "Name cannot exceed 100 characters",
+													},
+												})}
 											/>
 											<div className="invalid-feedback">
 												Valid first name is required.
@@ -147,7 +181,18 @@ const Checkout = () => {
 												className="form-control"
 												id="lastName"
 												placeholder="Last Name"
-												required
+												{...register("lastName", {
+													required: "Name is required",
+													validate: validateName,
+													minLength: {
+														value: 2,
+														message: "Name can't be shorter than 2 characters",
+													},
+													maxLength: {
+														value: 100,
+														message: "Name cannot exceed 100 characters",
+													},
+												})}
 											/>
 											<div className="invalid-feedback">
 												Valid last name is required.
@@ -156,17 +201,27 @@ const Checkout = () => {
 
 										<div className="col-12">
 											<label htmlFor="email" className="form-label">
-												Email <span className="text-muted">(Optional)</span>
+												Email
 											</label>
 											<input
 												type="email"
 												className="form-control"
 												id="email"
 												placeholder="you@example.com"
+												{...register("email", {
+													required: "Email is required",
+													pattern: {
+														value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+														message: "Email address is invalid",
+													},
+													minLength: {
+														value: 5,
+														message: "Email must be longer than 5 characters",
+													},
+												})}
 											/>
 											<div className="invalid-feedback">
-												Please enter a valid email address htmlFor shipping
-												updates.
+												Please enter a valid email address for shipping updates.
 											</div>
 										</div>
 
@@ -278,13 +333,26 @@ const Checkout = () => {
 												Zip
 											</label>
 											<input
-												type="number"
-												className="form-control"
+												type="text"
+												className={`form-control ${
+													errors?.zip ? "is-invalid" : ""
+												}`}
 												id="zip"
+												name="zip"
+												{...register('zip', {
+													required: "Zip code is required",
+													pattern: {
+														value: zipPattern,
+														message: "Invalid zip code",
+													},
+												})}
 												placeholder=""
-												required
 											/>
-											<div className="invalid-feedback">Zip code required.</div>
+											{errors?.zip && (
+												<div className="invalid-feedback">
+													{errors?.zip.message}
+												</div>
+											)}
 										</div>
 									</div>
 
@@ -302,7 +370,6 @@ const Checkout = () => {
 											Shipping address is the same as my billing address
 										</label>
 									</div>
-									<hr className="my-4" />
 
 									{sameAsBilling ? (
 										<></>
@@ -310,11 +377,15 @@ const Checkout = () => {
 										// Render the editable billing address fields if sameAsBilling is false
 
 										<>
+											<hr className="my-4" />
 											<div className="form-check">
 												<h4 className="mb-3">Shipping address</h4>
 												<div className="row g-3">
 													<div className="col-sm-6">
-														<label htmlFor="ship_FfirstName" className="form-label">
+														<label
+															htmlFor="ship_FfirstName"
+															className="form-label"
+														>
 															First name
 														</label>
 														<input
@@ -322,7 +393,19 @@ const Checkout = () => {
 															className="form-control"
 															id="ship_firstName"
 															placeholder="First Name"
-															required
+															{...register("ship_firstName", {
+																required: "Name is required",
+																validate: validateName,
+																minLength: {
+																	value: 2,
+																	message:
+																		"Name can't be shorter than 2 characters",
+																},
+																maxLength: {
+																	value: 100,
+																	message: "Name cannot exceed 100 characters",
+																},
+															})}
 														/>
 														<div className="invalid-feedback">
 															Valid first name is required.
@@ -330,7 +413,10 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-sm-6">
-														<label htmlFor="ship_lastName" className="form-label">
+														<label
+															htmlFor="ship_lastName"
+															className="form-label"
+														>
 															Last name
 														</label>
 														<input
@@ -338,7 +424,19 @@ const Checkout = () => {
 															className="form-control"
 															id="ship_lastName"
 															placeholder="Last Name"
-															required
+															{...register("ship_lastName", {
+																required: "Name is required",
+																validate: validateName,
+																minLength: {
+																	value: 2,
+																	message:
+																		"Name can't be shorter than 2 characters",
+																},
+																maxLength: {
+																	value: 100,
+																	message: "Name cannot exceed 100 characters",
+																},
+															})}
 														/>
 														<div className="invalid-feedback">
 															Valid last name is required.
@@ -347,14 +445,26 @@ const Checkout = () => {
 
 													<div className="col-12">
 														<label htmlFor="ship_email" className="form-label">
-															Email{" "}
-															<span className="text-muted">(Optional)</span>
+															Email
 														</label>
 														<input
 															type="email"
 															className="form-control"
 															id="ship_email"
 															placeholder="you@example.com"
+															{...register("ship_email", {
+																required: "Email is required",
+																pattern: {
+																	value:
+																		/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+																	message: "Email address is invalid",
+																},
+																minLength: {
+																	value: 5,
+																	message:
+																		"Email must be longer than 5 characters",
+																},
+															})}
 														/>
 														<div className="invalid-feedback">
 															Please enter a valid email address htmlFor
@@ -363,7 +473,10 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-12">
-														<label htmlFor="ship_address" className="form-label">
+														<label
+															htmlFor="ship_address"
+															className="form-label"
+														>
 															Address
 														</label>
 														<input
@@ -379,7 +492,10 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-12">
-														<label htmlFor="ship_address2" className="form-label">
+														<label
+															htmlFor="ship_address2"
+															className="form-label"
+														>
 															Address 2{" "}
 															<span className="text-muted">(Optional)</span>
 														</label>
@@ -392,7 +508,10 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-md-5">
-														<label htmlFor="ship_country" className="form-label">
+														<label
+															htmlFor="ship_country"
+															className="form-label"
+														>
 															Country
 														</label>
 														<select
@@ -412,7 +531,11 @@ const Checkout = () => {
 														<label htmlFor="ship_state" className="form-label">
 															State
 														</label>
-														<select className="form-select" id="ship_state" required>
+														<select
+															className="form-select"
+															id="ship_state"
+															required
+														>
 															<option value="">Choose...</option>
 															<option>Alabama</option>
 															<option>Alaska</option>
@@ -475,15 +598,26 @@ const Checkout = () => {
 															Zip
 														</label>
 														<input
-															type="number"
-															className="form-control"
+															type="text"
+															className={`form-control ${
+																errors?.zip ? "is-invalid" : ""
+															}`}
 															id="ship_zip"
+															name="ship_zip"
+															{...register('ship_zip',{
+																required: "Zip code is required",
+																pattern: {
+																	value: zipPattern,
+																	message: "Invalid zip code",
+																},
+															})}
 															placeholder=""
-															required
 														/>
-														<div className="invalid-feedback">
-															Zip code required.
-														</div>
+														{errors?.ship_zip && (
+															<div className="invalid-feedback">
+																{errors?.ship_zip.message}
+															</div>
+														)}
 													</div>
 												</div>
 											</div>
@@ -545,15 +679,26 @@ const Checkout = () => {
 												Credit card number
 											</label>
 											<input
-												type="number"
-												className="form-control"
+												type="text"
+												className={`form-control ${
+													errors?.ccNumber ? "is-invalid" : ""
+												}`}
 												id="cc-number"
+												name="ccNumber"
+												{...register('ccNumber',{
+													required: "Credit card number is required",
+													pattern: {
+														value: cardNumberPattern,
+														message: "Invalid credit card number",
+													},
+												})}
 												placeholder=""
-												required
 											/>
-											<div className="invalid-feedback">
-												Credit card number is required
-											</div>
+											{errors?.ccNumber && (
+												<div className="invalid-feedback">
+													{errors?.ccNumber.message}
+												</div>
+											)}
 										</div>
 
 										<div className="col-md-3">
@@ -578,15 +723,26 @@ const Checkout = () => {
 												CVV
 											</label>
 											<input
-												type="number"
-												className="form-control"
+												type="text"
+												className={`form-control ${
+													errors?.ccv ? "is-invalid" : ""
+												}`}
 												id="cc-cvv"
+												name="ccv"
+												{...register('ccv',{
+													required: "CVV is required",
+													pattern: {
+														value: ccvPattern,
+														message: "Invalid CVV",
+													},
+												})}
 												placeholder=""
-												required
 											/>
-											<div className="invalid-feedback">
-												Security code required
-											</div>
+											{errors?.ccv && (
+												<div className="invalid-feedback">
+													{errors?.ccv.message}
+												</div>
+											)}
 										</div>
 									</div>
 
