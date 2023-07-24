@@ -154,6 +154,7 @@ const Checkout = () => {
 												className="form-control"
 												id="firstName"
 												placeholder="First Name"
+												required
 												{...register("firstName", {
 													required: "Name is required",
 													validate: validateName,
@@ -180,6 +181,7 @@ const Checkout = () => {
 												type="text"
 												className="form-control"
 												id="lastName"
+												required
 												placeholder="Last Name"
 												{...register("lastName", {
 													required: "Name is required",
@@ -207,6 +209,7 @@ const Checkout = () => {
 												type="email"
 												className="form-control"
 												id="email"
+												required
 												placeholder="you@example.com"
 												{...register("email", {
 													required: "Email is required",
@@ -339,6 +342,7 @@ const Checkout = () => {
 												}`}
 												id="zip"
 												name="zip"
+												required
 												{...register('zip', {
 													required: "Zip code is required",
 													pattern: {
@@ -393,6 +397,7 @@ const Checkout = () => {
 															className="form-control"
 															id="ship_firstName"
 															placeholder="First Name"
+															required
 															{...register("ship_firstName", {
 																required: "Name is required",
 																validate: validateName,
@@ -424,6 +429,7 @@ const Checkout = () => {
 															className="form-control"
 															id="ship_lastName"
 															placeholder="Last Name"
+															required
 															{...register("ship_lastName", {
 																required: "Name is required",
 																validate: validateName,
@@ -451,6 +457,7 @@ const Checkout = () => {
 															type="email"
 															className="form-control"
 															id="ship_email"
+															required
 															placeholder="you@example.com"
 															{...register("ship_email", {
 																required: "Email is required",
@@ -481,6 +488,7 @@ const Checkout = () => {
 														</label>
 														<input
 															type="text"
+															required
 															className="form-control"
 															id="ship_address"
 															placeholder="1234 Main St"
@@ -604,6 +612,7 @@ const Checkout = () => {
 															}`}
 															id="ship_zip"
 															name="ship_zip"
+															required
 															{...register('ship_zip',{
 																required: "Zip code is required",
 																pattern: {
@@ -685,6 +694,7 @@ const Checkout = () => {
 												}`}
 												id="cc-number"
 												name="ccNumber"
+												required
 												{...register('ccNumber',{
 													required: "Credit card number is required",
 													pattern: {
@@ -729,6 +739,7 @@ const Checkout = () => {
 												}`}
 												id="cc-cvv"
 												name="ccv"
+												required
 												{...register('ccv',{
 													required: "CVV is required",
 													pattern: {
