@@ -457,6 +457,32 @@ footer {
 	}
 }
 
+.editImgsCont{
+	@include button;
+	.upload__image-wrapper{
+		@include flex-center();
+		flex-direction: row;
+		flex-wrap: wrap;
+		.flex{
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
+	.image-item{
+		@include border();
+		@include border-radius();
+		@include borderRadiusContainers();
+		background-color: $lightBrown;
+		width: 20vw;
+		padding: 2%;
+		margin: 1%;
+	}
+	img{
+		width: 260px;
+		float: center;
+	}
+}
+
 .errorpg {
 	@include flex-center();
 	flex-direction: row;

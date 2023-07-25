@@ -99,8 +99,8 @@ app.post("/editImgs/:id", async (req, res) => {
 	let image = req.body.images
 	console.log(image)
 	// const trueKeys = Object.keys(images).filter(key => images[key])
-
-	dal.editRoles(id, image)
+ 
+	dal.editImgs(id, image)
 	res.json({Message: "updated"})
 })
 

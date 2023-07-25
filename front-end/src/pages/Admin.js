@@ -68,7 +68,9 @@ const Admin = () => {
 										<button>Edit Roles</button>
 									</Link>
 									{user.Roles?.includes("Client") ? (
-										<button>Edit Pictures</button>
+										<Link to={`/editImages/${user._id}`}>
+											<button>Edit Pictures</button>
+										</Link>
 									) : (
 										<></>
 									)}
