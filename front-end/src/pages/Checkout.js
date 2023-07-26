@@ -108,9 +108,7 @@ const Checkout = () => {
 		form.classList.add("was-validated");
 	};
 
-	// add logic htmlFor shipping address to show or hide if the checkmark is clicked
 	return (
-		// add shipping address form
 		<div className="container">
 			{showPopup && (
 				<Popup
