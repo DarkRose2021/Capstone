@@ -312,6 +312,10 @@ footer {
 	}
 }
 
+.product{
+	@include button;
+}
+
 .team {
 	.info {
 		display: flex;
@@ -575,5 +579,23 @@ footer {
 	}
 	p {
 		margin: 0;
+	}
+}
+
+.order-con{
+	@include flex-center;
+	.order{
+		background-color: $lightBrown;
+	@include border;
+	@include borderRadiusContainers;
+	padding: 1%;
+	}
+	.orderInfo{
+		@include flex-between;
+		flex-direction: row;
+		h4{
+			color: $yellow;
+			text-align: center;
+		}
 	}
 }

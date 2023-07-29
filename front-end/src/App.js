@@ -238,7 +238,7 @@ function App() {
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 					<br />
 					All text generated with ChatGPT - All images from{" "}
-					<a href="https://www.pexels.com/">Pexels</a>
+					<a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer" >Pexels</a>
 					<br />
 					<b>
 						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL

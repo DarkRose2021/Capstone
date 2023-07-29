@@ -63,7 +63,7 @@ const Checkout = () => {
 			for (let i = 0; i < elements.length; i++) {
 				const element = elements[i];
 				if (element.tagName === "INPUT" || element.tagName === "SELECT") {
-					if (element.id === "cc-expiration") {
+					if (element.id === "ccExpiration") {
 						// Convert the Date object to "yyyy-mm" format first
 						const expirationDate = new Date(element.value);
 						const month = String(expirationDate.getMonth() + 1).padStart(
@@ -386,11 +386,11 @@ const Checkout = () => {
 										<input
 											type="checkbox"
 											className="form-check-input"
-											id="same-address"
+											id="sameAddress"
 											checked={sameAsBilling}
 											onChange={handleCheckboxChange}
 										/>
-										<label className="form-check-label" htmlFor="same-address">
+										<label className="form-check-label" htmlFor="sameAddress">
 											Shipping address is the same as my billing address
 										</label>
 									</div>
@@ -407,7 +407,7 @@ const Checkout = () => {
 												<div className="row g-3">
 													<div className="col-sm-6">
 														<label
-															htmlFor="ship_FfirstName"
+															htmlFor="shipFirstName"
 															className="form-label"
 														>
 															First name
@@ -415,10 +415,10 @@ const Checkout = () => {
 														<input
 															type="text"
 															className="form-control"
-															id="ship_firstName"
+															id="shipFirstName"
 															placeholder="First Name"
 															required
-															{...register("ship_firstName", {
+															{...register("shipFirstName", {
 																required: "Name is required",
 																validate: validateName,
 																minLength: {
@@ -439,7 +439,7 @@ const Checkout = () => {
 
 													<div className="col-sm-6">
 														<label
-															htmlFor="ship_lastName"
+															htmlFor="shipLastName"
 															className="form-label"
 														>
 															Last name
@@ -447,10 +447,10 @@ const Checkout = () => {
 														<input
 															type="text"
 															className="form-control"
-															id="ship_lastName"
+															id="shipLastName"
 															placeholder="Last Name"
 															required
-															{...register("ship_lastName", {
+															{...register("shipLastName", {
 																required: "Name is required",
 																validate: validateName,
 																minLength: {
@@ -470,16 +470,16 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-12">
-														<label htmlFor="ship_email" className="form-label">
+														<label htmlFor="shipEmail" className="form-label">
 															Email
 														</label>
 														<input
 															type="email"
 															className="form-control"
-															id="ship_email"
+															id="shipEmail"
 															required
 															placeholder="you@example.com"
-															{...register("ship_email", {
+															{...register("shipEmail", {
 																required: "Email is required",
 																pattern: {
 																	value:
@@ -501,7 +501,7 @@ const Checkout = () => {
 
 													<div className="col-12">
 														<label
-															htmlFor="ship_address"
+															htmlFor="shipAddress"
 															className="form-label"
 														>
 															Address
@@ -509,7 +509,7 @@ const Checkout = () => {
 														<input
 															type="text"
 															className="form-control"
-															id="ship_address"
+															id="shipAddress2"
 															placeholder="1234 Main St"
 															required
 														/>
@@ -520,7 +520,7 @@ const Checkout = () => {
 
 													<div className="col-12">
 														<label
-															htmlFor="ship_address2"
+															htmlFor="shipAddress2"
 															className="form-label"
 														>
 															Address 2{" "}
@@ -529,21 +529,21 @@ const Checkout = () => {
 														<input
 															type="text"
 															className="form-control"
-															id="ship_address2"
+															id="shipAddress2"
 															placeholder="Apartment or suite"
 														/>
 													</div>
 
 													<div className="col-md-5">
 														<label
-															htmlFor="ship_country"
+															htmlFor="shipCountry"
 															className="form-label"
 														>
 															Country
 														</label>
 														<select
 															className="form-select"
-															id="ship_country"
+															id="shipCountry"
 															required
 														>
 															<option value="">Choose...</option>
@@ -555,12 +555,12 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-md-4">
-														<label htmlFor="ship_state" className="form-label">
+														<label htmlFor="shipState" className="form-label">
 															State
 														</label>
 														<select
 															className="form-select"
-															id="ship_state"
+															id="shipState"
 															required
 														>
 															<option value="">Choose...</option>
@@ -621,18 +621,16 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-md-3">
-														<label htmlFor="ship_zip" className="form-label">
+														<label htmlFor="shipState" className="form-label">
 															Zip
 														</label>
 														<input
 															type="text"
-															className={`form-control ${
-																errors?.zip ? "is-invalid" : ""
-															}`}
-															id="ship_zip"
-															name="ship_zip"
+															className={`form-control`}
+															id="shipZip"
+															name="shipZip"
 															required
-															{...register("ship_zip", {
+															{...register("shipZip", {
 																required: "Zip code is required",
 																pattern: {
 																	value: zipPattern,
@@ -641,9 +639,9 @@ const Checkout = () => {
 															})}
 															placeholder=""
 														/>
-														{errors?.ship_zip && (
+														{errors?.shipZip && (
 															<div className="invalid-feedback">
-																{errors?.ship_zip.message}
+																{errors?.shipZip.message}
 															</div>
 														)}
 													</div>
@@ -690,7 +688,7 @@ const Checkout = () => {
 											<input
 												type="text"
 												className="form-control"
-												id="cc-name"
+												id="ccName"
 												placeholder=""
 												required
 											/>
@@ -703,7 +701,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-6">
-											<label htmlFor="cc-number" className="form-label">
+											<label htmlFor="ccNumber" className="form-label">
 												Credit card number
 											</label>
 											<input
@@ -711,7 +709,7 @@ const Checkout = () => {
 												className={`form-control ${
 													errors?.ccNumber ? "is-invalid" : ""
 												}`}
-												id="cc-number"
+												id="ccNumber"
 												name="ccNumber"
 												required
 												{...register("ccNumber", {
@@ -733,13 +731,13 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-3">
-											<label htmlFor="cc-expiration" className="form-label">
+											<label htmlFor="ccExpiration" className="form-label">
 												Expiration
 											</label>
 											<input
 												type="text"
 												className="form-control"
-												id="cc-expiration"
+												id="ccExpiration"
 												placeholder="mm/yy"
 												pattern="^(0[1-9]|1[0-2])\/\d{2}$"
 												required
@@ -750,7 +748,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="col-md-3">
-											<label htmlFor="cc-cvv" className="form-label">
+											<label htmlFor="ccCvv" className="form-label">
 												CVV
 											</label>
 											<input
@@ -758,7 +756,7 @@ const Checkout = () => {
 												className={`form-control ${
 													errors?.ccv ? "is-invalid" : ""
 												}`}
-												id="cc-cvv"
+												id="ccCvv"
 												name="ccv"
 												required
 												{...register("ccv", {

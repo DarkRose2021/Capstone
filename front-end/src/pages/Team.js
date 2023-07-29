@@ -21,7 +21,7 @@ const Team = () => {
 			img: "/assets/Sarah Jones.jpg",
 		},
 		{
-			name: "John Lee",
+			name: "John Doe",
 			position: "Marketing Manager",
 			txt: "John is responsible for promoting Mane Frame Photography and expanding our reach to new clients. With a background in marketing and a passion for horses, John is adept at creating compelling campaigns that resonate with our target audience. He is also an expert at social media marketing, which helps us to connect with horse lovers all around the world.",
 			img: "/assets/John Lee.jpg",
