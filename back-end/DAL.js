@@ -118,13 +118,14 @@ exports.dal = {
 	findUser: async (id) => {
 		return await userModel.find({ _id: new mongodb.ObjectId(id) }).exec();
 	},
-	testImags: async (userId) => {
+	findUserEmail: async (email) => {
 		try {
-			const user = await userModel.findById(userId).populate("Images");
-			console.log(user.Images); // This will be an array of picture documents
-		} catch (err) {
-			// Handle the error
-			console.error(err);
+			console.log(email);
+			email = email.replace(/^"(.*)"$/, "$1");
+			return await userModel.findOne({ Email: email }).exec();
+		} catch (error) {
+			console.error("Error finding user:", error);
+			throw error; // Rethrow the error to be handled by the caller of this function.
 		}
 	},
 	addProducts: async (name, price, des, briefdes, disimg, selectedimg) => {
@@ -134,8 +135,18 @@ exports.dal = {
 			Description: des,
 			BriefDescription: briefdes,
 			DisplayImage: disimg,
-		}
+		};
 
-		return await productsModel.collection.insertOne(data)
-	}
+		return await productsModel.collection.insertOne(data);
+	},
+	showAllImgs: async () => {
+		return await picModel.find({}).exec();
+	},
+	addImgs: async (id, pictures) => {
+		userModel.collection.updateOne(
+			{ _id: new mongodb.ObjectId(id) },
+			{ $push: { Images: { $each: pictures } } }
+		);
+		return id + " updated";
+	},
 };

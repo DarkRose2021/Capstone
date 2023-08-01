@@ -598,4 +598,13 @@ footer {
 			text-align: center;
 		}
 	}
+	.conProducts{
+		flex-direction: row;
+		.prices{
+			float: right;
+		}
+	}
+	.total{
+		text-align: right;
+	}
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Popup from "./Popup";
+import emailjs from "emailjs-com";
 
 const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -10,12 +11,29 @@ const Checkout = () => {
 	const { register, handleSubmit, errors } = useForm();
 	const [showPopup, setShowPopup] = useState(false);
 	const [sendData, setSendData] = useState(null);
+	const [currentDate, setCurrentDate] = useState(new Date());
 
 	let navigate = useNavigate();
 	const routeChange = () => {
 		let path = `/confirm`;
-		navigate(path, { state: { data: sendData }});
+		navigate(path, { state: { data: sendData } });
 	};
+
+	useEffect(() => {
+		// Function to update the date every second
+		const interval = setInterval(() => {
+			setCurrentDate(new Date());
+		}, 3600000);
+
+		// Clean up the interval when the component unmounts
+		return () => clearInterval(interval);
+	}, []);
+
+	const formattedDate = currentDate.toLocaleDateString(undefined, {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
 
 	const handleClosePopup = () => {
 		setShowPopup(false);
@@ -98,6 +116,33 @@ const Checkout = () => {
 					console.log(responseData);
 					setSendData(responseData.Body);
 					setShowPopup(true);
+
+					emailjs
+						.send(
+							"service_iua6vej",
+							"template_kw5pkjq",
+							{
+								to_email: "kking@student.neumont.edu",
+								// from_email: "maneframephotography2023@gmail.com",
+								from_name: "Mane Frame",
+								subject: "Confirmation Email",
+								message: `
+									Hi ${data.firstName} ${data.lastName} \n
+									Your order has been confirmed! \n
+									Date placed: ${formattedDate} \n
+									Shipping to: ${data.shipAddress ? data.shipAddress : data.address}
+								`,
+							},
+							"jhFwa0eEmp0_7VOPv"
+						)
+						.then(
+							function (response) {
+								console.log("Email sent successfully!", response);
+							},
+							function (error) {
+								console.error("Email failed to send.", error);
+							}
+						);
 				})
 				.catch((error) => {
 					// Handle any errors that occurred during the fetch request
@@ -500,10 +545,7 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-12">
-														<label
-															htmlFor="shipAddress"
-															className="form-label"
-														>
+														<label htmlFor="shipAddress" className="form-label">
 															Address
 														</label>
 														<input
@@ -535,10 +577,7 @@ const Checkout = () => {
 													</div>
 
 													<div className="col-md-5">
-														<label
-															htmlFor="shipCountry"
-															className="form-label"
-														>
+														<label htmlFor="shipCountry" className="form-label">
 															Country
 														</label>
 														<select
@@ -715,11 +754,12 @@ const Checkout = () => {
 												{...register("ccNumber", {
 													required: "Credit card number is required",
 													pattern: {
-														value: /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
+														value:
+															/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/,
 														message: "Invalid credit card number",
 													},
 													minLength: 14,
-													maxLength: 16
+													maxLength: 16,
 												})}
 												placeholder=""
 											/>
