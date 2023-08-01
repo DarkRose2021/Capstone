@@ -120,7 +120,6 @@ exports.dal = {
 	},
 	findUserEmail: async (email) => {
 		try {
-			console.log(email);
 			email = email.replace(/^"(.*)"$/, "$1");
 			return await userModel.findOne({ Email: email }).exec();
 		} catch (error) {

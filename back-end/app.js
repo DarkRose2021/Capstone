@@ -112,9 +112,9 @@ app.get("/testing/:id", async (req, res) => {
 	let id = req.params.id
 	imgs = [];
 	let allImages = await dal.showAllImgs();
-	for (let i = 0; i < 8; i++) {
+	for (let i = 0; i < 9; i++) {
 		foundImg = getRandomObjectFromArray(allImages)
-		imgs.push(foundImg.url);
+		imgs.push(foundImg);
 	}
 
 	let user = dal.addImgs(id, imgs)
@@ -131,7 +131,6 @@ app.get("/findUser/:id", async (req, res) => {
 app.get("/findUserEmail/:email", async (req, res) => {
 	let email = req.params.email;
 	let user = await dal.findUserEmail(email);
-	console.log(user)
 	res.json({ User: user });
 });
 

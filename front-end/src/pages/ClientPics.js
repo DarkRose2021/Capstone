@@ -54,8 +54,8 @@ const ClientPics = () => {
 					<h1>Your Pictures</h1>
 					<div className="pics">
 					{pics?.map((pic) => (
-							<a onClick={() => downloadImage(pic)}>
-								<img src={pic} />
+							<a onClick={() => downloadImage(pic.url, pic.name)}>
+								<img src={pic.url} />
 							</a>
 						))}
 					</div>
