@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Confirm = (props) => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
+	const [orderID, setOrderID] = useState(null);
 
 	const { state } = useLocation();
 	// console.log(state)
@@ -17,6 +19,12 @@ const Confirm = (props) => {
 
 		// Clean up the interval when the component unmounts
 		return () => clearInterval(interval);
+	}, []);
+
+	useEffect(() => {
+		const maxDisplayedLength = 15; // Set your desired maximum length here
+		const uuid = uuidv4().substring(0, maxDisplayedLength);
+		setOrderID(uuid);
 	}, []);
 
 	const formattedDate = currentDate.toLocaleDateString(undefined, {
@@ -61,7 +69,7 @@ const Confirm = (props) => {
 								</div>
 								<div>
 									<h4>Order ID</h4>
-									<p>ORD202307273GPT3</p>
+									<p>{orderID}</p>
 								</div>
 								<div>
 									<h4>Payment</h4>

@@ -4,29 +4,32 @@ import Compressor from "compressorjs";
 import { Link, Navigate, useParams } from "react-router-dom";
 import Resizer from "react-image-file-resizer";
 
+const uploadImagesToBackend = async (images, id) => {
+	// Send the images to the backend using an API call
+	// Replace 'YOUR_UPLOAD_API_ENDPOINT' with your actual API endpoint
+	try {
+		console.log(JSON.stringify({ images }))
+		await fetch(`/editImgs/${id}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ images }),
+		});
+		// Handle successful upload if needed
+		console.log("Images uploaded successfully");
+	} catch (error) {
+		// Handle upload error if needed
+		console.error("Error uploading images:", error);
+	}
+};
+
 const EditImages = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [user, setUser] = useState(null);
 	const [msg, setMsg] = useState(null);
 	let { id } = useParams();
-
-    const resizeFile = (file) =>
-	new Promise((resolve) => {
-		Resizer.imageFileResizer(
-			file,
-			300,
-			300,
-			"JPEG",
-			100,
-			0,
-			(uri) => {
-				resolve(uri);
-			},
-			"base64"
-		);
-	});
-
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -44,36 +47,12 @@ const EditImages = () => {
 	const maxNumber = 50;
 
 	const onChange = async (imageList, addUpdateIndex) => {
-		// const file = imageList[addUpdateIndex].file;
-		// const image = await resizeFile(file);
-		// console.log(image);
-
-		// Filter out null values (failed compressions) and update state with compressed images
 		setImages(imageList.filter((img) => img !== null));
-
-		// Call the onUpload function with the compressed imageList
-		// onUpload(imageList.filter((img) => img !== null));
 	};
 
-	const onUpload = (imageList) => {
-		let url = `http://localhost:5000/editRoles/${id}`;
-		const compressedImageList = imageList.map((image) => ({
-			data_url: image.data_url,
-			file: image.file,
-		}));
-
-		fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(compressedImageList),
-		})
-			.then((data) => data.json())
-			.then((data) => {
-				setMsg(data.Message);
-			})
-			.catch((err) => console.log(err));
+	const handleUploadImages = () => {
+		// Call the API function to send the images to the backend
+		uploadImagesToBackend(images, id);
 	};
 
 	useEffect(() => {
@@ -89,7 +68,9 @@ const EditImages = () => {
 	return (
 		<div className="editImgsCont">
 			{roles?.includes("Admin") ? (
-				<>
+				<><div className="upload__image-wrapper">
+
+				
 					<ImageUploading
 						multiple
 						value={images}
@@ -108,7 +89,7 @@ const EditImages = () => {
 							dragProps,
 						}) => (
 							// write your building UI
-							<div className="upload__image-wrapper">
+							<div className="buttons">
 								<button
 									style={isDragging ? { color: "red" } : undefined}
 									onClick={onImageUpload}
@@ -118,8 +99,9 @@ const EditImages = () => {
 								</button>
 								&nbsp;
 								<button onClick={onImageRemoveAll}>Remove all images</button>
+								<button onClick={handleUploadImages}>Upload Images</button>
 								&nbsp;
-								{/* <button onClick={onUpload}>Add Images</button> */}
+								{/* Remove the 'onUpload' button from here */}
 								<div className="flex">
 									{imageList.map((image, index) => (
 										<div key={index} className="image-item">
@@ -166,6 +148,7 @@ const EditImages = () => {
 							</div>
 						)}
 					</ImageUploading>
+					</div>
 				</>
 			) : (
 				<>

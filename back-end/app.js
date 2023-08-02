@@ -2,6 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const bodyParser = require("body-parser");
+const formidable = require('formidable');
+// var form = new formidable.IncomingForm();
+
+// // ADD THIS LINE to increase file size limit to 10 GB; default is 200 MB
+// form.maxFileSize = 10 * 1024 * 1024 * 1024;
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -9,17 +14,16 @@ const app = express();
 
 // app.use(express.urlencoded({ extended: true }))
 // app.use(express.json())
-app.use(bodyParser.json({ limit: "10mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+app.use(bodyParser.json({limit: '150mb'}));
+app.use(bodyParser.urlencoded({
+limit: '150mb',
+extended: true
+})); 
 app.use(cors());
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
 });
-
-app.get("/clientPics", async (req, res) => {});
-
-app.get("/clients", async (req, res) => {});
 
 app.get("/login", async (req, res) => {});
 
@@ -56,7 +60,10 @@ app.post("/signup", async (req, res) => {
 
 app.get("/cart", async (req, res) => {});
 
-app.get("/products", async (req, res) => {});
+app.get("/products", async (req, res) => {
+	products = await dal.showProducts()
+	res.json(products)
+});
 
 app.get("/checkout", async (req, res) => {});
 
@@ -99,7 +106,7 @@ app.post("/editImgs/:id", async (req, res) => {
 	console.log(image);
 	// const trueKeys = Object.keys(images).filter(key => images[key])
 
-	dal.editImgs(id, image);
+	// dal.editImgs(id, image);
 	res.json({ Message: "updated" });
 });
 

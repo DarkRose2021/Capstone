@@ -108,6 +108,7 @@ exports.dal = {
 			{ $set: values }
 		);
 	},
+
 	editImgs: async (id, images) => {
 		let values = { Images: images };
 		userModel.collection.updateOne(
@@ -138,9 +139,6 @@ exports.dal = {
 
 		return await productsModel.collection.insertOne(data);
 	},
-	showAllImgs: async () => {
-		return await picModel.find({}).exec();
-	},
 	addImgs: async (id, pictures) => {
 		userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
@@ -148,4 +146,7 @@ exports.dal = {
 		);
 		return id + " updated";
 	},
+	showProducts: async () => {
+		return await productsModel.find({}).exec();
+	}
 };
