@@ -4,18 +4,40 @@ import { Link, Navigate } from "react-router-dom";
 const Products = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
+	const [user, setUser] = useState(null)
+	const [products, setProducts] = useState(null)
+	let email = null
 
 	useEffect(() => {
 		const handleStorage = () => {
 			if (localStorage.length > 0) {
 				setLoggedIn(true);
 				setRoles(localStorage.getItem("Roles"));
+				email = localStorage.getItem("Valid Email");
 			}
 		};
 
 		window.addEventListener("storage", handleStorage());
 		return () => window.removeEventListener("storage", handleStorage());
 	}, []);
+
+	function loadAPI() {
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		fetch(getUrl)
+			.then((data) => data.json())
+			.then((data) => {
+				console.log(data);
+				setUser(data.User);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	useEffect(() => {
+		loadAPI();
+		console.log(products);
+		// console.log("email " +email);
+	}, [email]);
+
 	return (
 		<div className="products">
 			{roles?.includes("Admin") || roles?.includes("Client") ? (

@@ -123,14 +123,16 @@ const Checkout = () => {
 							"template_kw5pkjq",
 							{
 								to_email: "kking@student.neumont.edu",
-								// from_email: "maneframephotography2023@gmail.com",
+								from_email: "maneframephotography2023@gmail.com",
 								from_name: "Mane Frame",
 								subject: "Confirmation Email",
 								message: `
 									Hi ${data.firstName} ${data.lastName} \n
 									Your order has been confirmed! \n
 									Date placed: ${formattedDate} \n
-									Shipping to: ${data.shipAddress ? data.shipAddress : data.address}
+									Shipping to: ${data.shipAddress ? data.shipAddress : data.address}\n
+									Thank you for your order! \n
+									-Mane Frame Photography
 								`,
 							},
 							"jhFwa0eEmp0_7VOPv"

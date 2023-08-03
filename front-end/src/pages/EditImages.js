@@ -68,7 +68,7 @@ const EditImages = () => {
 	return (
 		<div className="editImgsCont">
 			{roles?.includes("Admin") ? (
-				<><div className="upload__image-wrapper">
+				<>
 
 				
 					<ImageUploading
@@ -89,6 +89,7 @@ const EditImages = () => {
 							dragProps,
 						}) => (
 							// write your building UI
+							<div className="btnDiv">
 							<div className="buttons">
 								<button
 									style={isDragging ? { color: "red" } : undefined}
@@ -98,10 +99,10 @@ const EditImages = () => {
 									Click or Drop here
 								</button>
 								&nbsp;
-								<button onClick={onImageRemoveAll}>Remove all images</button>
+								<button onClick={onImageRemoveAll}>Remove all images</button>&nbsp;
 								<button onClick={handleUploadImages}>Upload Images</button>
-								&nbsp;
-								{/* Remove the 'onUpload' button from here */}
+								</div>
+								<div className="upload__image-wrapper">
 								<div className="flex">
 									{imageList.map((image, index) => (
 										<div key={index} className="image-item">
@@ -115,8 +116,9 @@ const EditImages = () => {
 												</button>
 											</div>
 										</div>
+										
 									))}
-								</div>
+								</div></div>
 								{({ imageList, onImageUpload, onImageRemoveAll, errors }) =>
 									errors && (
 										<div>
@@ -148,7 +150,6 @@ const EditImages = () => {
 							</div>
 						)}
 					</ImageUploading>
-					</div>
 				</>
 			) : (
 				<>

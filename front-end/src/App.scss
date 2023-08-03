@@ -471,11 +471,17 @@ footer {
 			flex-direction: row;
 			flex-wrap: wrap;
 		}
+		
+	}
+	.btnDiv{
+		@include flex-center();
+		flex-direction: row;
 		.buttons{
 			@include flex-center;
 			// width: 90vw
 		}
 	}
+	
 	.image-item{
 		@include border();
 		@include border-radius();
