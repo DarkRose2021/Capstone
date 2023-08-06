@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ImageUploading from "react-images-uploading";
-import Compressor from "compressorjs";
-import { Link, Navigate, useParams } from "react-router-dom";
-import Resizer from "react-image-file-resizer";
+import { useParams } from "react-router-dom";
 
 const uploadImagesToBackend = async (images, id) => {
 	// Send the images to the backend using an API call
-	// Replace 'YOUR_UPLOAD_API_ENDPOINT' with your actual API endpoint
 	try {
-		console.log(JSON.stringify({ images }))
-		await fetch(`/editImgs/${id}`, {
+		console.log(JSON.stringify({ images }));
+		await fetch(`http://localhost:5000/editImgs/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -69,8 +66,6 @@ const EditImages = () => {
 		<div className="editImgsCont">
 			{roles?.includes("Admin") ? (
 				<>
-
-				
 					<ImageUploading
 						multiple
 						value={images}
@@ -90,63 +85,36 @@ const EditImages = () => {
 						}) => (
 							// write your building UI
 							<div className="btnDiv">
-							<div className="buttons">
-								<button
-									style={isDragging ? { color: "red" } : undefined}
-									onClick={onImageUpload}
-									{...dragProps}
-								>
-									Click or Drop here
-								</button>
-								&nbsp;
-								<button onClick={onImageRemoveAll}>Remove all images</button>&nbsp;
-								<button onClick={handleUploadImages}>Upload Images</button>
+								<div className="buttons">
+									<button
+										style={isDragging ? { color: "red" } : undefined}
+										onClick={onImageUpload}
+										{...dragProps}
+									>
+										Click or Drop here
+									</button>
+									&nbsp;
+									<button onClick={onImageRemoveAll}>Remove all images</button>
+									&nbsp;
+									<button onClick={handleUploadImages}>Upload Images</button>
 								</div>
 								<div className="upload__image-wrapper">
-								<div className="flex">
-									{imageList.map((image, index) => (
-										<div key={index} className="image-item">
-											<img src={image["data_url"]} alt="" width="100" />
-											<div className="image-item__btn-wrapper">
-												<button onClick={() => onImageUpdate(index)}>
-													Update
-												</button>
-												<button onClick={() => onImageRemove(index)}>
-													Remove
-												</button>
-											</div>
-										</div>
-										
-									))}
-								</div></div>
-								{({ imageList, onImageUpload, onImageRemoveAll, errors }) =>
-									errors && (
-										<div>
-											{errors.maxNumber && (
-												<span>Number of selected images exceed maxNumber</span>
-											)}
-											{errors.acceptType && (
-												<span>Your selected file type is not allow</span>
-											)}
-											{errors.maxFileSize && (
-												<span>Selected file size exceed maxFileSize</span>
-											)}
-											{errors.resolution && (
-												<span>
-													Selected file is not match your desired resolution
-												</span>
-											)}
-										</div>
-									)
-								}
-								{({ imageList, dragProps, isDragging }) => (
-									<div {...dragProps}>
-										{isDragging ? "Drop here please" : "Upload space"}
+									<div className="flex">
 										{imageList.map((image, index) => (
-											<img key={index} src={image.data_url} />
+											<div key={index} className="image-item">
+												<img src={image["data_url"]} alt="" width="100" />
+												<div className="image-item__btn-wrapper">
+													<button onClick={() => onImageUpdate(index)}>
+														Update
+													</button>
+													<button onClick={() => onImageRemove(index)}>
+														Remove
+													</button>
+												</div>
+											</div>
 										))}
 									</div>
-								)}
+								</div>
 							</div>
 						)}
 					</ImageUploading>

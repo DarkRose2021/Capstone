@@ -20,27 +20,27 @@ connection.once("open", () => {
 	console.log("mongoose connected");
 });
 
+const pic = new Schema(
+	{
+		name: String,
+		data_url: String,
+	},
+	{ collection: pictureCollection }
+);
+const picModel = mongoose.model("pic", pic);
+
 const user = new Schema(
 	{
 		Email: { type: String, required: true, unique: true },
 		Name: String,
 		Password: { type: String, required: true },
 		Roles: Array,
-		Images: Array,
+		Images: [],
 	},
 	{ collection: userCollection }
 );
 
 const userModel = mongoose.model("user", user);
-
-const pic = new Schema(
-	{
-		name: String,
-		url: String,
-	},
-	{ collection: pictureCollection }
-);
-const picModel = mongoose.model("pic", pic);
 
 const products = new Schema(
 	{
@@ -148,5 +148,5 @@ exports.dal = {
 	},
 	showProducts: async () => {
 		return await productsModel.find({}).exec();
-	}
+	},
 };

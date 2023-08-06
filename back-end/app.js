@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const bodyParser = require("body-parser");
-const formidable = require('formidable');
+const formidable = require("formidable");
 // var form = new formidable.IncomingForm();
 
 // // ADD THIS LINE to increase file size limit to 10 GB; default is 200 MB
@@ -14,11 +14,13 @@ const app = express();
 
 // app.use(express.urlencoded({ extended: true }))
 // app.use(express.json())
-app.use(bodyParser.json({limit: '150mb'}));
-app.use(bodyParser.urlencoded({
-limit: '150mb',
-extended: true
-})); 
+app.use(bodyParser.json({ limit: "150mb" }));
+app.use(
+	bodyParser.urlencoded({
+		limit: "150mb",
+		extended: true,
+	})
+);
 app.use(cors());
 
 app.get("/", (req, res) => {
@@ -61,8 +63,8 @@ app.post("/signup", async (req, res) => {
 app.get("/cart", async (req, res) => {});
 
 app.get("/products", async (req, res) => {
-	products = await dal.showProducts()
-	res.json(products)
+	products = await dal.showProducts();
+	res.json(products);
 });
 
 app.get("/checkout", async (req, res) => {});
@@ -101,13 +103,25 @@ app.get("/editImgs/:id", async (req, res) => {
 });
 
 app.post("/editImgs/:id", async (req, res) => {
-	let id = req.params.id;
-	let image = req.body.images;
-	console.log(image);
-	// const trueKeys = Object.keys(images).filter(key => images[key])
+	try {
+		const userId = req.params.id;
+		// console.log(userId)
+		const images = req.body.images;
 
-	// dal.editImgs(id, image);
-	res.json({ Message: "updated" });
+		const updatedImageArray = images.map((img, index) => {
+			return {
+				url: img.url,
+				name: `Image_${index + 1}`, // Add the "name" field based on the index (adding 1 to index for 1-based numbering)
+			};
+		});
+
+		dal.addImgs(userId, updatedImageArray);
+
+		res.status(200).json({ message: "Images uploaded successfully." });
+	} catch (error) {
+		console.error("Error uploading images:", error);
+		res.status(500).json({ error: "Internal server error." });
+	}
 });
 
 function getRandomObjectFromArray(array) {
@@ -116,15 +130,15 @@ function getRandomObjectFromArray(array) {
 }
 
 app.get("/testing/:id", async (req, res) => {
-	let id = req.params.id
+	let id = req.params.id;
 	imgs = [];
 	let allImages = await dal.showAllImgs();
 	for (let i = 0; i < 9; i++) {
-		foundImg = getRandomObjectFromArray(allImages)
+		foundImg = getRandomObjectFromArray(allImages);
 		imgs.push(foundImg);
 	}
 
-	let user = dal.addImgs(id, imgs)
+	let user = dal.addImgs(id, imgs);
 
 	res.json(user);
 });
@@ -138,6 +152,13 @@ app.get("/findUser/:id", async (req, res) => {
 app.get("/findUserEmail/:email", async (req, res) => {
 	let email = req.params.email;
 	let user = await dal.findUserEmail(email);
+	res.json({ User: user });
+});
+// fetchImages/
+
+app.get("/fetchImages/:id", async (req, res) => {
+	let id = req.params.id;
+	let user = await dal.findUser(id);
 	res.json({ User: user });
 });
 
