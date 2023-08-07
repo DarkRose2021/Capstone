@@ -20,11 +20,8 @@ const Cart = () => {
 		<div className="container">
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
+				<br />
 					<main>
-						<div class="py-5 text-center">
-							<h2>Cart</h2>
-						</div>
-
 						<div class="row g-5 cart">
 							<div class="col-md-5 col-lg-4 order-md-last">
 								<h4 class="d-flex justify-content-between align-items-center mb-3">

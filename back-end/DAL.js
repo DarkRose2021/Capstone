@@ -8,6 +8,7 @@ const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
 const pictureCollection = "Pictures";
 const productCollection = "Products";
+const cartCollection = "Checkout";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -54,6 +55,11 @@ const products = new Schema(
 	{ collection: productCollection }
 );
 const productsModel = mongoose.model("products", products);
+
+const cart = new Schema({
+	UserID: String,
+	Products: []
+})
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -149,4 +155,28 @@ exports.dal = {
 	showProducts: async () => {
 		return await productsModel.find({}).exec();
 	},
+	checkCart: async (email) =>{
+		let check = {
+			Email: email,
+		};
+		let user = {
+			Email: email,
+			Name: name,
+			Password: password,
+			Roles: ["User"],
+			Images: [],
+		};
+		let existingUser = await userModel.collection.find(check).toArray();
+		console.log("Existing User ", existingUser);
+		if (existingUser.length > 0) {
+			console.log("user found");
+			return "";
+		} else {
+			console.log(name + " added");
+			return await userModel.collection.insertOne(user);
+		}
+	},
+	addToCart: () =>{
+
+	}
 };

@@ -314,6 +314,10 @@ footer {
 
 .product{
 	@include button;
+	h3, h4{
+		text-align: center;
+		color: $yellow;
+	}
 }
 
 .team {
@@ -423,9 +427,22 @@ footer {
 	@include flex-center;
 	flex-wrap: wrap;
 	margin-bottom: 1%;
+	a{
+		margin: 1%;
+	}
 	img {
 		max-width: 500px;
-		margin: 0.5%;
+		
+		cursor: pointer;
+		filter: brightness(100%);
+	}
+	img:hover{
+		filter: brightness(50%);
+		-webkit-transition: all 1s ease;
+		-moz-transition: all 1s ease;
+		-o-transition: all 1s ease;
+		-ms-transition: all 1s ease;
+		transition: all 1s ease;
 	}
 }
 

@@ -60,7 +60,14 @@ app.post("/signup", async (req, res) => {
 	}
 });
 
-app.get("/cart", async (req, res) => {});
+app.get("/cart", async (req, res) => {
+
+});
+
+app.post("/addToCart/:id/:email", async (req, res) => {
+	const id = 
+});
+
 
 app.get("/products", async (req, res) => {
 	products = await dal.showProducts();
@@ -161,6 +168,7 @@ app.get("/fetchImages/:id", async (req, res) => {
 	let user = await dal.findUser(id);
 	res.json({ User: user });
 });
+
 
 app.listen(port, () => {
 	console.log("Listening on port " + port);
