@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Navigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+	const navigate = useNavigate();
 	const {
 		register,
 		formState: { errors },
@@ -72,6 +74,7 @@ const Signin = () => {
 				JSON.stringify(user.User[0].Email)
 			);
 			window.localStorage.setItem("Roles", JSON.stringify(user.User[0].Roles));
+			navigate(0);
 		}
 	}, [user]);
 

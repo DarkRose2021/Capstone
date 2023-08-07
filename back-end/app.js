@@ -60,21 +60,25 @@ app.post("/signup", async (req, res) => {
 	}
 });
 
-app.get("/cart", async (req, res) => {
+app.get("/cart", async (req, res) => {});
 
+app.post("/addToCart/:items", async (req, res) => {
+	const items = req.params.items;
+	const data = JSON.parse(items)
+	dal.addToCart(data.items.UserID, data.items.Products)
 });
-
-app.post("/addToCart/:id/:email", async (req, res) => {
-	const id = 
-});
-
 
 app.get("/products", async (req, res) => {
 	products = await dal.showProducts();
 	res.json(products);
 });
 
-app.get("/checkout", async (req, res) => {});
+app.get("/deleteUser/:id", async (req, res) => {
+	let id = req.params.id
+	dal.deleteUser(id)
+	let users = await dal.listUsers()
+	res.json({Message: "User Deleted", Users: users})
+});
 
 app.post("/checkout", async (req, res) => {
 	let body = req.body;
@@ -168,7 +172,6 @@ app.get("/fetchImages/:id", async (req, res) => {
 	let user = await dal.findUser(id);
 	res.json({ User: user });
 });
-
 
 app.listen(port, () => {
 	console.log("Listening on port " + port);

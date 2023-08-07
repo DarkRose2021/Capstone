@@ -4,6 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 const Admin = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
+	const [allUsers, setAllUsers] = useState([]);
+	const [msg, setMsg] = useState(null);
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -16,8 +18,6 @@ const Admin = () => {
 		window.addEventListener("storage", handleStorage());
 		return () => window.removeEventListener("storage", handleStorage());
 	}, []);
-
-	const [allUsers, setAllUsers] = useState([]);
 
 	function listUsers() {
 		fetch("http://localhost:5000/listUsers")
@@ -37,6 +37,17 @@ const Admin = () => {
 			});
 	}
 
+	function deleteUser(id) {
+		const getUrl = `http://localhost:5000/deleteUser/${id}`;
+		fetch(getUrl)
+			.then((r) => r.json())
+			.then((data) => {
+				setAllUsers(data.Users);
+				setMsg(data.Message);
+			})
+			.catch((err) => console.log(err));
+	}
+
 	return (
 		<div className="admincontainer">
 			{roles?.includes("Admin") ? (
@@ -48,37 +59,38 @@ const Admin = () => {
 								<button onClick={listUsers}>List Users</button>
 							</div>
 						</div>
-						{/* show the clients when either button is clicked (might change to showing clients by default)*/}
-						{/* when client is clicked it'll bring up their "page" ie, their images */}
-						{/* options for admin to add or delete imgs from the client's page */}
+						{msg?( <div className="userMsg">User was Deleted</div>):(<></>)}
 						<div className="users">
-						{allUsers.length > 0 ? (
-							allUsers.map((user) => (
-								<div key={user._id} className="user">
-									<h3>Name: {user.Name}</h3>
-									<h3>Email: {user.Email}</h3>
-									<h3>
-										Roles:{" "}
-										{user.Roles?.map((role, index) => (
-											<>{role}, </>
-										))}
-									</h3>
+							{allUsers.length > 0 ? (
+								allUsers.map((user) => (
+									<div key={user._id} className="user">
+										<h3>Name: {user.Name}</h3>
+										<h3>Email: {user.Email}</h3>
+										<h3>
+											Roles:{" "}
+											{user.Roles?.map((role, index) => (
+												<>{role}, </>
+											))}
+										</h3>
 
-									<Link to={`/edit/${user._id}`}>
-										<button>Edit Roles</button>
-									</Link>
-									{user.Roles?.includes("Client") ? (
-										<Link to={`/editImages/${user._id}`}>
-											<button>Edit Pictures</button>
+										<Link to={`/edit/${user._id}`}>
+											<button>Edit Roles</button>
 										</Link>
-									) : (
-										<></>
-									)}
-								</div>
-							))
-						) : (
-							<></>
-						)}
+										<button onClick={() => deleteUser(user._id)}>
+											Delete User
+										</button>
+										{user.Roles?.includes("Client") ? (
+											<Link to={`/editImages/${user._id}`}>
+												<button>Edit Pictures</button>
+											</Link>
+										) : (
+											<></>
+										)}
+									</div>
+								))
+							) : (
+								<></>
+							)}
 						</div>
 					</div>
 				</>

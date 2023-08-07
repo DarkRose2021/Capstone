@@ -56,10 +56,15 @@ const products = new Schema(
 );
 const productsModel = mongoose.model("products", products);
 
-const cart = new Schema({
-	UserID: String,
-	Products: []
-})
+const cart = new Schema(
+	{
+		UserID: String,
+		Products: [{ProductID: String, Qty: Number}],
+	},
+	{ collection: cartCollection }
+);
+
+const cartModel = mongoose.model("cart", cart);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -80,7 +85,15 @@ exports.dal = {
 			return "";
 		} else {
 			console.log(name + " added");
-			return await userModel.collection.insertOne(user);
+			let newUser = await userModel.collection.insertOne(user);
+			let id = newUser.insertedId.toString();
+			let data = {
+				UserID: id,
+				Products: [{ProductID: "", Qty: 0}]
+			}
+			await cartModel.collection.insertOne(data)
+			return newUser
+
 		}
 	},
 	checkUser: async (email, password) => {
@@ -155,28 +168,31 @@ exports.dal = {
 	showProducts: async () => {
 		return await productsModel.find({}).exec();
 	},
-	checkCart: async (email) =>{
-		let check = {
-			Email: email,
-		};
-		let user = {
-			Email: email,
-			Name: name,
-			Password: password,
-			Roles: ["User"],
-			Images: [],
-		};
-		let existingUser = await userModel.collection.find(check).toArray();
-		console.log("Existing User ", existingUser);
-		if (existingUser.length > 0) {
-			console.log("user found");
-			return "";
+	checkCart: async (id) => {
+		let found = await cartModel.findOne({ UserID: id }).exec();
+		console.log("Found: " + found);
+		if (found) {
+			console.log("cart found");
+			return found;
 		} else {
-			console.log(name + " added");
-			return await userModel.collection.insertOne(user);
+			let data = {
+				UserID: id,
+				Products: [],
+			};
+			cartModel.collection.insertOne(data);
+			console.log("cart created");
 		}
 	},
-	addToCart: () =>{
-
+	addToCart: async (id, product) => {
+		await cartModel.collection.updateOne(
+			{ UserID: id },
+			{ $push: { Products: { $each: product } } }
+		);
+	},
+	deleteUser: async (id) =>{
+		if(userModel.collection.findOne({_id: new mongodb.ObjectId(id)}) !== null){
+			await userModel.collection.deleteOne({_id: new mongodb.ObjectId(id)})
+		await cartModel.collection.deleteOne({UserID: id})
+		}
 	}
 };

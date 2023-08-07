@@ -312,9 +312,10 @@ footer {
 	}
 }
 
-.product{
+.product {
 	@include button;
-	h3, h4{
+	h3,
+	h4 {
 		text-align: center;
 		color: $yellow;
 	}
@@ -427,16 +428,16 @@ footer {
 	@include flex-center;
 	flex-wrap: wrap;
 	margin-bottom: 1%;
-	a{
+	a {
 		margin: 1%;
 	}
 	img {
 		max-width: 500px;
-		
+
 		cursor: pointer;
 		filter: brightness(100%);
 	}
-	img:hover{
+	img:hover {
 		filter: brightness(50%);
 		-webkit-transition: all 1s ease;
 		-moz-transition: all 1s ease;
@@ -476,30 +477,34 @@ footer {
 			margin: 0%, 7%;
 		}
 	}
+	.userMsg {
+		text-align: center;
+		font-size: 1.4em;
+		color: $yellow;
+	}
 }
 
-.editImgsCont{
+.editImgsCont {
 	@include button;
-	.upload__image-wrapper{
+	.upload__image-wrapper {
 		@include flex-center();
 		flex-direction: row;
 		flex-wrap: wrap;
-		.flex{
+		.flex {
 			flex-direction: row;
 			flex-wrap: wrap;
 		}
-		
 	}
-	.btnDiv{
+	.btnDiv {
 		@include flex-center();
 		flex-direction: row;
-		.buttons{
+		.buttons {
 			@include flex-center;
 			// width: 90vw
 		}
 	}
-	
-	.image-item{
+
+	.image-item {
 		@include border();
 		@include border-radius();
 		@include borderRadiusContainers();
@@ -508,7 +513,7 @@ footer {
 		padding: 2%;
 		margin: 1%;
 	}
-	img{
+	img {
 		width: 260px;
 		float: center;
 	}
@@ -609,29 +614,29 @@ footer {
 	}
 }
 
-.order-con{
+.order-con {
 	@include flex-center;
-	.order{
+	.order {
 		background-color: $lightBrown;
-	@include border;
-	@include borderRadiusContainers;
-	padding: 1%;
+		@include border;
+		@include borderRadiusContainers;
+		padding: 1%;
 	}
-	.orderInfo{
+	.orderInfo {
 		@include flex-between;
 		flex-direction: row;
-		h4{
+		h4 {
 			color: $yellow;
 			text-align: center;
 		}
 	}
-	.conProducts{
+	.conProducts {
 		flex-direction: row;
-		.prices{
+		.prices {
 			float: right;
 		}
 	}
-	.total{
+	.total {
 		text-align: right;
 	}
 }
