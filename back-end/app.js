@@ -46,6 +46,13 @@ app.get("/signup", async (req, res) => {
 	return res.json({ Message: "Getting the Signup Page" });
 });
 
+app.get("/deleteCart/:userId/:id", async (req, res) => {
+	userId = req.params.userId
+	id = req.params.id
+	console.log(userId)
+	console.log(id)
+});
+
 app.post("/signup", async (req, res) => {
 	let email = req.body.email;
 	let name = req.body.name;

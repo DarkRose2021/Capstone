@@ -205,5 +205,8 @@ exports.dal = {
 	clearCart: (id) =>{
 			return cartModel.updateOne({UserID: id},
 				{$set: {Products: []}})
-	}
+	},
+	deleteCart: async (id) =>{
+		return cartModel.updateOne
+	},
 };
