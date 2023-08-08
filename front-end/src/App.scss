@@ -20,6 +20,10 @@ a:visited {
 	margin-bottom: 1% !important;
 }
 
+.capstone{
+	color: $yellow;
+}
+
 .navbar {
 	background-color: $darkbrown;
 	a {
@@ -107,6 +111,21 @@ footer {
 	b {
 		color: $error;
 	}
+}
+
+@media all and (max-width: 428px) {
+	footer {
+		background-color: $darkbrown;
+		position: relative; /* Change this to relative */
+		width: 100%;
+		padding: 0.5%;
+		border-top: 2px solid $borderbrown;
+		box-shadow: 2px 2px $borderbrown;
+		z-index: 900;
+		b {
+		  color: $error;
+		}
+	  }
 }
 
 .intro-txt {
@@ -294,7 +313,7 @@ footer {
 	color: black;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 810px) {
 	.contact{
 		.flex{
 			display: block;
@@ -349,7 +368,7 @@ footer {
 	}
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 810px) {
 	.s-container {
 		display: flex;
 		justify-content: space-between;
@@ -400,7 +419,7 @@ footer {
 	}
 }
 
-@media all and (max-width: 801px) {
+@media all and (max-width: 810px) {
 	.info{
 		display: block !important;
 		
@@ -701,8 +720,8 @@ footer {
 	z-index: 9999;
 	@include button();
 	.popup {
-		background-color: $lightBrown;
-		@include border;
+		background-color: $darkbrown;
+		@include border-brown;
 		@include borderRadiusContainers;
 		padding: 20px;
 		border-radius: 5px;

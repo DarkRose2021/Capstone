@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Popup from "./Popup";
 import emailjs from "emailjs-com";
 
 const Checkout = () => {
@@ -257,10 +256,18 @@ const Checkout = () => {
 	return (
 		<div className="container">
 			{showPopup && (
-				<Popup
-					message="Form Submitted! This information will not be saved, you will not actually receive a product, and your card won't actually be charged."
-					onClose={handleClosePopup}
-				/>
+				<>
+					<div className="popup-container">
+						<div className="popup">
+							<p>
+							Form Submitted! This information will not be saved, you will not actually receive a product, and your card won't actually be charged.
+							</p>
+							<button className="close-button" onClick={handleClosePopup}>
+								I understand!
+							</button>
+						</div>
+					</div>
+				</>
 			)}
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
@@ -936,7 +943,7 @@ const Checkout = () => {
 						</div>
 					</main>
 				</>
-					): (<><h1>There's nothing on your cart!</h1></>)
+					): (<><h1>There's nothing in your cart!</h1></>)
 				}
 				</>
 			) : (

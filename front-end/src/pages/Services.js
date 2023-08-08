@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Services = () => {
@@ -69,12 +69,33 @@ const Services = () => {
 			],
 		},
 	];
+
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
+
+	{
+		/* Performs similarly to componentDidMount in classes */
+	}
+	useEffect(() => {
+		window.addEventListener(
+			"resize",
+			() => {
+				const ismobile = window.innerWidth < 1200;
+				if (ismobile !== isMobile) setIsMobile(ismobile);
+			},
+			false
+		);
+	}, [isMobile]);
+
 	return (
 		<div className="servicesPage">
 			<h1>Services</h1>
 			<div class="album py-5 highlight-color">
 				<div class="s-container">
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+					<div
+						className={`row row-cols-1 row-cols-sm-2 ${
+							isMobile ? "row-cols-md-2" : "row-cols-md-3"
+						}  g-3`}
+					>
 						{services?.map((service) => (
 							<div className="col" key={service.id}>
 								<div className="card shadow-sm">

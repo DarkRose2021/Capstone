@@ -19,7 +19,6 @@ import ClientStories from "./pages/ClientStories";
 import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
 import NotFound from "./pages/NotFound";
-import Popup from "./pages/Popup";
 import EditImages from "./pages/EditImages";
 
 function App() {
@@ -45,8 +44,8 @@ function App() {
 	}, []);
 
 	const logout = () => {
-		localStorage.removeItem("Valid Email")
-		localStorage.removeItem("Roles")
+		localStorage.removeItem("Valid Email");
+		localStorage.removeItem("Roles");
 		setLoggedIn(false);
 		window.location.reload();
 	};
@@ -72,10 +71,22 @@ function App() {
 	return (
 		<div>
 			{showPopup && (
-				<Popup
-					message="This is a website for a fake business. DO NOT put any personal information on this site. With that out of the way, Welcome to my Capstone Project!"
-					onClose={handleClosePopup}
-				/>
+				<>
+					<div className="popup-container">
+						<div className="popup">
+							<p>
+								This is a website for a fake business. <b className="error">DO NOT</b> put any
+								personal information on this site.
+								<br /> 
+								With that out of the way, <br />
+								<b className="capstone">Welcome to my Capstone Project!</b>
+							</p>
+							<button className="close-button" onClick={handleClosePopup}>
+								I understand!
+							</button>
+						</div>
+					</div>
+				</>
 			)}
 			<div className="layout">
 				<BrowserRouter>
@@ -225,7 +236,7 @@ function App() {
 							<Route path="/adminHome" element={<Admin />} />
 							<Route path="/cart" element={<Cart />} />
 							<Route path="/clientStories" element={<ClientStories />} />
-							<Route path="/confirm" element={<Confirm /> } />
+							<Route path="/confirm" element={<Confirm />} />
 							<Route path="/edit/:id" element={<EditRoles />} />
 							<Route path="/editImages/:id" element={<EditImages />} />
 							<Route path="*" element={<NotFound />} />
@@ -238,7 +249,13 @@ function App() {
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 					<br />
 					All text generated with ChatGPT - All images from{" "}
-					<a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer" >Pexels</a>
+					<a
+						href="https://www.pexels.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Pexels
+					</a>
 					<br />
 					<b>
 						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
