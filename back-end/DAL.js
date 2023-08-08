@@ -193,5 +193,13 @@ exports.dal = {
 			await userModel.collection.deleteOne({_id: new mongodb.ObjectId(id)})
 		await cartModel.collection.deleteOne({UserID: id})
 		}
+	},
+	showCart: async (id) =>{
+		return await cartModel.find({ UserID: id }).exec();
+	},
+	findProducts: async (id) =>{
+		let temp = await productsModel.findOne({_id: new mongodb.ObjectId(id)}).exec()
+		// console.log(temp)
+		return temp
 	}
 };

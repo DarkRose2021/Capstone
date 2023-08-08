@@ -7,9 +7,69 @@ const Confirm = (props) => {
 	const [roles, setRoles] = useState(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const [orderID, setOrderID] = useState(null);
+	const [cart, setCart] = useState(null);
+	const [products, setProducts] = useState(null);
+	const [user, setUser] = useState(null);
+	let email = null;
+	const location = useLocation();
+	const { data } = location.state || {};
 
-	const { state } = useLocation();
-	// console.log(state)
+	useEffect(() => {
+		const handleStorage = () => {
+			if (localStorage.length > 0) {
+				setLoggedIn(true);
+				setRoles(localStorage.getItem("Roles"));
+				email = localStorage.getItem("Valid Email");
+			}
+		};
+
+		window.addEventListener("storage", handleStorage());
+		return () => window.removeEventListener("storage", handleStorage());
+	}, []);
+
+	function getCart() {
+		let id = user._id;
+		let url = `http://localhost:5000/cart/${id}`;
+		fetch(url)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data[0])
+				setCart(data[0]);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function loadAPI() {
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		fetch(getUrl)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data);
+				setUser(data.User);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function getProducts() {
+		let ids = [];
+		const productsArray = cart.Products;
+
+		// Loop through the Products array and extract ProductID values
+		for (const product of productsArray) {
+			const productId = product.ProductID;
+			ids.push(productId);
+		}
+		let getUrl = `http://localhost:5000/findProduct/${ids}`;
+		fetch(getUrl)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data);
+				setProducts(data);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	
 
 	useEffect(() => {
 		// Function to update the date every second (optional)
@@ -25,7 +85,7 @@ const Confirm = (props) => {
 		const maxDisplayedLength = 15; // Set your desired maximum length here
 		const uuid = uuidv4().substring(0, maxDisplayedLength);
 		setOrderID(uuid);
-	}, []);
+	}, [data]);
 
 	const formattedDate = currentDate.toLocaleDateString(undefined, {
 		year: "numeric",
@@ -52,6 +112,47 @@ const Confirm = (props) => {
 		return () => window.removeEventListener("storage", handleStorage());
 	}, []);
 
+	useEffect(() => {
+		loadAPI();
+	}, [email]);
+
+	useEffect(() => {
+		if (user) {
+			getCart();
+		}
+	}, [user]);
+
+	useEffect(() => {
+		if (cart) {
+			getProducts();
+		}
+	}, [cart]);
+
+	function getProductQty(productId) {
+		if (cart) {
+			const productInCart = cart.Products.find(
+				(product) => product.ProductID === productId
+			);
+			return productInCart ? productInCart.Qty : 0;
+		}
+		return 0;
+	}
+
+	function prices(qty, price) {
+		return qty * price;
+	}
+
+	function total() {
+		let total = 0;
+		if (cart && products) {
+			products.forEach((product) => {
+				const quantity = getProductQty(product._id);
+				total += prices(quantity, product.Price);
+			});
+		}
+		return total;
+	}
+
 	return (
 		<div>
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
@@ -59,7 +160,7 @@ const Confirm = (props) => {
 					<h1>Your Order has been confirmed!</h1>
 					<div className="order-con">
 						<div className="order">
-							<h3>Hi {state.data.firstName}!</h3>
+							<h3>Hi {data.firstName}!</h3>
 							<p>Your order has been confirmed and will be shipped soon</p>
 							<hr />
 							<div className="orderInfo">
@@ -73,19 +174,21 @@ const Confirm = (props) => {
 								</div>
 								<div>
 									<h4>Payment</h4>
-									<p>**** **** **** {getLastFourDigits(state.data.ccNumber)}</p>
+									<p>**** **** **** {getLastFourDigits(data.ccNumber)}</p>
 								</div>
 								<div>
 									<h4>Address</h4>
-									<p>{state.data.address}</p>
+									<p>{data.address}</p>
 								</div>
 							</div>
 							<hr />
 							<div className="conProducts">
-								<div>
-									<span>products</span>
-									<span className="prices">prices</span>
-								</div>
+								{products?.map((product) => {
+									<div>
+										<span>{product.Name}</span>
+										<span className="prices">{product.Price}</span>
+									</div>
+								})}
 							</div>
 							<hr />
 							<div>

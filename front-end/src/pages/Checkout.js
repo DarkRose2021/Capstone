@@ -12,6 +12,10 @@ const Checkout = () => {
 	const [showPopup, setShowPopup] = useState(false);
 	const [sendData, setSendData] = useState(null);
 	const [currentDate, setCurrentDate] = useState(new Date());
+	const [cart, setCart] = useState(null);
+	const [products, setProducts] = useState(null);
+	const [user, setUser] = useState(null);
+	let email = null;
 
 	let navigate = useNavigate();
 	const routeChange = () => {
@@ -53,11 +57,54 @@ const Checkout = () => {
 		return "Name must only contain letters";
 	};
 
+	function getCart() {
+		let id = user._id;
+		let url = `http://localhost:5000/cart/${id}`;
+		fetch(url)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data[0])
+				setCart(data[0]);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function loadAPI() {
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		fetch(getUrl)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data);
+				setUser(data.User);
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function getProducts() {
+		let ids = [];
+		const productsArray = cart.Products;
+
+		// Loop through the Products array and extract ProductID values
+		for (const product of productsArray) {
+			const productId = product.ProductID;
+			ids.push(productId);
+		}
+		let getUrl = `http://localhost:5000/findProduct/${ids}`;
+		fetch(getUrl)
+			.then((data) => data.json())
+			.then((data) => {
+				// console.log(data);
+				setProducts(data);
+			})
+			.catch((err) => console.log(err));
+	}
+
 	useEffect(() => {
 		const handleStorage = () => {
 			if (localStorage.length > 0) {
 				setLoggedIn(true);
 				setRoles(localStorage.getItem("Roles"));
+				email = localStorage.getItem("Valid Email");
 			}
 		};
 
@@ -155,6 +202,57 @@ const Checkout = () => {
 		form.classList.add("was-validated");
 	};
 
+	useEffect(() => {
+		loadAPI();
+	}, [email]);
+
+	useEffect(() => {
+		if (user) {
+			getCart();
+		}
+	}, [user]);
+
+	useEffect(() => {
+		if (cart) {
+			getProducts();
+		}
+	}, [cart]);
+
+	function getProductQty(productId) {
+		if (cart) {
+			const productInCart = cart.Products.find(
+				(product) => product.ProductID === productId
+			);
+			return productInCart ? productInCart.Qty : 0;
+		}
+		return 0;
+	}
+
+	function prices(qty, price) {
+		return qty * price;
+	}
+
+	function total() {
+		let total = 0;
+		if (cart && products) {
+			products.forEach((product) => {
+				const quantity = getProductQty(product._id);
+				total += prices(quantity, product.Price);
+			});
+		}
+		return total;
+	}
+
+	const calculateTotalItems = () => {
+		let totalItems = 0;
+		if (cart && products) {
+			products.forEach((product) => {
+				totalItems += getProductQty(product._id);
+			});
+		}
+		return totalItems;
+	};
+
 	return (
 		<div className="container">
 			{showPopup && (
@@ -174,33 +272,37 @@ const Checkout = () => {
 							<div className="col-md-5 col-lg-4 order-md-last ">
 								<h4 className="d-flex justify-content-between align-items-center mb-3">
 									<span className="">Your cart</span>
-									<span className="badge bg-primary rounded-pill">3</span>
+									<span className="badge bg-primary rounded-pill">
+										{calculateTotalItems()}
+									</span>
 								</h4>
 								<ul className="list-group mb-3 cart">
-									<li className="list-group-item d-flex justify-content-between lh-sm">
-										<div>
-											<h6 className="my-0">Product name</h6>
-											<small className="">Brief description</small>
-										</div>
-										<span className="">$12</span>
-									</li>
-									<li className="list-group-item d-flex justify-content-between lh-sm">
-										<div>
-											<h6 className="my-0">Second product</h6>
-											<small className="">Brief description</small>
-										</div>
-										<span className="">$8</span>
-									</li>
-									<li className="list-group-item d-flex justify-content-between lh-sm">
-										<div>
-											<h6 className="my-0">Third item</h6>
-											<small className="">Brief description</small>
-										</div>
-										<span className="">$5</span>
-									</li>
+									{cart ? (
+										products?.map((product) => (
+											<>
+												<li
+													key={product._id}
+													className="list-group-item d-flex justify-content-between lh-sm"
+												>
+													<div>
+														<h4 className="my-0">{product.Name}</h4>
+														<small>{product.BriefDescription}</small>
+														<br />
+														<small>Qty: {getProductQty(product._id)}</small>
+													</div>
+
+													<span className="prices">
+														${prices(getProductQty(product._id), product.Price)}
+													</span>
+												</li>
+											</>
+										))
+									) : (
+										<></>
+									)}
 									<li className="list-group-item d-flex justify-content-between total">
 										<span>Total (USD)</span>
-										<strong>$20</strong>
+										<strong>${total()}</strong>
 									</li>
 								</ul>
 							</div>

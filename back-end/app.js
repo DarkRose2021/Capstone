@@ -60,12 +60,29 @@ app.post("/signup", async (req, res) => {
 	}
 });
 
-app.get("/cart", async (req, res) => {});
+app.get("/cart/:id", async (req, res) => {
+	let id = req.params.id;
+	const user = await dal.showCart(id);
+	return res.json(user);
+});
+
+app.get("/findProduct/:id", async (req, res) => {
+	let id = req.params.id;
+	let idArray = id.split(",");
+
+	let products = [];
+
+	for(const id of idArray){
+		const product = await dal.findProducts(id);
+		products.push(product)
+	}
+	return res.json(products)
+});
 
 app.post("/addToCart/:items", async (req, res) => {
 	const items = req.params.items;
-	const data = JSON.parse(items)
-	dal.addToCart(data.items.UserID, data.items.Products)
+	const data = JSON.parse(items);
+	dal.addToCart(data.items.UserID, data.items.Products);
 });
 
 app.get("/products", async (req, res) => {
@@ -74,10 +91,10 @@ app.get("/products", async (req, res) => {
 });
 
 app.get("/deleteUser/:id", async (req, res) => {
-	let id = req.params.id
-	dal.deleteUser(id)
-	let users = await dal.listUsers()
-	res.json({Message: "User Deleted", Users: users})
+	let id = req.params.id;
+	dal.deleteUser(id);
+	let users = await dal.listUsers();
+	res.json({ Message: "User Deleted", Users: users });
 });
 
 app.post("/checkout", async (req, res) => {
