@@ -89,7 +89,7 @@ exports.dal = {
 			let id = newUser.insertedId.toString();
 			let data = {
 				UserID: id,
-				Products: [{ProductID: "", Qty: 0}]
+				Products: []
 			}
 			await cartModel.collection.insertOne(data)
 			return newUser
@@ -168,26 +168,25 @@ exports.dal = {
 	showProducts: async () => {
 		return await productsModel.find({}).exec();
 	},
-	checkCart: async (id) => {
-		let found = await cartModel.findOne({ UserID: id }).exec();
-		console.log("Found: " + found);
-		if (found) {
-			console.log("cart found");
-			return found;
-		} else {
-			let data = {
-				UserID: id,
-				Products: [],
-			};
-			cartModel.collection.insertOne(data);
-			console.log("cart created");
-		}
-	},
 	addToCart: async (id, product) => {
-		await cartModel.collection.updateOne(
-			{ UserID: id },
-			{ $push: { Products: { $each: product } } }
-		);
+		const existingCartItem = await cartModel.findOne({ UserID: id, "Products.ProductID": product }).exec();
+
+    if (existingCartItem) {
+        await cartModel.updateOne(
+            { UserID: id, "Products.ProductID": product },
+            { $inc: { "Products.$.Qty": 1 } }
+        );
+    } else {
+        const newItem = {
+            ProductID: product,
+            Qty: 1
+        };
+
+        await cartModel.updateOne(
+            { UserID: id },
+            { $push: { Products: newItem } }
+        );
+    }
 	},
 	deleteUser: async (id) =>{
 		if(userModel.collection.findOne({_id: new mongodb.ObjectId(id)}) !== null){

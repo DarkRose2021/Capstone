@@ -47,7 +47,7 @@ const Products = () => {
 	}
 
 	function addToCart(id) {
-		items.Products.push(id);
+		items.Products = id;
 		console.log(items);
 		let dataToSend = {
 			items: items,
