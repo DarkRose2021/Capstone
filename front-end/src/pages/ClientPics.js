@@ -61,8 +61,6 @@ const ClientPics = () => {
 					</div>
 					<br />
 					<br />
-					<br />
-					<br />
 				</>
 			) : (
 				<>

@@ -20,7 +20,7 @@ a:visited {
 	margin-bottom: 1% !important;
 }
 
-.capstone{
+.capstone {
 	color: $yellow;
 }
 
@@ -123,9 +123,9 @@ footer {
 		box-shadow: 2px 2px $borderbrown;
 		z-index: 900;
 		b {
-		  color: $error;
+			color: $error;
 		}
-	  }
+	}
 }
 
 .intro-txt {
@@ -187,71 +187,69 @@ footer {
 	}
 }
 
-.contact{
+.contact {
 	.flex {
-	margin-top: 3%;
-	display: flex;
-	flex-direction: row;
-	margin-left: 15%;
-	margin-right: auto;
-	.form {
-		.error {
-			color: $darkerError;
-		}
-		@include border();
-		@include borderRadiusContainers;
-		margin-left: 10%;
-		width: 25%;
-		background-color: $lightBrown;
-		padding: 2%;
-		@include button;
-		div {
-			h3 {
-				text-align: center;
-				color: $yellow;
+		margin-top: 3%;
+		display: flex;
+		flex-direction: row;
+		margin-left: 15%;
+		margin-right: auto;
+		.form {
+			.error {
+				color: $darkerError;
 			}
-			form {
-				margin: 1%;
-			}
-			input,
-			textarea {
-				margin: 2%;
-				width: 100%;
-				@include borderRadius();
-			}
-			.btn {
-				width: 100%;
-				background-color: $blue;
-				border: none;
-				padding: 1% 2%;
-				margin: 2%;
-				@include borderRadius();
-				font-size: 1.2em;
-			}
-			.btn:hover {
-				background-color: $blue-hover;
-				color: black;
-			}
-			.btn:active {
-				background-color: $blue-active;
-				color: black;
-			}
-			h4 {
-				margin-top: 2%;
-				text-align: center;
-				a {
-					font-weight: bold;
+			@include border();
+			@include borderRadiusContainers;
+			margin-left: 10%;
+			width: 25%;
+			background-color: $lightBrown;
+			padding: 2%;
+			@include button;
+			div {
+				h3 {
+					text-align: center;
+					color: $yellow;
+				}
+				form {
+					margin: 1%;
+				}
+				input,
+				textarea {
+					margin: 2%;
+					width: 100%;
+					@include borderRadius();
+				}
+				.btn {
+					width: 100%;
+					background-color: $blue;
+					border: none;
+					padding: 1% 2%;
+					margin: 2%;
+					@include borderRadius();
+					font-size: 1.2em;
+				}
+				.btn:hover {
+					background-color: $blue-hover;
+					color: black;
+				}
+				.btn:active {
+					background-color: $blue-active;
+					color: black;
+				}
+				h4 {
+					margin-top: 2%;
+					text-align: center;
+					a {
+						font-weight: bold;
+					}
 				}
 			}
-		}
-		.calenderDiv {
-			background-color: $lightBrown !important;
+			.calenderDiv {
+				background-color: $lightBrown !important;
+			}
 		}
 	}
 }
-}
-
-
 
 .fc {
 	@include borderRadiusContainers;
@@ -314,24 +312,23 @@ footer {
 }
 
 @media all and (max-width: 810px) {
-	.contact{
-		.flex{
+	.contact {
+		.flex {
 			display: block;
 			margin-left: 0%;
 			margin: 1%;
-			.form{
+			.form {
 				width: 90vw;
 				margin-left: 4%;
 			}
+		}
 	}
-	}
-	.fc{
+	.fc {
 		width: 90vw;
 		margin-left: 4%;
 		margin-bottom: 2%;
 	}
 }
-
 
 .row {
 	width: 100%;
@@ -420,15 +417,14 @@ footer {
 }
 
 @media all and (max-width: 810px) {
-	.info{
+	.info {
 		display: block !important;
-		
 	}
 }
 
 @media all and (max-width: 428px) {
-	.info{
-		img{
+	.info {
+		img {
 			width: 100%;
 		}
 	}
@@ -566,8 +562,8 @@ footer {
 }
 
 @media all and (max-width: 428px) {
-	.pics{
-		img{
+	.pics {
+		img {
 			width: 90vw;
 		}
 	}
@@ -613,22 +609,26 @@ footer {
 .editImgsCont {
 	@include button;
 	.upload__image-wrapper {
-		@include flex-center();
-		flex-direction: row;
-		flex-wrap: wrap;
-		.flex {
+		div {
+			@include flex-center();
 			flex-direction: row;
 			flex-wrap: wrap;
+			.flex {
+			@include flex-center();
+				
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
 		}
 	}
 	.btnDiv {
-		@include flex-center();
-		flex-direction: row;
+		// @include flex-center();
+		flex-direction: block;
 		.buttons {
 			@include flex-center;
 			// width: 90vw
 		}
-	}
+	}	
 
 	.image-item {
 		@include border();

@@ -3,20 +3,16 @@ const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
-// var form = new formidable.IncomingForm();
-
-// // ADD THIS LINE to increase file size limit to 10 GB; default is 200 MB
-// form.maxFileSize = 10 * 1024 * 1024 * 1024;
+const fs = require("fs");
+const path = require("path");
 
 const dal = require("./DAL").dal;
 const port = 5000;
 const app = express();
 
-// app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
-app.use(bodyParser.json({ limit: "150mb" }));
+app.use(express.json({ limit: "150mb" }));
 app.use(
-	bodyParser.urlencoded({
+	express.urlencoded({
 		limit: "150mb",
 		extended: true,
 	})
@@ -136,33 +132,29 @@ app.post("/editRoles/:id", async (req, res) => {
 	res.json({ Message: "updated" });
 });
 
-app.get("/editImgs/:id", async (req, res) => {
-	// let id = req.params.id
-	// let images = dal.findUser(id)
-	// res.json({Message: "Images Found", Images: images.Images})
-});
-
 app.post("/editImgs/:id", async (req, res) => {
 	try {
 		const userId = req.params.id;
-		// console.log(userId)
 		const images = req.body.images;
 
-		const updatedImageArray = images.map((img, index) => {
-			return {
-				url: img.url,
-				name: `Image_${index + 1}`, // Add the "name" field based on the index (adding 1 to index for 1-based numbering)
-			};
-		});
+		const updatedImageArray = images.map((img, index) => ({
+			url: img.url,
+			name: `Image_${index + 1}`,
+		}));
 
-		dal.addImgs(userId, updatedImageArray);
+		// const filePath = path.join(__dirname, "updatedImages.json");
 
-		res.status(200).json({ message: "Images uploaded successfully." });
+		// fs.writeFileSync(filePath, JSON.stringify(updatedImageArray, null, 2));
+
+		dal.addImgs(userId, updatedImageArray)
+
+		res.status(200).json({ message: "Images uploaded and saved successfully." });
 	} catch (error) {
 		console.error("Error uploading images:", error);
 		res.status(500).json({ error: "Internal server error." });
 	}
 });
+
 
 function getRandomObjectFromArray(array) {
 	const randomIndex = Math.floor(Math.random() * array.length);
