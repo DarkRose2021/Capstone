@@ -201,5 +201,9 @@ exports.dal = {
 		let temp = await productsModel.findOne({_id: new mongodb.ObjectId(id)}).exec()
 		// console.log(temp)
 		return temp
+	},
+	clearCart: (id) =>{
+			return cartModel.updateOne({UserID: id},
+				{$set: {Products: []}})
 	}
 };

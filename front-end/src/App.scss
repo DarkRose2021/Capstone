@@ -656,10 +656,13 @@ footer {
 		flex-direction: row;
 		.prices {
 			float: right;
+			color: $yellow;
+			font-weight: bold;
 		}
 	}
 	.total {
 		text-align: right;
+		color: $yellow;
 	}
 }
 

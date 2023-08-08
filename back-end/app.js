@@ -66,6 +66,11 @@ app.get("/cart/:id", async (req, res) => {
 	return res.json(user);
 });
 
+app.get("/clearCart/:id", async (req, res) => {
+	let id = req.params.id;
+	let cart = await dal.clearCart(id);
+});
+
 app.get("/findProduct/:id", async (req, res) => {
 	let id = req.params.id;
 	let idArray = id.split(",");
