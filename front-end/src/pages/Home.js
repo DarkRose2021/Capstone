@@ -2,15 +2,6 @@ import React, { useEffect } from "react";
 import logo from "../logo.png";
 
 const Home = () => {
-	// function disclaimer() {
-	// 	alert(
-	// 		"This website is for a fake business. \n Do not put any personal information on this website"
-	// 	);
-	// }
-
-	// useEffect(() => {
-	// 	disclaimer();
-	// }, []);
 
 	return (
 		<div>
@@ -115,6 +106,10 @@ const Home = () => {
 					</ul>
 				</div>
 			</div>
+			<br />
+			<br />
+			<br />
+			<br />
 		</div>
 	);
 };

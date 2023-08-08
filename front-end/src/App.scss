@@ -155,7 +155,21 @@ footer {
 	}
 }
 
-.flex {
+@media all and (max-width: 1694px) {
+	.about-txt {
+		display: block;
+		div {
+			display: block;
+		}
+		img {
+			margin-right: 50% !important;
+			max-width: 50% !important;
+		}
+	}
+}
+
+.contact{
+	.flex {
 	margin-top: 3%;
 	display: flex;
 	flex-direction: row;
@@ -216,6 +230,9 @@ footer {
 		}
 	}
 }
+}
+
+
 
 .fc {
 	@include borderRadiusContainers;
@@ -277,6 +294,26 @@ footer {
 	color: black;
 }
 
+@media all and (max-width: 800px) {
+	.contact{
+		.flex{
+			display: block;
+			margin-left: 0%;
+			margin: 1%;
+			.form{
+				width: 90vw;
+				margin-left: 4%;
+			}
+	}
+	}
+	.fc{
+		width: 90vw;
+		margin-left: 4%;
+		margin-bottom: 2%;
+	}
+}
+
+
 .row {
 	width: 100%;
 }
@@ -300,7 +337,7 @@ footer {
 			font-weight: bold;
 		}
 		.card-body {
-			max-height: 500px;
+			// max-height: 500px;
 			ul {
 				list-style: none;
 			}
@@ -308,6 +345,17 @@ footer {
 		button {
 			margin-left: 35%;
 			@include button;
+		}
+	}
+}
+
+@media all and (max-width: 800px) {
+	.s-container {
+		display: flex;
+		justify-content: space-between;
+		.card {
+			flex: 1; /* This will make both columns equally sized */
+			flex-basis: 49%;
 		}
 	}
 }
@@ -349,6 +397,21 @@ footer {
 	}
 	.name {
 		margin-left: 5%;
+	}
+}
+
+@media all and (max-width: 801px) {
+	.info{
+		display: block !important;
+		
+	}
+}
+
+@media all and (max-width: 428px) {
+	.info{
+		img{
+			width: 100%;
+		}
 	}
 }
 
@@ -424,12 +487,13 @@ footer {
 	}
 }
 
-.cart{
+.cart {
 	background-color: $darkbrown;
-		@include border-brown;
-		@include borderRadiusContainers;
-		@include button;
-	small, span {
+	@include border-brown;
+	@include borderRadiusContainers;
+	@include button;
+	small,
+	span {
 		color: $color !important;
 	}
 	.list-group-item {
@@ -440,16 +504,16 @@ footer {
 	.total {
 		color: $yellow;
 	}
-	
-	.prices{
+
+	.prices {
 		color: $yellow;
 	}
 
-	.bi{
+	.bi {
 		cursor: pointer;
 	}
 
-	.bi:hover{
+	.bi:hover {
 		filter: brightness(50%);
 		-webkit-transition: all 1s ease;
 		-moz-transition: all 1s ease;
@@ -479,6 +543,14 @@ footer {
 		-o-transition: all 1s ease;
 		-ms-transition: all 1s ease;
 		transition: all 1s ease;
+	}
+}
+
+@media all and (max-width: 428px) {
+	.pics{
+		img{
+			width: 90vw;
+		}
 	}
 }
 
@@ -678,5 +750,3 @@ footer {
 		color: $yellow;
 	}
 }
-
-

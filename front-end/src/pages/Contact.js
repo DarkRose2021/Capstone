@@ -40,7 +40,7 @@ const Contact = () => {
 	};
 
 	return (
-		<div>
+		<div className="contact">
 			<h1>Contact Us</h1>
 			<div className="flex">
 				<div className="calenderDiv">

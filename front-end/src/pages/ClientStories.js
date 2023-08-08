@@ -67,7 +67,7 @@ const ClientStories = () => {
 			{/* eventually put in to something that I can loop over */}
 			<div className="album py-5 highlight-color">
 				<div class="s-container">
-					<div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
 						{clients?.map((client) =>(
 						<div className="col" key={client.id}>
 							<div className="card shadow-sm">

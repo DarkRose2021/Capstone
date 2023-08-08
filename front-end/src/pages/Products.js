@@ -91,7 +91,7 @@ const Products = () => {
 					<h1>Products</h1>
 					<div className="album py-5 highlight-color">
 						<div className="s-container product">
-							<div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+							<div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
 								{products?.map((product) => (
 									<div className="col" key={product._id}>
 										<div className="card shadow-sm">

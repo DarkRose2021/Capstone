@@ -74,7 +74,7 @@ const Services = () => {
 			<h1>Services</h1>
 			<div class="album py-5 highlight-color">
 				<div class="s-container">
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
 						{services?.map((service) => (
 							<div className="col" key={service.id}>
 								<div className="card shadow-sm">

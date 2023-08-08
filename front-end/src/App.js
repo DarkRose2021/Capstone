@@ -81,7 +81,7 @@ function App() {
 				<BrowserRouter>
 					<header>
 						<nav
-							className="navbar navbar-expand-sm navbar-toggleable-sm mb-3"
+							className="navbar navbar-expand-md navbar-toggleable-md mb-3"
 							id="top"
 						>
 							<div className="container-fluid">

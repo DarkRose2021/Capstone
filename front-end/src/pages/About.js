@@ -35,6 +35,11 @@ const About = () => {
 					</p>
 				</div>
 			</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 		</div>
 	);
 };
