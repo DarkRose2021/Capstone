@@ -71,10 +71,6 @@ const Services = () => {
 	];
 
 	const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
-
-	{
-		/* Performs similarly to componentDidMount in classes */
-	}
 	useEffect(() => {
 		window.addEventListener(
 			"resize",

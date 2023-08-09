@@ -51,6 +51,7 @@ const Login = () => {
 				JSON.stringify(user.User.Email)
 			);
 			window.localStorage.setItem("Roles", JSON.stringify(user.User.Roles));
+			window.localStorage.setItem("Name", JSON.stringify(user.User.Name));
 			navigate(0);
 		}
 	}, [user]);

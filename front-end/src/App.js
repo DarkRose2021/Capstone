@@ -30,9 +30,9 @@ function App() {
 
 	useEffect(() => {
 		const handleStorage = () => {
-			if (localStorage.length > 0 && localStorage.getItem("Valid Email")) {
+			if (localStorage.length > 0 && localStorage.getItem("Name")) {
 				setLoggedIn(true);
-				str = localStorage.getItem("Valid Email");
+				str = localStorage.getItem("Name");
 				newEmail = str.replace(/^"(.*)"$/, "$1");
 				setEmail(newEmail);
 				setRoles(localStorage.getItem("Roles"));
@@ -45,6 +45,7 @@ function App() {
 
 	const logout = () => {
 		localStorage.removeItem("Valid Email");
+		localStorage.removeItem("Name");
 		localStorage.removeItem("Roles");
 		setLoggedIn(false);
 		window.location.reload();
@@ -68,6 +69,18 @@ function App() {
 		localStorage.setItem("popupShown", "true");
 	};
 
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
+	useEffect(() => {
+		window.addEventListener(
+			"resize",
+			() => {
+				const ismobile = window.innerWidth < 1200;
+				if (ismobile !== isMobile) setIsMobile(ismobile);
+			},
+			false
+		);
+	}, [isMobile]);
+
 	return (
 		<div>
 			{showPopup && (
@@ -75,9 +88,10 @@ function App() {
 					<div className="popup-container">
 						<div className="popup">
 							<p>
-								This is a website for a fake business. <b className="error">DO NOT</b> put any
-								personal information on this site.
-								<br /> 
+								This is a website for a fake business.{" "}
+								<b className="error">DO NOT</b> put any personal information on
+								this site.
+								<br />
 								With that out of the way, <br />
 								<b className="capstone">Welcome to my Capstone Project!</b>
 							</p>
@@ -92,7 +106,7 @@ function App() {
 				<BrowserRouter>
 					<header>
 						<nav
-							className="navbar navbar-expand-lg navbar-toggleable mb-3"
+							className="navbar navbar-expand-sm navbar-toggleable mb-3"
 							id="top"
 						>
 							<div className="container-fluid">
@@ -142,52 +156,159 @@ function App() {
 												Client Stories
 											</Link>
 										</li>
-										{loggedIn === true && roles.includes("Client") ? (
-											<li className="nav-item">
-												<Link to="/client-pictures" className="nav-link">
-													Your Pictures
-												</Link>
-											</li>
-										) : (
-											<></>
-										)}
-										{loggedIn === true &&
-										(roles.includes("Client") || roles.includes("Admin")) ? (
-											<li className="nav-item">
-												<Link to="/products" className="nav-link">
-													Products
-												</Link>
-											</li>
-										) : (
-											<></>
-										)}
-										{loggedIn === true &&
-										(roles.includes("Client") || roles.includes("Admin")) ? (
-											<li className="nav-item">
-												<Link to="/checkout" className="nav-link">
-													Checkout
-												</Link>
-											</li>
-										) : (
-											<></>
-										)}
+										{loggedIn ? (
+											<>
+												{isMobile ? (
+													<>
+														<li class="nav-item dropdown">
+															<a
+																class="nav-link dropdown-toggle"
+																href="#"
+																role="button"
+																data-bs-toggle="dropdown"
+																aria-expanded="false"
+															>
+																{roles.includes("Client") ? "Client" : "Admin"}
+															</a>
+															<ul class="dropdown-menu">
+																<li>
+																	{loggedIn === true &&
+																	(roles.includes("Client") ||
+																		roles.includes("Admin")) ? (
+																		<li>
+																			<Link
+																				to="/products"
+																				className="dropdown-item"
+																			>
+																				Products
+																			</Link>
+																		</li>
+																	) : (
+																		<></>
+																	)}
+																</li>
+																<li>
+																	{loggedIn === true &&
+																	(roles.includes("Client") ||
+																		roles.includes("Admin")) ? (
+																		<li>
+																			<Link
+																				to="/checkout"
+																				className="dropdown-item"
+																			>
+																				Checkout
+																			</Link>
+																		</li>
+																	) : (
+																		<></>
+																	)}
+																</li>
+																<li>
+																	{loggedIn === true &&
+																	(roles.includes("Client") ||
+																		roles.includes("Admin")) ? (
+																		<li>
+																			<Link
+																				to="/cart"
+																				className="dropdown-item"
+																			>
+																				Cart
+																			</Link>
+																		</li>
+																	) : (
+																		<></>
+																	)}
+																</li>
+																{loggedIn === true &&
+																roles.includes("Client") ? (
+																	<li>
+																		<Link
+																			to="/client-pictures"
+																			className="dropdown-item"
+																		>
+																			Your Pictures
+																		</Link>
+																	</li>
+																) : (
+																	<></>
+																)}
+																{loggedIn === true &&
+																roles.includes("Admin") ? (
+																	<li>
+																		<Link
+																			to="/adminHome"
+																			className="dropdown-item"
+																		>
+																			Admin Home
+																		</Link>
+																	</li>
+																) : (
+																	<></>
+																)}
+															</ul>
+														</li>
+													</>
+												) : (
+													<>
+														{loggedIn === true && roles.includes("Client") ? (
+															<li className="nav-item">
+																<Link
+																	to="/client-pictures"
+																	className="nav-link"
+																>
+																	Your Pictures
+																</Link>
+															</li>
+														) : (
+															<></>
+														)}
+														{loggedIn === true && roles.includes("Admin") ? (
+															<li className="nav-item">
+																<Link to="/adminHome" className="nav-link">
+																	Admin Home
+																</Link>
+															</li>
+														) : (
+															<></>
+														)}
+														{loggedIn === true &&
+														(roles.includes("Client") ||
+															roles.includes("Admin")) ? (
+															<li className="nav-item">
+																<Link to="/products" className="nav-link">
+																	Products
+																</Link>
+															</li>
+														) : (
+															<></>
+														)}
+														{loggedIn === true &&
+														(roles.includes("Client") ||
+															roles.includes("Admin")) ? (
+															<li className="nav-item">
+																<Link to="/checkout" className="nav-link">
+																	Checkout
+																</Link>
+															</li>
+														) : (
+															<></>
+														)}
 
-										{loggedIn === true && roles.includes("Admin") ? (
-											<li className="nav-item">
-												<Link to="/adminHome" className="nav-link">
-													AdminHome
-												</Link>
-											</li>
-										) : (
-											<></>
-										)}
-										{loggedIn === true &&
-										(roles.includes("Client") || roles.includes("Admin")) ? (
-											<li className="nav-item">
-												<Link to="/cart" className="nav-link">
-													Cart
-												</Link>
-											</li>
+														
+														{loggedIn === true &&
+														(roles.includes("Client") ||
+															roles.includes("Admin")) ? (
+															<li className="nav-item">
+																<Link to="/cart" className="nav-link">
+																	Cart
+																</Link>
+															</li>
+														) : (
+															<></>
+														)}
+													</>
+												)}
+											</>
 										) : (
 											<></>
 										)}
@@ -208,10 +329,41 @@ function App() {
 									{/* only show when a user is logged in */}
 									{loggedIn === true ? (
 										<>
-											<a className="navbar-text welcome">Welcome {email}!</a>
-											<a href="#" onClick={logout} className="nav-link">
-												Logout
-											</a>
+											{isMobile ? (
+												<>
+													<li class="welcome dropdown">
+														<a
+															class="nav-link dropdown-toggle"
+															href="#"
+															role="button"
+															data-bs-toggle="dropdown"
+															aria-expanded="false"
+														>
+															Welcome {email}!
+														</a>
+														<ul class="dropdown-menu">
+															<li>
+																<a
+																	href="#"
+																	onClick={logout}
+																	className="dropdown-item"
+																>
+																	Logout
+																</a>
+															</li>
+														</ul>
+													</li>
+												</>
+											) : (
+												<>
+													<a className="navbar-text welcome">
+														Welcome {email}!
+													</a>
+													<a href="#" onClick={logout} className="nav-link">
+														Logout
+													</a>
+												</>
+											)}
 										</>
 									) : (
 										<></>

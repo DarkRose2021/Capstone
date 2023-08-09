@@ -24,7 +24,7 @@ a:visited {
 	color: $yellow;
 }
 
-.navbar {
+.navbar  {
 	background-color: $darkbrown;
 	a {
 		color: $color;
@@ -55,10 +55,18 @@ a:visited {
 		margin-right: 15px;
 		cursor: default;
 		text-decoration: none;
+		list-style-type: none;
 		a:hover {
 			color: $color !important;
 		}
 	}
+	.dropdown-menu{
+		background-color: $darkbrown;
+		.dropdown-item:hover{
+			background-color: $borderbrown;
+		}
+	}
+	
 }
 
 body {

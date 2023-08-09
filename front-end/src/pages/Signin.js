@@ -74,6 +74,7 @@ const Signin = () => {
 				JSON.stringify(user.User[0].Email)
 			);
 			window.localStorage.setItem("Roles", JSON.stringify(user.User[0].Roles));
+			window.localStorage.setItem("Name", JSON.stringify(user.User[0].Name));
 			navigate(0);
 		}
 	}, [user]);
