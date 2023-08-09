@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
+import rrulePlugin from '@fullcalendar/rrule'
 
 const Contact = () => {
 	const [values, setValues] = useState({
@@ -38,10 +39,109 @@ const Contact = () => {
 			[name]: value,
 		}));
 	};
-
-	const events = [
-		{id: 1, title: "Photo shoot", start: '2023-10-08T8:00:00', end: '2023-10-08T11:00:00', backgroundColor: "#40797A", borderColor: "#40797A"}
-	]
+	let events = [
+		{
+			title: "Photo shoot",
+			start: "2023-10-08",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-09-23",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-09-03",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-09-16",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-08-12",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-08-17",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-08-27",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-08-01",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-08-08",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-09-19",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Photo shoot",
+			start: "2023-09-08",
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		},
+		{
+			title: "Christmas",
+			date: "2023-12-25",
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			allDay: true,
+		},
+		{
+			title: "Christmas Eve",
+			date: "2023-12-24",
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			allDay: true,
+		},
+		{
+			title: "New Years Eve",
+			date: "2023-12-31",
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			allDay: true,
+		},
+		{
+			title: "Halloween",
+			date: "2023-10-31",
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			allDay: true,
+		},
+		{
+			title: "New Years Day",
+			date: "2023-01-01",
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			allDay: true,
+		},
+	];
 
 	return (
 		<div className="contact">
@@ -53,7 +153,7 @@ const Contact = () => {
 						plugins={[dayGridPlugin]}
 						initialView="dayGridMonth"
 						weekends={true}
-						events={[{id: 1, title: "Photo shoot", start: '2023-10-08T8:00:00', end: '2023-10-08T11:00:00', backgroundColor: "#40797A", borderColor: "#40797A"}]}
+						events={events}
 						handleWindowResize={true}
 					/>
 				</div>
@@ -102,8 +202,6 @@ const Contact = () => {
 					</div>
 				</div>
 			</div>
-			<br />
-			<br />
 			<br />
 		</div>
 	);
