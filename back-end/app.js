@@ -20,8 +20,8 @@ app.use(
 	})
 );
 app.use(cors());
-
 app.use(express.static("public"));
+// app.use('/public/images', express.static('/public/'));
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
@@ -179,7 +179,7 @@ app.post("/editImgs/:id", async (req, res) => {
 
             updatedImageArray.push({
                 name: imageName,
-                url: `http://localhost:5000/public/images/${userId}/${imageName}`,
+                url: `http://localhost:5000/images/${userId}/${imageName}`,
             });
         }
 
