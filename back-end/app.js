@@ -3,8 +3,9 @@ const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
-const fs = require("fs");
+const fs = require('fs').promises;
 const path = require("path");
+const http = require('http');
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -18,6 +19,8 @@ app.use(
 	})
 );
 app.use(cors());
+
+app.use('/images', express.static("public"));
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
@@ -43,10 +46,10 @@ app.get("/signup", async (req, res) => {
 });
 
 app.get("/deleteCart/:userId/:id", async (req, res) => {
-	userId = req.params.userId
-	id = req.params.id
-	console.log(userId)
-	console.log(id)
+	userId = req.params.userId;
+	id = req.params.id;
+	console.log(userId);
+	console.log(id);
 });
 
 app.post("/signup", async (req, res) => {
@@ -80,11 +83,11 @@ app.get("/findProduct/:id", async (req, res) => {
 
 	let products = [];
 
-	for(const id of idArray){
+	for (const id of idArray) {
 		const product = await dal.findProducts(id);
-		products.push(product)
+		products.push(product);
 	}
-	return res.json(products)
+	return res.json(products);
 });
 
 app.post("/addToCart/:items", async (req, res) => {
@@ -132,29 +135,42 @@ app.post("/editRoles/:id", async (req, res) => {
 	res.json({ Message: "updated" });
 });
 
-app.post("/editImgs/:id", async (req, res) => {
-	try {
-		const userId = req.params.id;
-		const images = req.body.images;
+app.post('/editImgs/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const images = req.body.images;
 
-		const updatedImageArray = images.map((img, index) => ({
-			url: img.url,
-			name: `Image_${index + 1}`,
-		}));
+        const updatedImageArray = [];
 
-		// const filePath = path.join(__dirname, "updatedImages.json");
+        for (let index = 0; index < images.length; index++) {
+            const img = images[index];
+            const imageName = `Image_${index + 1}.jpg`; // Assuming you want to save as JPEG format
 
-		// fs.writeFileSync(filePath, JSON.stringify(updatedImageArray, null, 2));
+            const imagePath = path.join(__dirname, 'public', 'images', userId, imageName);
+
+            // Convert data URL to buffer
+            const imageData = Buffer.from(img.url.split(',')[1], 'base64');
+
+            // Save the image data to file
+            await fs.writeFile(imagePath, imageData);
+            console.log('Image saved:', imagePath);
+
+            updatedImageArray.push({ name: imageName, url: `http://localhost:5000/public/images/${userId}/${imageName}` });
+        }
 
 		dal.addImgs(userId, updatedImageArray)
 
-		res.status(200).json({ message: "Images uploaded and saved successfully." });
-	} catch (error) {
-		console.error("Error uploading images:", error);
-		res.status(500).json({ error: "Internal server error." });
-	}
+        res.status(200).json({ message: 'Images uploaded and saved successfully.', images: updatedImageArray });
+    } catch (error) {
+        console.error('Error uploading images:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
 });
 
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 function getRandomObjectFromArray(array) {
 	const randomIndex = Math.floor(Math.random() * array.length);

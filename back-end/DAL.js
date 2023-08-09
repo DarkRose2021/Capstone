@@ -59,7 +59,7 @@ const productsModel = mongoose.model("products", products);
 const cart = new Schema(
 	{
 		UserID: String,
-		Products: [{ProductID: String, Qty: Number}],
+		Products: [{ ProductID: String, Qty: Number }],
 	},
 	{ collection: cartCollection }
 );
@@ -89,11 +89,10 @@ exports.dal = {
 			let id = newUser.insertedId.toString();
 			let data = {
 				UserID: id,
-				Products: []
-			}
-			await cartModel.collection.insertOne(data)
-			return newUser
-
+				Products: [],
+			};
+			await cartModel.collection.insertOne(data);
+			return newUser;
 		}
 	},
 	checkUser: async (email, password) => {
@@ -169,44 +168,46 @@ exports.dal = {
 		return await productsModel.find({}).exec();
 	},
 	addToCart: async (id, product) => {
-		const existingCartItem = await cartModel.findOne({ UserID: id, "Products.ProductID": product }).exec();
+		const existingCartItem = await cartModel
+			.findOne({ UserID: id, "Products.ProductID": product })
+			.exec();
 
-    if (existingCartItem) {
-        await cartModel.updateOne(
-            { UserID: id, "Products.ProductID": product },
-            { $inc: { "Products.$.Qty": 1 } }
-        );
-    } else {
-        const newItem = {
-            ProductID: product,
-            Qty: 1
-        };
+		if (existingCartItem) {
+			await cartModel.updateOne(
+				{ UserID: id, "Products.ProductID": product },
+				{ $inc: { "Products.$.Qty": 1 } }
+			);
+		} else {
+			const newItem = {
+				ProductID: product,
+				Qty: 1,
+			};
 
-        await cartModel.updateOne(
-            { UserID: id },
-            { $push: { Products: newItem } }
-        );
-    }
-	},
-	deleteUser: async (id) =>{
-		if(userModel.collection.findOne({_id: new mongodb.ObjectId(id)}) !== null){
-			await userModel.collection.deleteOne({_id: new mongodb.ObjectId(id)})
-		await cartModel.collection.deleteOne({UserID: id})
+			await cartModel.updateOne(
+				{ UserID: id },
+				{ $push: { Products: newItem } }
+			);
 		}
 	},
-	showCart: async (id) =>{
+	deleteUser: async (id) => {
+		if (
+			userModel.collection.findOne({ _id: new mongodb.ObjectId(id) }) !== null
+		) {
+			await userModel.collection.deleteOne({ _id: new mongodb.ObjectId(id) });
+			await cartModel.collection.deleteOne({ UserID: id });
+		}
+	},
+	showCart: async (id) => {
 		return await cartModel.find({ UserID: id }).exec();
 	},
-	findProducts: async (id) =>{
-		let temp = await productsModel.findOne({_id: new mongodb.ObjectId(id)}).exec()
+	findProducts: async (id) => {
+		let temp = await productsModel
+			.findOne({ _id: new mongodb.ObjectId(id) })
+			.exec();
 		// console.log(temp)
-		return temp
+		return temp;
 	},
-	clearCart: (id) =>{
-			return cartModel.updateOne({UserID: id},
-				{$set: {Products: []}})
-	},
-	deleteCart: async (id) =>{
-		return cartModel.updateOne
+	clearCart: (id) => {
+		return cartModel.updateOne({ UserID: id }, { $set: { Products: [] } });
 	},
 };
