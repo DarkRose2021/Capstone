@@ -92,7 +92,7 @@ function App() {
 				<BrowserRouter>
 					<header>
 						<nav
-							className="navbar navbar-expand-md navbar-toggleable mb-3"
+							className="navbar navbar-expand-lg navbar-toggleable mb-3"
 							id="top"
 						>
 							<div className="container-fluid">
@@ -208,7 +208,7 @@ function App() {
 									{/* only show when a user is logged in */}
 									{loggedIn === true ? (
 										<>
-											<a className="nav-link welcome">Welcome {email}!</a>
+											<a className="navbar-text welcome">Welcome {email}!</a>
 											<a href="#" onClick={logout} className="nav-link">
 												Logout
 											</a>

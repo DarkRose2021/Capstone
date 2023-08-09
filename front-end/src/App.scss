@@ -54,8 +54,9 @@ a:visited {
 	.welcome {
 		margin-right: 15px;
 		cursor: default;
+		text-decoration: none;
 		a:hover {
-			color: $color;
+			color: $color !important;
 		}
 	}
 }

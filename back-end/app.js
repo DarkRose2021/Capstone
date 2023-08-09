@@ -46,7 +46,7 @@ app.post("/login", async (req, res) => {
 		}
 		
 	} catch {
-		res.json({ Message: "Invalid Email or password", User: null });
+		res.json({ Message: "Invalid Email or password" });
 	}
 });
 

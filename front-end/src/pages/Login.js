@@ -44,7 +44,8 @@ const Login = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user && user.Message && user.User) {
+		// console.log(user)
+		if (user && user.Message !== "Invalid Email or password" && user.User) {
 			window.localStorage.setItem(
 				"Valid Email",
 				JSON.stringify(user.User.Email)
@@ -133,7 +134,7 @@ const Login = () => {
 							Show Password
 						</label>
 						<br />
-						{user?.Users === null && user?.Message ? (
+						{user?.Message === "Invalid Email or password" ? (
 							<p className="error">{user?.Message}</p>
 						) : user?.Users !== null && user?.Message ? (
 							<>
