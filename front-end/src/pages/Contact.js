@@ -39,6 +39,10 @@ const Contact = () => {
 		}));
 	};
 
+	const events = [
+		{id: 1, title: "Photo shoot", start: '2023-10-08T8:00:00', end: '2023-10-08T11:00:00', backgroundColor: "#40797A", borderColor: "#40797A"}
+	]
+
 	return (
 		<div className="contact">
 			<h1>Contact Us</h1>
@@ -49,10 +53,7 @@ const Contact = () => {
 						plugins={[dayGridPlugin]}
 						initialView="dayGridMonth"
 						weekends={true}
-						events={[
-							{ title: "event 1", date: "2023-07-04", backgroundColor: "#40797A", borderColor: "#40797A" },
-							{ title: "event 2", date: "2023-07-07", backgroundColor: "#40797A", borderColor: "#40797A"},
-						]}
+						events={[{id: 1, title: "Photo shoot", start: '2023-10-08T8:00:00', end: '2023-10-08T11:00:00', backgroundColor: "#40797A", borderColor: "#40797A"}]}
 						handleWindowResize={true}
 					/>
 				</div>

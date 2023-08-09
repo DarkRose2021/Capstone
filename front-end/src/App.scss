@@ -113,21 +113,6 @@ footer {
 	}
 }
 
-@media all and (max-width: 428px) {
-	footer {
-		background-color: $darkbrown;
-		position: relative; /* Change this to relative */
-		width: 100%;
-		padding: 0.5%;
-		border-top: 2px solid $borderbrown;
-		box-shadow: 2px 2px $borderbrown;
-		z-index: 900;
-		b {
-			color: $error;
-		}
-	}
-}
-
 .intro-txt {
 	@include flex-center;
 	margin-top: 2%;
@@ -171,19 +156,6 @@ footer {
 		margin-right: 2%;
 		@include border();
 		@include borderRadiusContainers;
-	}
-}
-
-@media all and (max-width: 1694px) {
-	.about-txt {
-		display: block;
-		div {
-			display: block;
-		}
-		img {
-			margin-right: 50% !important;
-			max-width: 50% !important;
-		}
 	}
 }
 
@@ -311,25 +283,6 @@ footer {
 	color: black;
 }
 
-@media all and (max-width: 810px) {
-	.contact {
-		.flex {
-			display: block;
-			margin-left: 0%;
-			margin: 1%;
-			.form {
-				width: 90vw;
-				margin-left: 4%;
-			}
-		}
-	}
-	.fc {
-		width: 90vw;
-		margin-left: 4%;
-		margin-bottom: 2%;
-	}
-}
-
 .row {
 	width: 100%;
 }
@@ -361,17 +314,6 @@ footer {
 		button {
 			margin-left: 35%;
 			@include button;
-		}
-	}
-}
-
-@media all and (max-width: 810px) {
-	.s-container {
-		display: flex;
-		justify-content: space-between;
-		.card {
-			flex: 1; /* This will make both columns equally sized */
-			flex-basis: 49%;
 		}
 	}
 }
@@ -413,20 +355,6 @@ footer {
 	}
 	.name {
 		margin-left: 5%;
-	}
-}
-
-@media all and (max-width: 810px) {
-	.info {
-		display: block !important;
-	}
-}
-
-@media all and (max-width: 428px) {
-	.info {
-		img {
-			width: 100%;
-		}
 	}
 }
 
@@ -561,14 +489,6 @@ footer {
 	}
 }
 
-@media all and (max-width: 428px) {
-	.pics {
-		img {
-			width: 90vw;
-		}
-	}
-}
-
 .admincontainer {
 	@include button;
 	.user {
@@ -614,8 +534,8 @@ footer {
 			flex-direction: row;
 			flex-wrap: wrap;
 			.flex {
-			@include flex-center();
-				
+				@include flex-center();
+
 				flex-direction: row;
 				flex-wrap: wrap;
 			}
@@ -628,7 +548,7 @@ footer {
 			@include flex-center;
 			// width: 90vw
 		}
-	}	
+	}
 
 	.image-item {
 		@include border();
@@ -769,3 +689,5 @@ footer {
 		color: $yellow;
 	}
 }
+
+@import "media.scss";

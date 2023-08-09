@@ -3,6 +3,8 @@ var mongodb = require("mongodb");
 var ObjectID = require("mongodb").ObjectID;
 const path = require("path");
 require("dotenv").config();
+var bcrypt = require("bcryptjs");
+
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
@@ -74,7 +76,7 @@ exports.dal = {
 		let user = {
 			Email: email,
 			Name: name,
-			Password: password,
+			Password: await bcrypt.hash(password, 10),
 			Roles: ["User"],
 			Images: [],
 		};

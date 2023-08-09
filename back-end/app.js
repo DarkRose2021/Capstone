@@ -3,9 +3,10 @@ const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 const path = require("path");
-const http = require('http');
+const http = require("http");
+var bcrypt = require('bcryptjs');
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -20,7 +21,7 @@ app.use(
 );
 app.use(cors());
 
-app.use('/images', express.static("public"));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
@@ -32,10 +33,18 @@ app.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	try {
-		let found = await dal.checkUser(email, password);
-		// console.log(found[0])
-		let found_email = found[0].Email;
-		res.json({ Message: `${found_email} found`, User: found[0] });
+		let found = await dal.findUserEmail(email)
+		let found_email = found.Email;
+
+		if(found){
+			let checkPasswords = await bcrypt.compare(password, found.Password)
+			console.log(checkPasswords)
+
+			if(checkPasswords){
+				res.json({ Message: `${found_email} found`, User: found });
+			}
+		}
+		
 	} catch {
 		res.json({ Message: "Invalid Email or password", User: null });
 	}
@@ -56,7 +65,8 @@ app.post("/signup", async (req, res) => {
 	let email = req.body.email;
 	let name = req.body.name;
 	let password = req.body.password;
-	console.log(req.body);
+	console.log(password);
+
 	let user = await dal.createUser(email, name, password);
 	if (user == "") {
 		return res.json({ Message: "Email already in use", User: null });
@@ -135,41 +145,54 @@ app.post("/editRoles/:id", async (req, res) => {
 	res.json({ Message: "updated" });
 });
 
-app.post('/editImgs/:id', async (req, res) => {
+app.post("/editImgs/:id", async (req, res) => {
     try {
         const userId = req.params.id;
         const images = req.body.images;
 
         const updatedImageArray = [];
+        const userImagePath = path.join(__dirname, "public", "images", userId);
+
+        // Check if the directory exists, if not, create it
+        try {
+            await fs.access(userImagePath);
+        } catch (error) {
+            if (error.code === "ENOENT") {
+                await fs.mkdir(userImagePath, { recursive: true });
+            } else {
+                throw error;
+            }
+        }
 
         for (let index = 0; index < images.length; index++) {
             const img = images[index];
             const imageName = `Image_${index + 1}.jpg`; // Assuming you want to save as JPEG format
 
-            const imagePath = path.join(__dirname, 'public', 'images', userId, imageName);
+            const imagePath = path.join(userImagePath, imageName);
 
             // Convert data URL to buffer
-            const imageData = Buffer.from(img.url.split(',')[1], 'base64');
+            const imageData = Buffer.from(img.url.split(",")[1], "base64");
 
             // Save the image data to file
             await fs.writeFile(imagePath, imageData);
-            console.log('Image saved:', imagePath);
+            console.log("Image saved:", imagePath);
 
-            updatedImageArray.push({ name: imageName, url: `http://localhost:5000/public/images/${userId}/${imageName}` });
+            updatedImageArray.push({
+                name: imageName,
+                url: `http://localhost:5000/public/images/${userId}/${imageName}`,
+            });
         }
 
-		dal.addImgs(userId, updatedImageArray)
+        dal.addImgs(userId, updatedImageArray);
 
-        res.status(200).json({ message: 'Images uploaded and saved successfully.', images: updatedImageArray });
+        res.status(200).json({
+            message: "Images uploaded and saved successfully.",
+            images: updatedImageArray,
+        });
     } catch (error) {
-        console.error('Error uploading images:', error);
-        res.status(500).json({ error: 'Internal server error.' });
+        console.error("Error uploading images:", error);
+        res.status(500).json({ error: "Internal server error." });
     }
-});
-
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
 
 function getRandomObjectFromArray(array) {
