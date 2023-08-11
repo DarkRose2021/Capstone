@@ -169,6 +169,7 @@ const Contact = () => {
 								id="from_name"
 								name="from_name"
 								placeholder="Name"
+								required
 								type="text"
 							/>
 
@@ -178,6 +179,7 @@ const Contact = () => {
 								name="from_email"
 								placeholder="Email"
 								type="email"
+								required
 								value={values.from_email}
 								onChange={handleInputChange}
 							/>
@@ -189,6 +191,7 @@ const Contact = () => {
 								id="html_message"
 								name="html_message"
 								placeholder="Email body"
+								required
 								rows="2"
 								cols="25"
 							></textarea>

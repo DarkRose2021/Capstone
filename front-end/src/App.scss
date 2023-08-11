@@ -178,9 +178,6 @@ footer {
 		margin-left: 15%;
 		margin-right: auto;
 		.form {
-			.error {
-				color: $darkerError;
-			}
 			@include border();
 			@include borderRadiusContainers;
 			margin-left: 10%;
