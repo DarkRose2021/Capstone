@@ -23,7 +23,6 @@ const Admin = () => {
 		fetch("http://localhost:5000/listUsers")
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
 				setAllUsers(result);
 			});
 	}
@@ -32,7 +31,6 @@ const Admin = () => {
 		fetch("http://localhost:5000/listClients")
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
 				setAllUsers(result);
 			});
 	}

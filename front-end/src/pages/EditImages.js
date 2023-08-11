@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 const uploadImagesToBackend = async (images, id) => {
 	// Send the images to the backend using an API call
 	try {
-		console.log(JSON.stringify({ images }));
 		await fetch(`http://localhost:5000/editImgs/${id}`, {
 			method: "POST",
 			headers: {

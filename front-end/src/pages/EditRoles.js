@@ -31,7 +31,6 @@ const EditRoles = () => {
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
-				console.log(data.User[0]);
 				setUser(data.User[0]);
 			})
 			.catch((err) => console.log(err));
@@ -39,7 +38,6 @@ const EditRoles = () => {
 
 	useEffect(() => {
 		loadAPI();
-		console.log(user);
 	}, []);
 
 	useEffect(() => {
@@ -70,7 +68,6 @@ const EditRoles = () => {
 				User: true,
 			});
 		}
-		console.log(checkboxes);
 	}, [user]);
 
 	const handleSubmit = (event) => {

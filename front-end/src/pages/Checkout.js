@@ -62,7 +62,6 @@ const Checkout = () => {
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
-				// console.log(data[0])
 				setCart(data[0]);
 			})
 			.catch((err) => console.log(err));
@@ -73,7 +72,6 @@ const Checkout = () => {
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
-				// console.log(data);
 				setUser(data.User);
 			})
 			.catch((err) => console.log(err));
@@ -92,7 +90,6 @@ const Checkout = () => {
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
-				// console.log(data);
 				setProducts(data);
 			})
 			.catch((err) => console.log(err));

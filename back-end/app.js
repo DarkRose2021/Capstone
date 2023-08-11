@@ -38,7 +38,6 @@ app.post("/login", async (req, res) => {
 
 		if(found){
 			let checkPasswords = await bcrypt.compare(password, found.Password)
-			console.log(checkPasswords)
 
 			if(checkPasswords){
 				res.json({ Message: `${found_email} found`, User: found });
@@ -57,8 +56,6 @@ app.get("/signup", async (req, res) => {
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
-	console.log(userId)
-	console.log(id)
 	dal.deleteItem(userId, id)
 });
 
@@ -66,7 +63,6 @@ app.post("/signup", async (req, res) => {
 	let email = req.body.email;
 	let name = req.body.name;
 	let password = req.body.password;
-	console.log(password);
 
 	let user = await dal.createUser(email, name, password);
 	if (user == "") {
@@ -121,7 +117,6 @@ app.get("/deleteUser/:id", async (req, res) => {
 
 app.post("/checkout", async (req, res) => {
 	let body = req.body;
-	console.log(body);
 	res.json({ Message: "data submitted to the back", Body: body });
 });
 

@@ -44,7 +44,6 @@ const Signin = () => {
 	}, [watch]);
 
 	const onSubmit = (data) => {
-		console.log(data);
 		fetch("http://localhost:5000/signup", {
 			method: "POST",
 			headers: {
@@ -54,7 +53,6 @@ const Signin = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
 				setUser(result);
 			})
 			.catch((error) => {

@@ -81,7 +81,6 @@ exports.dal = {
 			Images: [],
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
-		console.log("Existing User ", existingUser);
 		if (existingUser.length > 0) {
 			console.log("user found");
 			return "";
@@ -206,7 +205,6 @@ exports.dal = {
 		let temp = await productsModel
 			.findOne({ _id: new mongodb.ObjectId(id) })
 			.exec();
-		// console.log(temp)
 		return temp;
 	},
 	clearCart: async (id) => {
@@ -225,7 +223,6 @@ exports.dal = {
 	// 		}else{
 	// 			return cartModel.collection.deleteOne({ProductID: id})
 	// 		}
-			
 	// 	}
 	// }
 };

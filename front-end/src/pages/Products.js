@@ -40,7 +40,6 @@ const Products = () => {
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
-				console.log(data);
 				setUser(data.User);
 			})
 			.catch((err) => console.log(err));
@@ -48,7 +47,6 @@ const Products = () => {
 
 	function addToCart(id) {
 		items.Products = id;
-		console.log(items);
 		let dataToSend = {
 			items: items,
 		};
@@ -64,7 +62,6 @@ const Products = () => {
 		})
 			.then((data) => data.json())
 			.then((data) => {
-				console.log(data);
 				setUser(data.User);
 			})
 			.catch((err) => console.log(err));

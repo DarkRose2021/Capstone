@@ -4,7 +4,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
-import rrulePlugin from '@fullcalendar/rrule'
 
 const Contact = () => {
 	const [values, setValues] = useState({

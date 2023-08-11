@@ -28,7 +28,6 @@ const ClientPics = () => {
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
-				console.log(data);
 				setUser(data.User);
 				setPics(data.User.Images)
 			})
@@ -37,9 +36,7 @@ const ClientPics = () => {
 
 	useEffect(() => {
 		loadAPI();
-		console.log(pics);
-		// console.log("email " +email);
-	}, [email]);
+		}, [email]);
 
 	function downloadImage (url, name) {
 		saveAs(url, name); // Put your image url here.
