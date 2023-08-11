@@ -53,6 +53,7 @@ const products = new Schema(
 		BriefDescription: String,
 		DisplayImage: String,
 		SelectedImage: String,
+		Alt: String
 	},
 	{ collection: productCollection }
 );

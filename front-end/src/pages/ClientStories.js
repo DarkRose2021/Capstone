@@ -7,6 +7,7 @@ const ClientStories = () => {
 			name: "Sarah and her horse Apache",
 			about:
 				"Sarah is a competitive barrel racer, and she and Apache have been a team for over five years. They've won multiple regional competitions, and Sarah credits Apache's speed and agility for their success.",
+			alt: "a person riding a horse in a barrel race",
 			img: "/assets/pexels-coldbeer-15215865.jpg",
 			id: 1,
 		},
@@ -15,6 +16,7 @@ const ClientStories = () => {
 			about:
 				"Tyler is a ranch hand who works on a large cattle ranch in Texas. He and Duke are responsible for rounding up and herding the cattle, and Tyler says that Duke is one of the smartest and most reliable horses he's ever worked with.",
 			img: "/assets/pexels-zeynep-seçer-13444728.jpg",
+			alt: "a person riding a horse in the desert",
 			id: 2,
 		},
 		{
@@ -22,12 +24,14 @@ const ClientStories = () => {
 			about:
 				"Emily is a horse trainer who specializes in natural horsemanship techniques. She rescued Daisy from a neglectful situation, and has spent years rehabilitating her and training her to be a confident and well-behaved riding horse.",
 			img: "/assets/pexels-jennifer-murray-1090408.jpg",
+			alt: "a person in a pink dress standing next to a horse",
 			id: 3,
 		},
 		{
 			name: "Jack and his horse Trigger",
 			about:
 				"Jack is a retired rodeo cowboy who used to compete in bull riding and saddle bronc events. These days, he spends most of his time on his ranch, and he and Trigger still enjoy going for rides and reminiscing about their rodeo days.",
+			alt:"a person riding a horse with a dog",
 			img: "/assets/pexels-pixabay-162520.jpg",
 			id: 4,
 		},
@@ -36,6 +40,7 @@ const ClientStories = () => {
 			about:
 				"Rachel is a young equestrian who is just starting out in the horse show world. She and Rusty have been working hard to improve their jumping and dressage skills, and Rachel is hoping to start competing at the regional level soon",
 			img: "/assets/pexels-bartosz-bartkowiak-3723103.jpg",
+			alt: "a person riding a horse over a hurdle",
 			id: 5,
 		},
 		{
@@ -43,12 +48,14 @@ const ClientStories = () => {
 			about:
 				"Tom is a trail rider who loves exploring the beautiful natural landscapes around his home. He and Shadow have gone on countless adventures together, and Tom says that Shadow is the perfect trail horse--steady, sure-footed, and always up for a challenge.",
 			img: "/assets/pexels-jaime-reimer-9899960.jpg",
+			alt: "a person riding a horse in a river",
 			id: 6,
 		},
 		{
 			name: "Maya and her horse Apollo",
 			about:
 				"Maya is a horse lover who recently started taking riding lessons at a local stable. She and Apollo, one of the lesson horses, quickly bonded, and Maya now considers Apollo to be her best friend and confidante.",
+			alt: "a person holding a child on top of a horse",
 			img: "/assets/pexels-efigie-lima-marcos-11831345.jpg",
 			id: 7,
 		},
@@ -57,6 +64,7 @@ const ClientStories = () => {
 			about:
 				"Hannah is a young girl who has always loved horses, and she finally convinced her parents to buy her one for her birthday. Blaze is a sweet and gentle mare, and Hannah is thrilled to have her as a companion and riding partner.",
 			img: "/assets/pexels-filip-kuran-6199403.jpg",
+			alt: "a child lying on a pony",
 			id: 8,
 		},
 		{
@@ -64,6 +72,7 @@ const ClientStories = () => {
 			about:
 				"Marcus is a professional trainer who works with high-level performance horses. Ace is one of his star pupils, a talented reining horse who has won numerous championships under Marcus's guidance.",
 			img: "/assets/pexels-ali-alcántara-14024300.jpg",
+			alt: "a person riding a horse",
 			id: 9,
 		},
 	];

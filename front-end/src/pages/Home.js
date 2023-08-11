@@ -14,22 +14,22 @@ const Home = () => {
 				>
 					<div className="carousel-inner">
 						<div className="carousel-item active" data-bs-interval="2000">
-							<img src="/assets/home1.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home1.jpg" className="d-block w-100" alt="a group of horses in a field" />
 						</div>
 						<div className="carousel-item" data-bs-interval="3000">
-							<img src="/assets/home2.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home2.jpg" className="d-block w-100" alt="a group of people riding horses on a beach" />
 						</div>
 						<div className="carousel-item" data-bs-interval="4000">
-							<img src="/assets/home3.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home3.jpg" className="d-block w-100" alt="a group of horses grazing in a field" />
 						</div>
 						<div className="carousel-item" data-bs-interval="5000">
-							<img src="/assets/home4.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home4.jpg" className="d-block w-100" alt="a horse standing on a grassy hill" />
 						</div>
 						<div className="carousel-item" data-bs-interval="6000">
-							<img src="/assets/home5.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home5.jpg" className="d-block w-100" alt="a horse in a corral" />
 						</div>
 						<div className="carousel-item" data-bs-interval="7000">
-							<img src="/assets/home6.jpg" className="d-block w-100" alt="..." />
+							<img src="/assets/home6.jpg" className="d-block w-100" alt="two horses standing in the snow" />
 						</div>
 					</div>
 					<button
@@ -106,8 +106,6 @@ const Home = () => {
 					</ul>
 				</div>
 			</div>
-			<br />
-			<br />
 			<br />
 			<br />
 		</div>

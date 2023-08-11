@@ -4,7 +4,7 @@ const NotFound = () => {
 	return (
 		<div className="errorpg">
 			<div>
-				<img src="/assets/error1.jpg" width={400} />
+				<img src="/assets/error1.jpg" alt="a horse looking over a wall" width={400} />
 			</div>
 			<div>
 				<h1>404 Page Not found!</h1>
