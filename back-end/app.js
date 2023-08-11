@@ -57,8 +57,9 @@ app.get("/signup", async (req, res) => {
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
-	console.log(userId);
-	console.log(id);
+	console.log(userId)
+	console.log(id)
+	dal.deleteItem(userId, id)
 });
 
 app.post("/signup", async (req, res) => {

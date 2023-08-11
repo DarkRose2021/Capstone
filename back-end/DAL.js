@@ -209,7 +209,23 @@ exports.dal = {
 		// console.log(temp)
 		return temp;
 	},
-	clearCart: (id) => {
-		return cartModel.updateOne({ UserID: id }, { $set: { Products: [] } });
+	clearCart: async (id) => {
+		return await cartModel.updateOne({ UserID: id }, { $set: { Products: [] } });
 	},
+	// deleteItem: async (userID, id) =>{
+	// 	let userCart = await cartModel.findOne({UserID:userID}).exec()
+	// 	const existingCartItem = await cartModel
+	// 		.findOne({ UserID: userID, "Products.ProductID": id })
+	// 		.exec();
+	// 	if(existingCartItem.length !== null){
+	// 		if(existingCartItem.Qty > 1){
+	// 			return await cartModel.updateOne(
+	// 				{ UserID: userID, "Products.ProductID": id },
+	// 				{ $inc: { "Products.$.Qty": -1 } }) 
+	// 		}else{
+	// 			return cartModel.collection.deleteOne({ProductID: id})
+	// 		}
+			
+	// 	}
+	// }
 };

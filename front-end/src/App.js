@@ -160,9 +160,9 @@ function App() {
 											<>
 												{isMobile ? (
 													<>
-														<li class="nav-item dropdown">
+														<li className="nav-item dropdown">
 															<a
-																class="nav-link dropdown-toggle"
+																className="nav-link dropdown-toggle"
 																href="#"
 																role="button"
 																data-bs-toggle="dropdown"
@@ -170,7 +170,7 @@ function App() {
 															>
 																{roles.includes("Client") ? "Client" : "Admin"}
 															</a>
-															<ul class="dropdown-menu">
+															<ul className="dropdown-menu">
 																<li>
 																	{loggedIn === true &&
 																	(roles.includes("Client") ||
@@ -331,9 +331,9 @@ function App() {
 										<>
 											{isMobile ? (
 												<>
-													<li class="welcome dropdown">
+													<li className="welcome dropdown">
 														<a
-															class="nav-link dropdown-toggle"
+															className="nav-link dropdown-toggle"
 															href="#"
 															role="button"
 															data-bs-toggle="dropdown"
@@ -341,7 +341,7 @@ function App() {
 														>
 															Welcome {email}!
 														</a>
-														<ul class="dropdown-menu">
+														<ul className="dropdown-menu">
 															<li>
 																<a
 																	href="#"

@@ -62,9 +62,11 @@ a:visited {
 	}
 	.dropdown-menu{
 		background-color: $darkbrown;
-		.dropdown-item:hover{
-			background-color: $borderbrown;
-		}
+		
+	}
+	.dropdown-item:hover{
+		background-color: $blue !important;
+		color: $yellow !important;
 	}
 	
 }
