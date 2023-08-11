@@ -107,7 +107,7 @@ const ClientStories = () => {
 						{clients?.map((client) => (
 							<div className="col" key={client.id}>
 								<div className="card shadow-sm">
-									<img src={client.img} className="card-img-top" alt="..." />
+									<img src={client.img} className="card-img-top" alt={client.alt} />
 									<div className="card-body">
 										<h5 className="card-title">{client.name}</h5>
 										<p className="card-text">{client.about}</p>

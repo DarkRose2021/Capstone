@@ -101,7 +101,7 @@ const Services = () => {
 						{services?.map((service) => (
 							<div className="col" key={service.id}>
 								<div className="card shadow-sm">
-									<img src={service.img} className="card-img-top" alt="..." />
+									<img src={service.img} className="card-img-top" alt={service.alt} />
 									<div className="card-body">
 										<h5 className="card-title">{service.name}</h5>
 										<p className="card-text">{service.txt}</p>

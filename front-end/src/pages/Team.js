@@ -49,7 +49,7 @@ const Team = () => {
 							<h3>{person.position}</h3>
 						</div>
 						<div className="info">
-							<img src={person.img} alt="" />
+							<img src={person.img} alt={person.alt} />
 							<p>{person.txt}</p>
 						</div>
 					</div>
