@@ -125,13 +125,6 @@ app.get("/listUsers", async (req, res) => {
 	res.json(users);
 });
 
-app.get("/listClients", async (req, res) => {
-	clients = await dal.listClients();
-	res.json(clients);
-});
-
-app.get("/editRoles/", async (req, res) => {});
-
 app.post("/editRoles/:id", async (req, res) => {
 	let id = req.params.id;
 	let roles = req.body;
@@ -221,7 +214,6 @@ app.get("/findUserEmail/:email", async (req, res) => {
 	let user = await dal.findUserEmail(email);
 	res.json({ User: user });
 });
-// fetchImages/
 
 app.get("/fetchImages/:id", async (req, res) => {
 	let id = req.params.id;

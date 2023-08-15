@@ -17,6 +17,7 @@ const Admin = () => {
 
 		window.addEventListener("storage", handleStorage());
 		return () => window.removeEventListener("storage", handleStorage());
+		
 	}, []);
 
 	function listUsers() {
@@ -27,14 +28,12 @@ const Admin = () => {
 			});
 	}
 
-	function listClients() {
-		fetch("http://localhost:5000/listClients")
-			.then((response) => response.json())
-			.then((result) => {
-				setAllUsers(result);
-			});
-	}
+	useEffect(() =>{
+		listUsers();
+	}, [])
 
+	// change to disabling the user
+	// if user tries to log in then send a msg saying that the account has been disabled, put contact info
 	function deleteUser(id) {
 		const getUrl = `http://localhost:5000/deleteUser/${id}`;
 		fetch(getUrl)
@@ -51,12 +50,6 @@ const Admin = () => {
 			{roles?.includes("Admin") ? (
 				<>
 					<div>
-						<div className="adminbtns">
-							<div>
-								<button onClick={listClients}>List Clients</button>
-								<button onClick={listUsers}>List Users</button>
-							</div>
-						</div>
 						{msg?( <div className="userMsg">User was Deleted</div>):(<></>)}
 						<div className="users">
 							{allUsers.length > 0 ? (
@@ -80,6 +73,13 @@ const Admin = () => {
 										{user.Roles?.includes("Client") ? (
 											<Link to={`/editImages/${user._id}`}>
 												<button>Edit Pictures</button>
+											</Link>
+										) : (
+											<></>
+										)}
+										{user.Roles?.includes("Client") ? (
+											<Link to={`/ShowImages/${user._id}`}>
+												<button>Show Pictures</button>
 											</Link>
 										) : (
 											<></>

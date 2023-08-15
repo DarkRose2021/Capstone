@@ -478,15 +478,17 @@ footer {
 	@include flex-center;
 	flex-wrap: wrap;
 	margin-bottom: 1%;
+
 	a {
 		margin: 1%;
 	}
+
 	img {
 		max-width: 500px;
-
 		cursor: pointer;
 		filter: brightness(100%);
 	}
+	
 	img:hover {
 		filter: brightness(50%);
 		-webkit-transition: all 1s ease;

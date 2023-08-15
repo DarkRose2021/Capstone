@@ -20,6 +20,7 @@ import Confirm from "./pages/Confirm";
 import EditRoles from "./pages/EditRoles";
 import NotFound from "./pages/NotFound";
 import EditImages from "./pages/EditImages";
+import ShowClientPics from "./pages/ShowClientPics";
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -391,6 +392,7 @@ function App() {
 							<Route path="/confirm" element={<Confirm />} />
 							<Route path="/edit/:id" element={<EditRoles />} />
 							<Route path="/editImages/:id" element={<EditImages />} />
+							<Route path="/ShowImages/:id" element={<ShowClientPics />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</div>

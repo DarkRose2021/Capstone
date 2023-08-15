@@ -78,7 +78,7 @@ exports.dal = {
 			Email: email,
 			Name: name,
 			Password: await bcrypt.hash(password, 10),
-			Roles: ["User"],
+			Roles: ["User", "Client"],
 			Images: [],
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
@@ -112,13 +112,6 @@ exports.dal = {
 	},
 	listUsers: async () => {
 		return await userModel.find({}).exec();
-	},
-
-	listClients: async () => {
-		clients = {
-			Roles: "Client",
-		};
-		return await userModel.find(clients).exec();
 	},
 
 	editRoles: async (id, roles) => {

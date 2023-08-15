@@ -45,7 +45,6 @@ const ClientPics = () => {
 	return (
 		<div>
 			{/* might make the images clickable to view a larger one */}
-			{/* make images downloadable */}
 			{roles?.includes("Client") ? (
 				<>
 					<h1>Your Pictures</h1>

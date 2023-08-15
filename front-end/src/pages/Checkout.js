@@ -512,7 +512,7 @@ const Checkout = () => {
 												Zip
 											</label>
 											<input
-												type="text"
+												type="number"
 												className={`form-control ${
 													errors?.zip ? "is-invalid" : ""
 												}`}
@@ -526,7 +526,7 @@ const Checkout = () => {
 														message: "Invalid zip code",
 													},
 												})}
-												placeholder=""
+												placeholder="ZipCode"
 											/>
 											{errors?.zip && (
 												<div className="invalid-feedback">
@@ -775,10 +775,11 @@ const Checkout = () => {
 															Zip
 														</label>
 														<input
-															type="text"
+															type="number"
 															className={`form-control`}
 															id="shipZip"
 															name="shipZip"
+															placeholder="ZipCode"
 															required
 															{...register("shipZip", {
 																required: "Zip code is required",
@@ -787,7 +788,6 @@ const Checkout = () => {
 																	message: "Invalid zip code",
 																},
 															})}
-															placeholder=""
 														/>
 														{errors?.shipZip && (
 															<div className="invalid-feedback">
@@ -802,33 +802,6 @@ const Checkout = () => {
 
 									<hr className="my-4" />
 									<h4 className="mb-3">Payment</h4>
-									<div className="my-3">
-										<div className="form-check">
-											<input
-												id="credit"
-												name="paymentMethod"
-												type="radio"
-												className="form-check-input"
-												checked
-												required
-											/>
-											<label className="form-check-label" htmlFor="credit">
-												Credit card
-											</label>
-										</div>
-										<div className="form-check">
-											<input
-												id="debit"
-												name="paymentMethod"
-												type="radio"
-												className="form-check-input"
-												required
-											/>
-											<label className="form-check-label" htmlFor="debit">
-												Debit card
-											</label>
-										</div>
-									</div>
 
 									<div className="row gy-3">
 										<div className="col-md-6">
@@ -839,7 +812,7 @@ const Checkout = () => {
 												type="text"
 												className="form-control"
 												id="ccName"
-												placeholder=""
+												placeholder="cvv"
 												required
 											/>
 											<small className="text-muted">
@@ -852,10 +825,10 @@ const Checkout = () => {
 
 										<div className="col-md-6">
 											<label htmlFor="ccNumber" className="form-label">
-												Credit card number
+												Card number
 											</label>
 											<input
-												type="text"
+												type="number"
 												className={`form-control ${
 													errors?.ccNumber ? "is-invalid" : ""
 												}`}
@@ -872,7 +845,7 @@ const Checkout = () => {
 													minLength: 14,
 													maxLength: 16,
 												})}
-												placeholder=""
+												placeholder="Crd Number"
 											/>
 											{errors?.ccNumber && (
 												<div className="invalid-feedback">
@@ -903,7 +876,7 @@ const Checkout = () => {
 												CVV
 											</label>
 											<input
-												type="text"
+												type="number"
 												className={`form-control ${
 													errors?.ccv ? "is-invalid" : ""
 												}`}
