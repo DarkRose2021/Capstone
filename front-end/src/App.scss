@@ -497,6 +497,24 @@ footer {
 		-ms-transition: all 1s ease;
 		transition: all 1s ease;
 	}
+
+	div{
+		margin: 1%;
+		img {
+			max-width: 500px;
+			cursor: default;
+			filter: brightness(100%);
+		}
+		
+		img:hover {
+			filter: brightness(100%);
+			-webkit-transition: all 1s ease;
+			-moz-transition: all 1s ease;
+			-o-transition: all 1s ease;
+			-ms-transition: all 1s ease;
+			transition: all 1s ease;
+		}
+	}
 }
 
 .admincontainer {

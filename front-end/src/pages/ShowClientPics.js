@@ -45,9 +45,9 @@ const ShowClientPics = () => {
 							<h1>{user?.Name}'s Pictures</h1>
 							<div className="pics adminPics">
 								{pics?.map((pic) => (
-                                    <a>
+                                    <div>
 									<img src={pic.url} />
-                                    </a>
+                                    </div>
 								))}
 							</div>
 							<br />

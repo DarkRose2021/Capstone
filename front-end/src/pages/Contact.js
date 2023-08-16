@@ -159,7 +159,7 @@ const Contact = () => {
 
 				<div className="form">
 					<div>
-						<h3>Email Us</h3>
+						<h3>Contact Us</h3>
 						<form onSubmit={handleFormData}>
 							<input type="hidden" name="contact_number" />
 							<label htmlFor="from_name">Name:</label>
@@ -199,7 +199,10 @@ const Contact = () => {
 							<input type="submit" className="btn" value={"Send Email"} />
 						</form>
 						<h4>
-							Call Me at <a href="tel:3853550184">(385)355-0184</a>
+							Call us at <a href="tel:3853550184">(385)355-0184</a>
+						</h4>
+						<h4 className="email">
+							Email us at <a href="mailto:maneframephotography2023@gmail.com">maneframephotography2023</a>
 						</h4>
 					</div>
 				</div>
