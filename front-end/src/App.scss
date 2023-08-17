@@ -65,7 +65,7 @@ a:visited {
 		
 	}
 	.dropdown-item:hover{
-		background-color: $blue !important;
+		background-color: $borderbrown !important;
 		color: $yellow !important;
 	}
 	
@@ -434,6 +434,15 @@ footer {
 		}
 		.total {
 			color: $yellow;
+		}
+		
+	}
+	.checkoutBtn{
+		@include button;
+		@include flex-center;
+		button{
+			width: 15vw;
+			padding: .5%;
 		}
 	}
 }
