@@ -202,7 +202,7 @@ const Contact = () => {
 							Call us at <a href="tel:3853550184">(385)355-0184</a>
 						</h4>
 						<h4 className="email">
-							Email us at <a href="mailto:maneframephotography2023@gmail.com">maneframephotography2023</a>
+							Email us at <a href="mailto:maneframephotography2023@gmail.com">maneframephotography2023<br />@gmail.com</a>
 						</h4>
 					</div>
 				</div>
