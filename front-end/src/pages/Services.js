@@ -5,7 +5,7 @@ const Services = () => {
 	const services = [
 		{
 			id: 1,
-			name: "Equine portraiture",
+			name: "Equine portrait",
 			txt: "Equine portraiture is a beautiful and timeless way to capture the spirit and beauty of your horse. Whether you are a competitive rider or simply a horse lover, an equine portrait is a wonderful way to celebrate your equine partner.",
 			alt: "a white horse with long hair",
 			img: "/assets/Equineportraiture.jpg",

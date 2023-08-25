@@ -11,8 +11,10 @@ const Contact = () => {
 		from_email: "",
 		html_message: "",
 	});
+	const [isSending, setIsSending] = useState(false);
 
 	const handleFormData = (event) => {
+		setIsSending(true)
 		event.preventDefault();
 		emailjs
 			.send("service_iua6vej", "template_hnmq0z9", values, "jhFwa0eEmp0_7VOPv")
@@ -24,11 +26,13 @@ const Contact = () => {
 						from_email: "",
 						html_message: "",
 					});
+					setIsSending(false);
 				},
 				(error) => {
 					console.log("FAILED...", error);
 				}
 			);
+			
 	};
 
 	const handleInputChange = (event) => {
@@ -196,7 +200,7 @@ const Contact = () => {
 								cols="25"
 							></textarea>
 
-							<input type="submit" className="btn" value={"Send Email"} />
+							<button type="submit" className="btn" disabled={isSending}>{isSending ? 'Sending...' : 'Send Email'}</button>
 						</form>
 						<h4>
 							Call us at <a href="tel:3853550184">(385)355-0184</a>

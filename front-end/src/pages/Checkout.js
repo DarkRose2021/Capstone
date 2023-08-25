@@ -114,6 +114,7 @@ const Checkout = () => {
 		setSameAsBilling(event.target.checked);
 	};
 
+	//rework the entire submit?
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
