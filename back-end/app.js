@@ -164,7 +164,6 @@ app.post("/editImgs/:id", async (req, res) => {
 
             // Save the image data to file
             await fs.writeFile(imagePath, imageData);
-            console.log("Image saved:", imagePath);
 
             updatedImageArray.push({
                 name: imageName,

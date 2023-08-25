@@ -83,10 +83,8 @@ exports.dal = {
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		if (existingUser.length > 0) {
-			console.log("user found");
 			return "";
 		} else {
-			console.log(name + " added");
 			let newUser = await userModel.collection.insertOne(user);
 			let id = newUser.insertedId.toString();
 			let data = {
