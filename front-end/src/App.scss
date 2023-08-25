@@ -240,6 +240,7 @@ footer {
 	height: 610px;
 	a {
 		color: $color;
+		text-decoration: none !important;
 	}
 	th {
 		background-color: $darkbrown;
