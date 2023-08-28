@@ -1,7 +1,6 @@
 const { mongoose, Schema } = require("mongoose");
 var mongodb = require("mongodb");
 var ObjectID = require("mongodb").ObjectID;
-const path = require("path");
 require("dotenv").config();
 var bcrypt = require("bcryptjs");
 

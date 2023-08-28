@@ -1,11 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
-const bodyParser = require("body-parser");
-const formidable = require("formidable");
 const fs = require("fs").promises;
 const path = require("path");
-const http = require("http");
 var bcrypt = require('bcryptjs');
 
 const dal = require("./DAL").dal;
