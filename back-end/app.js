@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
-const fs = require("fs").promises;
+const fsPromises = require("fs").promises;
 const path = require("path");
 var bcrypt = require('bcryptjs');
+const { start } = require("repl");
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -112,6 +113,23 @@ app.get("/deleteUser/:id", async (req, res) => {
 	res.json({ Message: "User Deleted", Users: users });
 });
 
+app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
+	let id = req.params.id;
+	let imageUrl = req.params.imageUrl;
+	const userImagePath = path.join(__dirname, "public", "images", id);
+	dal.deleteUser(id, imageUrl);
+	let users = await dal.listUsers();
+
+	fs.unlink(userImagePath + imageUrl, (err) => {
+		if (err) {
+			throw err;
+		}
+	
+		console.log("Delete File successfully.");
+	});
+	res.json({ Message: "User Deleted", Users: users });
+});
+
 app.post("/checkout", async (req, res) => {
 	let body = req.body;
 	res.json({ Message: "data submitted to the back", Body: body });
@@ -141,18 +159,32 @@ app.post("/editImgs/:id", async (req, res) => {
 
         // Check if the directory exists, if not, create it
         try {
-            await fs.access(userImagePath);
+            await fsPromises.access(userImagePath);
         } catch (error) {
             if (error.code === "ENOENT") {
-                await fs.mkdir(userImagePath, { recursive: true });
+                await fsPromises.mkdir(userImagePath, { recursive: true });
             } else {
                 throw error;
             }
         }
 
+        // Determine the next available image index
+        let startIndex = 0;
+        try {
+            const existingImages = await fsPromises.readdir(userImagePath);
+            if (existingImages.length > 0) {
+                const lastImageName = existingImages[existingImages.length - 1];
+                const lastIndex = parseInt(lastImageName.match(/\d+/)[0]);
+                startIndex = lastIndex + 1;
+            }
+        } catch (error) {
+            // Handle error if the directory is empty or does not exist yet
+            console.error("Error reading existing images:", error);
+        }
+
         for (let index = 0; index < images.length; index++) {
             const img = images[index];
-            const imageName = `Image_${index + 1}.jpg`; // Assuming you want to save as JPEG format
+            const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
 
             const imagePath = path.join(userImagePath, imageName);
 
@@ -160,7 +192,7 @@ app.post("/editImgs/:id", async (req, res) => {
             const imageData = Buffer.from(img.url.split(",")[1], "base64");
 
             // Save the image data to file
-            await fs.writeFile(imagePath, imageData);
+            await fsPromises.writeFile(imagePath, imageData);
 
             updatedImageArray.push({
                 name: imageName,

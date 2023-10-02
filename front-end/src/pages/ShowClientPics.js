@@ -36,6 +36,17 @@ const ShowClientPics = () => {
 		loadAPI();
 	}, [id]);
 
+	function deleteImage(id, imageUrl) {
+		const getUrl = `http://localhost:5000/deleteImages/${id}/${imageUrl}`;
+		fetch(getUrl)
+			.then((r) => r.json())
+			.then((data) => {
+				setUser(data.Users);
+				setPics(data.Users.Images);
+			})
+			.catch((err) => console.log(err));
+	}
+
 	return (
 		<div>
 			{roles?.includes("Admin") ? (
@@ -45,8 +56,9 @@ const ShowClientPics = () => {
 							<h1>{user?.Name}'s Pictures</h1>
 							<div className="pics adminPics">
 								{pics?.map((pic) => (
-                                    <div>
+                                    <div key={pic.name}>
 									<img src={pic.url} />
+									<button onClick={() => deleteImage(user._id, pic.url)}>Delete Image</button>
                                     </div>
 								))}
 							</div>
