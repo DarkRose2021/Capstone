@@ -206,6 +206,11 @@ exports.dal = {
 	clearCart: async (id) => {
 		return await cartModel.updateOne({ UserID: id }, { $set: { Products: [] } });
 	},
+	deleteCartItem: async (cartID, productID) => {
+		await cartModel.collection.updateOne(
+			{ UserID: cartID },
+			{$pull: {Products: {ProductID: productID}}})
+	}
 	// deleteItem: async (userID, id) =>{
 	// 	let userCart = await cartModel.findOne({UserID:userID}).exec()
 	// 	const existingCartItem = await cartModel
