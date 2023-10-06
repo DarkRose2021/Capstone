@@ -192,7 +192,7 @@ exports.dal = {
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
-			{$pull: {Images: {url: imageUrl}}})
+			{$pull: {Images: {name: imageUrl}}})
 	},
 	showCart: async (id) => {
 		return await cartModel.find({ UserID: id }).exec();

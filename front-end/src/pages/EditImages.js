@@ -67,6 +67,7 @@ const EditImages = () => {
 		<div className="editImgsCont">
 			{roles?.includes("Admin") ? (
 				<>
+				<h1>Editing {user?.Name}'s Images</h1>
 					<ImageUploading
 						multiple
 						value={images}

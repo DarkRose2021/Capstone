@@ -17,14 +17,14 @@ a:visited {
 .invalid-feedback {
 	color: $error !important;
 	font-weight: bold !important;
-	margin-bottom: .1% !important;
+	margin-bottom: 0.1% !important;
 }
 
 .capstone {
 	color: $yellow;
 }
 
-.navbar  {
+.navbar {
 	background-color: $darkbrown;
 	a {
 		color: $color;
@@ -60,15 +60,13 @@ a:visited {
 			color: $color !important;
 		}
 	}
-	.dropdown-menu{
+	.dropdown-menu {
 		background-color: $darkbrown;
-		
 	}
-	.dropdown-item:hover{
+	.dropdown-item:hover {
 		background-color: $borderbrown !important;
 		color: $yellow !important;
 	}
-	
 }
 
 body {
@@ -436,14 +434,13 @@ footer {
 		.total {
 			color: $yellow;
 		}
-		
 	}
-	.checkoutBtn{
+	.checkoutBtn {
 		@include button;
 		@include flex-center;
-		button{
+		button {
 			width: 15vw;
-			padding: .5%;
+			padding: 0.5%;
 		}
 	}
 }
@@ -498,7 +495,7 @@ footer {
 		cursor: pointer;
 		filter: brightness(100%);
 	}
-	
+
 	img:hover {
 		filter: brightness(50%);
 		-webkit-transition: all 1s ease;
@@ -508,14 +505,19 @@ footer {
 		transition: all 1s ease;
 	}
 
-	div{
+	.delImage {
+		@include button;
+		margin-left: 35%;
+	}
+
+	div {
 		margin: 1%;
 		img {
 			max-width: 500px;
 			cursor: default;
 			filter: brightness(100%);
 		}
-		
+
 		img:hover {
 			filter: brightness(100%);
 			-webkit-transition: all 1s ease;

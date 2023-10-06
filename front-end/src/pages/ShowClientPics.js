@@ -41,8 +41,9 @@ const ShowClientPics = () => {
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
-				setUser(data.Users);
-				setPics(data.Users.Images);
+				setUser(data.User);
+				setPics(data.User.Images);
+				window.location.reload();
 			})
 			.catch((err) => console.log(err));
 	}
@@ -56,10 +57,14 @@ const ShowClientPics = () => {
 							<h1>{user?.Name}'s Pictures</h1>
 							<div className="pics adminPics">
 								{pics?.map((pic) => (
-                                    <div key={pic.name}>
-									<img src={pic.url} />
-									<button onClick={() => deleteImage(user._id, pic.url)}>Delete Image</button>
-                                    </div>
+									<div key={pic.name}>
+											<img src={pic.url} />
+											<div className="delImage">
+											<button onClick={() => deleteImage(user._id, pic.name)}>
+												Delete Image
+											</button>
+										</div>
+									</div>
 								))}
 							</div>
 							<br />

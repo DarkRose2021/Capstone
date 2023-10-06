@@ -5,6 +5,7 @@ const fsPromises = require("fs").promises;
 const path = require("path");
 var bcrypt = require('bcryptjs');
 const { start } = require("repl");
+const fs = require('fs');
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -116,9 +117,9 @@ app.get("/deleteUser/:id", async (req, res) => {
 app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 	let id = req.params.id;
 	let imageUrl = req.params.imageUrl;
-	const userImagePath = path.join(__dirname, "public", "images", id);
-	dal.deleteUser(id, imageUrl);
-	let users = await dal.listUsers();
+	const userImagePath = path.join(__dirname, "public", "images", id, "/");
+	dal.deleteImage(id, imageUrl);
+	let user = await dal.findUser(id);
 
 	fs.unlink(userImagePath + imageUrl, (err) => {
 		if (err) {
@@ -127,7 +128,7 @@ app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 	
 		console.log("Delete File successfully.");
 	});
-	res.json({ Message: "User Deleted", Users: users });
+	res.json({ Message: "Image Deleted", User: user});
 });
 
 app.post("/checkout", async (req, res) => {
