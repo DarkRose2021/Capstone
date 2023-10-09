@@ -102,7 +102,8 @@ app.get("/findProduct/:id", async (req, res) => {
 app.post("/addToCart/:items", async (req, res) => {
 	const items = req.params.items;
 	const data = JSON.parse(items);
-	dal.addToCart(data.items.UserID, data.items.Products);
+	console.log(data)
+	dal.addToCart(data.items.UserID, data.items.Products, data.items.ProductQty);
 });
 
 app.get("/products", async (req, res) => {

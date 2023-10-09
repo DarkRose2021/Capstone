@@ -159,7 +159,7 @@ exports.dal = {
 	showProducts: async () => {
 		return await productsModel.find({}).exec();
 	},
-	addToCart: async (id, product) => {
+	addToCart: async (id, product, qty) => {
 		const existingCartItem = await cartModel
 			.findOne({ UserID: id, "Products.ProductID": product })
 			.exec();
@@ -167,12 +167,12 @@ exports.dal = {
 		if (existingCartItem) {
 			await cartModel.updateOne(
 				{ UserID: id, "Products.ProductID": product },
-				{ $inc: { "Products.$.Qty": 1 } }
+				{ $inc: { "Products.$.Qty": qty } }
 			);
 		} else {
 			const newItem = {
 				ProductID: product,
-				Qty: 1,
+				Qty: qty,
 			};
 
 			await cartModel.updateOne(
