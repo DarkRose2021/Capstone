@@ -50,7 +50,7 @@ const EditImages = () => {
 		// Call the API function to send the images to the backend
 		uploadImagesToBackend(images, id);
 		setImages([])
-
+		setMsg("Images Uploaded!")
 	};
 
 	useEffect(() => {
@@ -105,6 +105,7 @@ const EditImages = () => {
 								</div>
 								<div className="upload__image-wrapper">
 									<div className="flex">
+										{msg? (<h2>{msg}</h2>):(<></>)}
 										{imageList.map((image, index) => (
 											<div key={index} className="image-item">
 												<img src={image["url"]} alt="" width="100" />
