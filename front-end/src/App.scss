@@ -2,15 +2,19 @@
 
 a {
 	color: $blue;
+	font-weight: bold;
 }
 a:hover {
 	color: $blue-hover;
+	font-weight: bold;
 }
 a:active {
 	color: $blue-active;
+	font-weight: bold;
 }
 a:visited {
 	color: $blue;
+	font-weight: bold;
 }
 
 .error,
@@ -273,9 +277,9 @@ footer {
 }
 
 .fc .fc-button-primary:active {
-	background-color: $blue-active;
-	border-color: none;
-	color: black;
+	background-color: $blue-active !important;
+	border-color: none !important;
+	color: black !important;
 }
 
 .fc .fc-button-primary {

@@ -98,7 +98,7 @@ const ClientStories = () => {
 			<h1>Client Stories</h1>
 			{/* eventually put in to something that I can loop over */}
 			<div className="album py-5 highlight-color">
-				<div class="s-container">
+				<div className="s-container">
 					<div
 						className={`row row-cols-1 row-cols-sm-2 ${
 							isMobile ? "row-cols-md-2" : "row-cols-md-3"

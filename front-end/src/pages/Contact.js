@@ -152,7 +152,6 @@ const Contact = () => {
 			<div className="flex">
 				<div className="calenderDiv">
 					<FullCalendar
-						className="calender"
 						plugins={[dayGridPlugin]}
 						initialView="dayGridMonth"
 						weekends={true}
