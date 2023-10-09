@@ -6,6 +6,8 @@ const Products = () => {
 	const [roles, setRoles] = useState(null);
 	const [user, setUser] = useState(null);
 	const [products, setProducts] = useState(null);
+	const [productBtnTexts, setProductBtnTexts] = useState({});
+	const [qty, setQty] = useState(1);
 	const [items, setItems] = useState({
 		UserID: "",
 		Products: [],
@@ -46,6 +48,18 @@ const Products = () => {
 	}
 
 	function addToCart(id) {
+		setProductBtnTexts((prevBtnTexts) => ({
+			...prevBtnTexts,
+			[id]: "Item Added!",
+		}));
+
+		setTimeout(() => {
+			setProductBtnTexts((prevBtnTexts) => ({
+				...prevBtnTexts,
+				[id]: "Add to Cart",
+			}));
+		}, 4000);
+
 		items.Products = id;
 		let dataToSend = {
 			items: items,
@@ -61,9 +75,7 @@ const Products = () => {
 			},
 		})
 			.then((data) => data.json())
-			.then((data) => {
-				setUser(data.User);
-			})
+			.then((data) => {})
 			.catch((err) => console.log(err));
 	}
 
@@ -82,10 +94,6 @@ const Products = () => {
 	}, [user]);
 
 	const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
-
-	{
-		/* Performs similarly to componentDidMount in classes */
-	}
 	useEffect(() => {
 		window.addEventListener(
 			"resize",
@@ -96,6 +104,10 @@ const Products = () => {
 			false
 		);
 	}, [isMobile]);
+
+	function customQty(){
+		
+	}
 
 	return (
 		<div className="products">
@@ -116,16 +128,20 @@ const Products = () => {
 												<h3 className="card-title">{product.Name}</h3>
 												<p className="card-text">{product.Description}</p>
 												<h4 className="card-price">${product.Price}</h4>
+												<div>
 												{/* + */}
-												{/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+												{/* add input for the + and - later */}
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-</svg> */}
+</svg> 
+{" "}<input className="customQty" type="number" value={qty} onChange={customQty()}/>{" "}
 												{/* - */}
-												{/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
-</svg> */}
+</svg>
+</div>
 												<button onClick={() => addToCart(product._id)}>
-													<svg
+												<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
 														height="16"
@@ -134,8 +150,7 @@ const Products = () => {
 														viewBox="0 0 16 16"
 													>
 														<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z" />
-													</svg>{" "}
-													Add to Cart
+													</svg>{" "}{productBtnTexts[product._id] || "Add to Cart"}
 												</button>
 											</div>
 										</div>

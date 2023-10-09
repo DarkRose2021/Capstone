@@ -336,6 +336,14 @@ footer {
 		text-align: center;
 		color: $yellow;
 	}
+	div{
+		text-align: center;
+		.customQty{
+		width: 40px;
+		@include border-radius;
+	}
+	}
+	
 }
 
 .team {
