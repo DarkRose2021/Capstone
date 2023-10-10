@@ -21,6 +21,7 @@ import EditRoles from "./pages/EditRoles";
 import NotFound from "./pages/NotFound";
 import EditImages from "./pages/EditImages";
 import ShowClientPics from "./pages/ShowClientPics";
+import BookingForm from "./pages/BookingForm";
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -393,6 +394,7 @@ function App() {
 							<Route path="/edit/:id" element={<EditRoles />} />
 							<Route path="/editImages/:id" element={<EditImages />} />
 							<Route path="/ShowImages/:id" element={<ShowClientPics />} />
+							<Route path="/BookingForm" element={<BookingForm />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</div>

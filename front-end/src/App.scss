@@ -336,14 +336,16 @@ footer {
 		text-align: center;
 		color: $yellow;
 	}
-	div{
+	div {
 		text-align: center;
-		.customQty{
-		width: 40px;
-		@include border-radius;
+		.customQty {
+			width: 40px;
+			@include border-radius;
+		}
+		button {
+			margin-left: 2% !important;
+		}
 	}
-	}
-	
 }
 
 .team {
@@ -378,7 +380,8 @@ footer {
 }
 
 .login,
-.signup {
+.signup,
+.booking {
 	.form {
 		margin: 5%;
 		@include flex-center;
@@ -392,7 +395,10 @@ footer {
 		}
 		input[type="text"],
 		input[type="email"],
-		input[type="password"] {
+		input[type="password"],
+		input[type="tel"],
+		textarea,
+		select {
 			@include borderRadius;
 			margin: 1%;
 			width: 100%;

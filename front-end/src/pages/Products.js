@@ -172,6 +172,7 @@ const Products = () => {
 														/>
 													</svg>
 												</div>
+												<div>
 												<button onClick={() => addToCart(product._id)}>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -185,6 +186,7 @@ const Products = () => {
 													</svg>{" "}
 													{productBtnTexts[product._id] || "Add to Cart"}
 												</button>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -197,7 +199,6 @@ const Products = () => {
 				<>
 					<>
 						<h1>You don't have permission to view this page</h1>
-						{/* <Navigate to={"/login"} /> */}
 					</>
 				</>
 			)}

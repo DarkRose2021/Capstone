@@ -52,6 +52,11 @@ app.get("/signup", async (req, res) => {
 	return res.json({ Message: "Getting the Signup Page" });
 });
 
+app.get("/services", async (req, res) =>{
+	let service = await dal.getServices()
+	res.json(service)
+})
+
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
@@ -102,7 +107,6 @@ app.get("/findProduct/:id", async (req, res) => {
 app.post("/addToCart/:items", async (req, res) => {
 	const items = req.params.items;
 	const data = JSON.parse(items);
-	console.log(data)
 	dal.addToCart(data.items.UserID, data.items.Products, data.items.ProductQty);
 });
 

@@ -10,6 +10,7 @@ const userCollection = "Users";
 const pictureCollection = "Pictures";
 const productCollection = "Products";
 const cartCollection = "Checkout";
+const serviceCollection = "Services";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -67,6 +68,18 @@ const cart = new Schema(
 );
 
 const cartModel = mongoose.model("cart", cart);
+
+const services = new Schema(
+	{
+		name: String,
+		txt: Number,
+		alt: String,
+		img: String,
+		price: [String]
+	},
+	{ collection: serviceCollection }
+);
+const servicesModel = mongoose.model("services", services);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -210,20 +223,8 @@ exports.dal = {
 		await cartModel.collection.updateOne(
 			{ UserID: cartID },
 			{$pull: {Products: {ProductID: productID}}})
+	},
+	getServices: async () =>{
+		return await servicesModel.find({}).exec()
 	}
-	// deleteItem: async (userID, id) =>{
-	// 	let userCart = await cartModel.findOne({UserID:userID}).exec()
-	// 	const existingCartItem = await cartModel
-	// 		.findOne({ UserID: userID, "Products.ProductID": id })
-	// 		.exec();
-	// 	if(existingCartItem.length !== null){
-	// 		if(existingCartItem.Qty > 1){
-	// 			return await cartModel.updateOne(
-	// 				{ UserID: userID, "Products.ProductID": id },
-	// 				{ $inc: { "Products.$.Qty": -1 } }) 
-	// 		}else{
-	// 			return cartModel.collection.deleteOne({ProductID: id})
-	// 		}
-	// 	}
-	// }
 };
