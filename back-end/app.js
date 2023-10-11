@@ -80,6 +80,10 @@ app.post("/signup", async (req, res) => {
 	}
 });
 
+app.post("/bookingInfo", async (req, res) =>{
+	console.log(req.body)
+})
+
 app.get("/cart/:id", async (req, res) => {
 	let id = req.params.id;
 	const user = await dal.showCart(id);
