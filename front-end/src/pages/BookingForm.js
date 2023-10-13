@@ -11,8 +11,36 @@ const BookingForm = () => {
 	} = useForm({
 		criteriaMode: "all",
 	});
+	const [currentDate, setCurrentDate] = useState(new Date());
+
+	useEffect(() => {
+		// Function to update the date every second
+		const interval = setInterval(() => {
+			setCurrentDate(new Date());
+		}, 3600000);
+
+		// Clean up the interval when the component unmounts
+		return () => clearInterval(interval);
+	}, []);
+
+	const formattedDate = currentDate.toLocaleDateString(undefined, {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+
+    const namePattern = /^[A-Za-z\s]+$/;
+	const validateName = (value) => {
+		if (namePattern.test(value)) {
+			return true;
+		}
+		return "Name must only contain letters";
+	};
 
 	const onSubmit = (data) => {
+		
+		data.date = formattedDate
+		console.log(data)
 		fetch("http://localhost:5000/bookingInfo", {
 			method: "POST",
 			headers: {
@@ -40,10 +68,11 @@ const BookingForm = () => {
 							id="name"
 							name="name"
 							type="text"
+                            placeholder="Full Name"
 							{...register("name", {
 								required: "Name is required",
-								// validate: validateName,
-								minLength: {
+                                validate: validateName,
+                                minLength: {
 									value: 2,
 									message: "Name can't be shorter than 2 characters",
 								},
@@ -60,6 +89,7 @@ const BookingForm = () => {
 							id="email"
 							name="email"
 							type="email"
+                            placeholder="example@mail.com"
 							{...register("email", {
 								required: "Email is required",
 								pattern: {
@@ -79,11 +109,12 @@ const BookingForm = () => {
 							id="phnumber"
 							name="phnumber"
 							type="tel"
+                            placeholder="123-456-7890"
 							{...register("phnumber", {
 								required: "Phone Number is required",
-                                pattern: /[0-9]{3}[0-9]{3}[0-9]{4}/,
-								minLength: 7,
-                                maxLength: 7
+                                pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/,
+								// minLength: 7,
+                                // maxLength: 7
 							})}
 						/>
 						<br />
@@ -93,8 +124,9 @@ const BookingForm = () => {
 							id="location"
 							name="location"
 							type="text"
+                            placeholder="Vague Area"
 							{...register("location", {
-								required: "Phone Number is required",
+								required: "Location is required",
 								
 							})}
 						/>
@@ -114,10 +146,12 @@ const BookingForm = () => {
 						<select
 							id="session"
 							name="session"
+							defaultValue=""
 							{...register("session", {
 								required: true,
 							})}
 						>
+							<option value={""} disabled>Select One</option>
 							<option value={"Equine portrait"}>Equine portrait</option>
 							<option value={"Event photography"}>Event photography</option>
 							<option value={"Fine art photography"}>
@@ -137,14 +171,16 @@ const BookingForm = () => {
 						<br />
 						<label htmlFor="hearAbout">How did you hear about me?</label>
 						<br />
-						<select id="hearAbout" name="hearAbout" {...register("hearAbout")}>
-							<option>Select One</option>
+						<select id="hearAbout" name="hearAbout" defaultValue="" {...register("hearAbout")}>
+							<option value={""} disabled>Select One</option>
 							<option value={"facebook"}>Facebook</option>
 							<option value={"instagram"}>Instagram</option>
 							<option value={"word of mouth"}>Word of Mouth</option>
 							<option value={"website"}>Website</option>
 							<option value={"other"}>Other</option>
 						</select>
+						<label hidden htmlFor="date"></label>
+						<input type="text" hidden id="date" name="date" value={formattedDate} disabled {...register("date")} />
 						<button type="submit">Submit</button>
 					</form>
 				</div>

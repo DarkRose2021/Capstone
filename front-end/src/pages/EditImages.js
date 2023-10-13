@@ -74,7 +74,7 @@ const EditImages = () => {
 						onChange={onChange}
 						maxNumber={maxNumber}
 						dataURLKey="url"
-						imgExtension={[".jpg", ".jpeg", ".png", ".gif"]}
+						imgExtension={[".jpg", ".jpeg", ".png"	]}
 					>
 						{({
 							imageList,

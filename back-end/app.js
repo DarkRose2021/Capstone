@@ -81,7 +81,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/bookingInfo", async (req, res) =>{
-	console.log(req.body)
+	await dal.bookingInfo(req.body)
 })
 
 app.get("/cart/:id", async (req, res) => {

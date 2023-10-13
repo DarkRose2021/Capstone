@@ -4,13 +4,13 @@ var ObjectID = require("mongodb").ObjectID;
 require("dotenv").config();
 var bcrypt = require("bcryptjs");
 
-
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
 const pictureCollection = "Pictures";
 const productCollection = "Products";
 const cartCollection = "Checkout";
 const serviceCollection = "Services";
+const bookingCollection = "Bookings";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -53,7 +53,7 @@ const products = new Schema(
 		BriefDescription: String,
 		DisplayImage: String,
 		SelectedImage: String,
-		Alt: String
+		Alt: String,
 	},
 	{ collection: productCollection }
 );
@@ -75,11 +75,29 @@ const services = new Schema(
 		txt: Number,
 		alt: String,
 		img: String,
-		price: [String]
+		price: [String],
 	},
 	{ collection: serviceCollection }
 );
 const servicesModel = mongoose.model("services", services);
+
+const bookings = new Schema(
+	{
+		Name: String,
+		Email: String,
+		PhoneNumber: String,
+		Message: String,
+		Location: String,
+		Session: String,
+		HearAbout: String,
+		Approved: Boolean,
+		Contacted: Boolean,
+		DateBooked: String,
+		DateScheduled: String,
+	},
+	{ collection: bookingCollection }
+);
+const bookingsModel = mongoose.model("bookings", bookings);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -205,7 +223,8 @@ exports.dal = {
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
-			{$pull: {Images: {name: imageUrl}}})
+			{ $pull: { Images: { name: imageUrl } } }
+		);
 	},
 	showCart: async (id) => {
 		return await cartModel.find({ UserID: id }).exec();
@@ -217,14 +236,34 @@ exports.dal = {
 		return temp;
 	},
 	clearCart: async (id) => {
-		return await cartModel.updateOne({ UserID: id }, { $set: { Products: [] } });
+		return await cartModel.updateOne(
+			{ UserID: id },
+			{ $set: { Products: [] } }
+		);
 	},
 	deleteCartItem: async (cartID, productID) => {
 		await cartModel.collection.updateOne(
 			{ UserID: cartID },
-			{$pull: {Products: {ProductID: productID}}})
+			{ $pull: { Products: { ProductID: productID } } }
+		);
 	},
-	getServices: async () =>{
-		return await servicesModel.find({}).exec()
-	}
+	getServices: async () => {
+		return await servicesModel.find({}).exec();
+	},
+	bookingInfo: async (data) => {
+		let newData = {
+			Name: data.name,
+			Email: data.email,
+			PhoneNumber: data.phnumber,
+			Message: data.msg,
+			Location: data.location,
+			Session: data.session,
+			HearAbout: data.hearAbout,
+			Approved: false,
+			Contacted: false,
+			DateBooked: data.date,
+			DateScheduled: "",
+		};
+		await bookingsModel.collection.insertOne(newData);
+	},
 };
