@@ -116,6 +116,19 @@ const BookingForm = () => {
 								},
 							})}
 						/>
+						<ErrorMessage
+							errors={errors}
+							name="email"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
 						<br />
 						<label htmlFor="phnumber">Phone Number<span className="required">*</span></label>
 						<br />
@@ -131,6 +144,19 @@ const BookingForm = () => {
                                 // maxLength: 7
 							})}
 						/>
+						<ErrorMessage
+							errors={errors}
+							name="phnumber"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
 						<br />
 						<label htmlFor="location">Location<span className="required">*</span></label>
 						<br />
@@ -143,6 +169,19 @@ const BookingForm = () => {
 								required: "Location is required",
 								
 							})}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="location"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
 						/>
 						<br />
 						<label htmlFor="msg">Message</label>
@@ -162,7 +201,7 @@ const BookingForm = () => {
 							name="session"
 							defaultValue=""
 							{...register("session", {
-								required: true,
+								required: "You must select an option",
 							})}
 						>
 							<option value={""} disabled>Select One</option>
@@ -182,6 +221,19 @@ const BookingForm = () => {
 							</option>
 							<option value={"other"}>Other</option>
 						</select>
+						<ErrorMessage
+							errors={errors}
+							name="session"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
 						<br />
 						<label htmlFor="hearAbout">How did you hear about me?</label>
 						<br />
