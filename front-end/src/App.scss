@@ -18,7 +18,8 @@ a:visited {
 }
 
 .error,
-.invalid-feedback {
+.invalid-feedback,
+.required {
 	color: $error !important;
 	font-weight: bold !important;
 	margin-bottom: 0.1% !important;

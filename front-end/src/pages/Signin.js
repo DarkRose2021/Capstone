@@ -83,7 +83,7 @@ const Signin = () => {
 			<div className="form">
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<label htmlFor="email">Email:</label>
+						<label htmlFor="email">Email<span className="required">*</span></label>
 						<br />
 						<input
 							id="email"
@@ -117,7 +117,7 @@ const Signin = () => {
 						/>
 						<br />
 
-						<label htmlFor="confirmEmail">Confirm Email:</label>
+						<label htmlFor="confirmEmail">Confirm Email<span className="required">*</span></label>
 						<br />
 						<input
 							id="confirmEmail"
@@ -146,7 +146,7 @@ const Signin = () => {
 						/>
 						<br />
 
-						<label htmlFor="name">Name:</label>
+						<label htmlFor="name">Name<span className="required">*</span></label>
 						<br />
 						<input
 							id="name"
@@ -181,7 +181,7 @@ const Signin = () => {
 						/>
 						<br />
 
-						<label htmlFor="password">Password:</label>
+						<label htmlFor="password">Password<span className="required">*</span></label>
 						<br />
 						<input
 							id="password"
@@ -215,7 +215,7 @@ const Signin = () => {
 							}
 						/>
 						<br />
-						<label htmlFor="confirmPassword">Confirm Password:</label>
+						<label htmlFor="confirmPassword">Confirm Password<span className="required">*</span></label>
 						<br />
 						<input
 							id="confirmPassword"

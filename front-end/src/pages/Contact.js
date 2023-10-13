@@ -165,7 +165,7 @@ const Contact = () => {
 						<h3>Contact Us</h3>
 						<form onSubmit={handleFormData}>
 							<input type="hidden" name="contact_number" />
-							<label htmlFor="from_name">Name:</label>
+							<label htmlFor="from_name">Name<span className="required">*</span></label>
 							<input
 								value={values.from_name}
 								onChange={handleInputChange}
@@ -176,7 +176,7 @@ const Contact = () => {
 								type="text"
 							/>
 
-							<label htmlFor="from_email">Email:</label>
+							<label htmlFor="from_email">Email<span className="required">*</span></label>
 							<input
 								id="from_email"
 								name="from_email"
@@ -187,7 +187,7 @@ const Contact = () => {
 								onChange={handleInputChange}
 							/>
 
-							<label htmlFor="html_message">Message:</label>
+							<label htmlFor="html_message">Message<span className="required">*</span></label>
 							<textarea
 								value={values.html_message}
 								onChange={handleInputChange}

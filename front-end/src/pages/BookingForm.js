@@ -58,11 +58,11 @@ const BookingForm = () => {
 	};
 	return (
 		<div className="booking">
-			<h1>Booking Information</h1>
+			<h1>Booking Request</h1>
 			<div className="form">
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<label htmlFor="name">Full Name</label>
+						<label htmlFor="name">Full Name<span className="required">*</span></label>
 						<br />
 						<input
 							id="name"
@@ -81,9 +81,23 @@ const BookingForm = () => {
 									message: "Name cannot exceed 100 characters",
 								},
 							})}
+							
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="name"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
 						/>
 						<br />
-						<label htmlFor="email">Email</label>
+						<label htmlFor="email">Email<span className="required">*</span></label>
 						<br />
 						<input
 							id="email"
@@ -103,7 +117,7 @@ const BookingForm = () => {
 							})}
 						/>
 						<br />
-						<label htmlFor="phnumber">Phone Number</label>
+						<label htmlFor="phnumber">Phone Number<span className="required">*</span></label>
 						<br />
 						<input
 							id="phnumber"
@@ -118,7 +132,7 @@ const BookingForm = () => {
 							})}
 						/>
 						<br />
-						<label htmlFor="location">Location</label>
+						<label htmlFor="location">Location<span className="required">*</span></label>
 						<br />
 						<input
 							id="location"
@@ -140,7 +154,7 @@ const BookingForm = () => {
 						/>
 						<br />
 						<label htmlFor="session">
-							Type of session you are interested in?
+							Type of session you are interested in?<span className="required">*</span>
 						</label>
 						<br />
 						<select
