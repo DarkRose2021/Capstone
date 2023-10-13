@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
+import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
@@ -48,6 +49,7 @@ const Contact = () => {
 			start: "2023-10-08",
 			backgroundColor: "#40797A",
 			borderColor: "#40797A",
+			eventDisplay: 'list-item'
 		},
 		{
 			title: "Photo shoot",
@@ -115,6 +117,7 @@ const Contact = () => {
 			backgroundColor: "#9E7B9B",
 			borderColor: "#9E7B9B",
 			allDay: true,
+			editable: false
 		},
 		{
 			title: "Christmas Eve",
@@ -122,6 +125,7 @@ const Contact = () => {
 			backgroundColor: "#9E7B9B",
 			borderColor: "#9E7B9B",
 			allDay: true,
+			editable: false
 		},
 		{
 			title: "New Years Eve",
@@ -129,6 +133,7 @@ const Contact = () => {
 			backgroundColor: "#9E7B9B",
 			borderColor: "#9E7B9B",
 			allDay: true,
+			editable: false
 		},
 		{
 			title: "Halloween",
@@ -136,6 +141,7 @@ const Contact = () => {
 			backgroundColor: "#9E7B9B",
 			borderColor: "#9E7B9B",
 			allDay: true,
+			editable: false
 		},
 		{
 			title: "New Years Day",
@@ -143,6 +149,7 @@ const Contact = () => {
 			backgroundColor: "#9E7B9B",
 			borderColor: "#9E7B9B",
 			allDay: true,
+			editable: false
 		},
 	];
 
@@ -152,7 +159,7 @@ const Contact = () => {
 			<div className="flex">
 				<div className="calenderDiv">
 					<FullCalendar
-						plugins={[dayGridPlugin]}
+						plugins={[rrulePlugin, dayGridPlugin]}
 						initialView="dayGridMonth"
 						weekends={true}
 						events={events}
