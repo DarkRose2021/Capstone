@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-import rrulePlugin from '@fullcalendar/rrule'
+// import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
@@ -159,7 +159,7 @@ const Contact = () => {
 			<div className="flex">
 				<div className="calenderDiv">
 					<FullCalendar
-						plugins={[rrulePlugin, dayGridPlugin]}
+						plugins={[dayGridPlugin]}
 						initialView="dayGridMonth"
 						weekends={true}
 						events={events}

@@ -26,26 +26,10 @@ const Confirm = (props) => {
 	}, []);
 
 	useEffect(() => {
-		// Function to update the date every second (optional)
-		const interval = setInterval(() => {
-			setCurrentDate(new Date());
-		}, 3600000);
-
-		// Clean up the interval when the component unmounts
-		return () => clearInterval(interval);
-	}, []);
-
-	useEffect(() => {
 		const maxDisplayedLength = 15; // Set your desired maximum length here
 		const uuid = uuidv4().substring(0, maxDisplayedLength);
 		setOrderID(uuid);
 	}, [data]);
-
-	const formattedDate = currentDate.toLocaleDateString(undefined, {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
 
 	const getLastFourDigits = (cardNumber) => {
 		// Check if cardNumber is valid and has at least 4 characters
@@ -102,7 +86,7 @@ const Confirm = (props) => {
 							<div className="orderInfo">
 								<div>
 									<h4>Order date</h4>
-									<p>{formattedDate}</p>
+									<p>{data.date}</p>
 								</div>
 								<div>
 									<h4>Order ID</h4>
@@ -121,9 +105,12 @@ const Confirm = (props) => {
 							<div className="conProducts">
 								{products?.map((product) => (
 									<>
+									{/* might make this something similar to the top part */}
 									<div key={product._id}>
 										<span>{product.Name}</span>
-										<span className="prices">${product.Price}</span>
+										<span>{product.Price}</span>
+										<span> {getProductQty(product._id)}</span>
+										<span className="prices">${prices(getProductQty(product._id), product.Price)}</span>
 									</div></>
 								))}
 							</div>

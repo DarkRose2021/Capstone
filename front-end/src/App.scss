@@ -21,8 +21,14 @@ a:visited {
 .invalid-feedback,
 .required {
 	color: $error !important;
-	font-weight: bold !important;
+	font-weight: bolder !important;
 	margin-bottom: 0.1% !important;
+	// text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;	
+}
+
+.lightError{
+	text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;
+	font-size: 1em;
 }
 
 .capstone {
