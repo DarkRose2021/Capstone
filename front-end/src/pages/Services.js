@@ -5,7 +5,7 @@ const Services = () => {
 	const [services, setServices] = useState(null)
 
 	useEffect(( )=>{
-		const url = `http://localhost:5000/services`
+		const url = `https://mane-frame-backend.onrender.com/services`
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {

@@ -20,7 +20,7 @@ const Login = () => {
 	const location = useLocation();
 
 	const onSubmit = (data) => {
-		fetch(`http://localhost:5000/login`, {
+		fetch(`https://mane-frame-backend.onrender.com/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

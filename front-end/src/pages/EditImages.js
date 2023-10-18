@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 const uploadImagesToBackend = async (images, id) => {
 	// Send the images to the backend using an API call
 	try {
-		await fetch(`http://localhost:5000/editImgs/${id}`, {
+		await fetch(`https://mane-frame-backend.onrender.com/editImgs/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -54,7 +54,7 @@ const EditImages = () => {
 	};
 
 	useEffect(() => {
-		let getUrl = `http://localhost:5000/findUser/${id}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUser/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {

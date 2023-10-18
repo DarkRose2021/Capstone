@@ -67,7 +67,7 @@ const Checkout = () => {
 
 	function getCart() {
 		let id = user._id;
-		let url = `http://localhost:5000/cart/${id}`;
+		let url = `https://mane-frame-backend.onrender.com/cart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
@@ -77,7 +77,7 @@ const Checkout = () => {
 	}
 
 	function loadAPI() {
-		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -95,7 +95,7 @@ const Checkout = () => {
 			const productId = product.ProductID;
 			ids.push(productId);
 		}
-		let getUrl = `http://localhost:5000/findProduct/${ids}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -124,7 +124,7 @@ const Checkout = () => {
 	//rework the entire submit?
 	const onSubmit = (data) => {
 		data.date = formattedDate;
-		const endpoint = `http://localhost:5000/checkout`;
+		const endpoint = `https://mane-frame-backend.onrender.com/checkout`;
 
 			// Use the fetch API to post the data to the backend
 			fetch(endpoint, {
@@ -232,7 +232,7 @@ const Checkout = () => {
 	};
 
 	function deleteItem(userId, id) {
-		const getUrl = `http://localhost:5000/deleteCart/${userId}/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteCart/${userId}/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {

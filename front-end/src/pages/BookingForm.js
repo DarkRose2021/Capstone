@@ -41,7 +41,7 @@ const BookingForm = () => {
 		
 		data.date = formattedDate
 		console.log(data)
-		fetch("http://localhost:5000/bookingInfo", {
+		fetch("https://mane-frame-backend.onrender.com/bookingInfo", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

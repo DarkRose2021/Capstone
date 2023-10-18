@@ -21,7 +21,7 @@ const Admin = () => {
 	}, []);
 
 	function listUsers() {
-		fetch("http://localhost:5000/listUsers")
+		fetch("https://mane-frame-backend.onrender.com/listUsers")
 			.then((response) => response.json())
 			.then((result) => {
 				setAllUsers(result);
@@ -35,7 +35,7 @@ const Admin = () => {
 	// change to disabling the user
 	// if user tries to log in then send a msg saying that the account has been disabled, put contact info
 	function deleteUser(id) {
-		const getUrl = `http://localhost:5000/deleteUser/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteUser/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {

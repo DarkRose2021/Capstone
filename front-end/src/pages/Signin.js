@@ -44,7 +44,7 @@ const Signin = () => {
 	}, [watch]);
 
 	const onSubmit = (data) => {
-		fetch("http://localhost:5000/signup", {
+		fetch("https://mane-frame-backend.onrender.com/signup", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
