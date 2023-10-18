@@ -331,7 +331,7 @@ function App() {
 									{/* only show when a user is logged in */}
 									{loggedIn === true ? (
 										<>
-											{isMobile ? (
+											{isMobile ? ( 
 												<>
 													<li className="welcome dropdown">
 														<a
