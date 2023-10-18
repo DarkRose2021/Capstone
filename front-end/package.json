@@ -45,6 +45,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://mane-frame.vercel.app",
   "eslintConfig": {
     "extends": [
       "react-app",
