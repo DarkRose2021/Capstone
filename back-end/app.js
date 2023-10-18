@@ -3,9 +3,9 @@ const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
 const fsPromises = require("fs").promises;
 const path = require("path");
-var bcrypt = require('bcryptjs');
+var bcrypt = require("bcryptjs");
 const { start } = require("repl");
-const fs = require('fs');
+const fs = require("fs");
 
 const dal = require("./DAL").dal;
 const port = 5000;
@@ -32,17 +32,16 @@ app.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	try {
-		let found = await dal.findUserEmail(email)
+		let found = await dal.findUserEmail(email);
 		let found_email = found.Email;
 
-		if(found){
-			let checkPasswords = await bcrypt.compare(password, found.Password)
+		if (found) {
+			let checkPasswords = await bcrypt.compare(password, found.Password);
 
-			if(checkPasswords){
+			if (checkPasswords) {
 				res.json({ Message: `${found_email} found`, User: found });
 			}
 		}
-		
 	} catch {
 		res.json({ Message: "Invalid Email or password" });
 	}
@@ -52,18 +51,21 @@ app.get("/signup", async (req, res) => {
 	return res.json({ Message: "Getting the Signup Page" });
 });
 
-app.get("/services", async (req, res) =>{
-	let service = await dal.getServices()
-	res.json(service)
-})
+app.get("/services", async (req, res) => {
+	let service = await dal.getServices();
+	res.json(service);
+});
 
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
-	product = await dal.findProducts(id)
+	product = await dal.findProducts(id);
 	const user = await dal.showCart(userId);
-	dal.deleteCartItem(userId, id)
-	res.json({Message: product.Name+ " was deleted from your cart", User: user})
+	dal.deleteCartItem(userId, id);
+	res.json({
+		Message: product.Name + " was deleted from your cart",
+		User: user,
+	});
 });
 
 app.post("/signup", async (req, res) => {
@@ -80,9 +82,9 @@ app.post("/signup", async (req, res) => {
 	}
 });
 
-app.post("/bookingInfo", async (req, res) =>{
-	await dal.bookingInfo(req.body)
-})
+app.post("/bookingInfo", async (req, res) => {
+	await dal.bookingInfo(req.body);
+});
 
 app.get("/cart/:id", async (req, res) => {
 	let id = req.params.id;
@@ -137,10 +139,10 @@ app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 		if (err) {
 			throw err;
 		}
-	
+
 		console.log("Delete File successfully.");
 	});
-	res.json({ Message: "Image Deleted", User: user});
+	res.json({ Message: "Image Deleted", User: user });
 });
 
 app.post("/checkout", async (req, res) => {
@@ -163,66 +165,66 @@ app.post("/editRoles/:id", async (req, res) => {
 });
 
 app.post("/editImgs/:id", async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const images = req.body.images;
+	try {
+		const userId = req.params.id;
+		const images = req.body.images;
 
-        const updatedImageArray = [];
-        const userImagePath = path.join(__dirname, "public", "images", userId);
+		const updatedImageArray = [];
+		const userImagePath = path.join(__dirname, "public", "images", userId);
 
-        // Check if the directory exists, if not, create it
-        try {
-            await fsPromises.access(userImagePath);
-        } catch (error) {
-            if (error.code === "ENOENT") {
-                await fsPromises.mkdir(userImagePath, { recursive: true });
-            } else {
-                throw error;
-            }
-        }
+		// Check if the directory exists, if not, create it
+		try {
+			await fsPromises.access(userImagePath);
+		} catch (error) {
+			if (error.code === "ENOENT") {
+				await fsPromises.mkdir(userImagePath, { recursive: true });
+			} else {
+				throw error;
+			}
+		}
 
-        // Determine the next available image index
-        let startIndex = 0;
-        try {
-            const existingImages = await fsPromises.readdir(userImagePath);
-            if (existingImages.length > 0) {
-                const lastImageName = existingImages[existingImages.length - 1];
-                const lastIndex = parseInt(lastImageName.match(/\d+/)[0]);
-                startIndex = lastIndex + 1;
-            }
-        } catch (error) {
-            // Handle error if the directory is empty or does not exist yet
-            console.error("Error reading existing images:", error);
-        }
+		// Determine the next available image index
+		let startIndex = 0;
+		try {
+			const existingImages = await fsPromises.readdir(userImagePath);
+			if (existingImages.length > 0) {
+				const lastImageName = existingImages[existingImages.length - 1];
+				const lastIndex = parseInt(lastImageName.match(/\d+/)[0]);
+				startIndex = lastIndex + 1;
+			}
+		} catch (error) {
+			// Handle error if the directory is empty or does not exist yet
+			console.error("Error reading existing images:", error);
+		}
 
-        for (let index = 0; index < images.length; index++) {
-            const img = images[index];
-            const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
+		for (let index = 0; index < images.length; index++) {
+			const img = images[index];
+			const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
 
-            const imagePath = path.join(userImagePath, imageName);
+			const imagePath = path.join(userImagePath, imageName);
 
-            // Convert data URL to buffer
-            const imageData = Buffer.from(img.url.split(",")[1], "base64");
+			// Convert data URL to buffer
+			const imageData = Buffer.from(img.url.split(",")[1], "base64");
 
-            // Save the image data to file
-            await fsPromises.writeFile(imagePath, imageData);
+			// Save the image data to file
+			await fsPromises.writeFile(imagePath, imageData);
 
-            updatedImageArray.push({
-                name: imageName,
-                url: `http://localhost:5000/images/${userId}/${imageName}`,
-            });
-        }
+			updatedImageArray.push({
+				name: imageName,
+				url: `http://localhost:5000/images/${userId}/${imageName}`,
+			});
+		}
 
-        dal.addImgs(userId, updatedImageArray);
+		dal.addImgs(userId, updatedImageArray);
 
-        res.status(200).json({
-            message: "Images uploaded and saved successfully.",
-            images: updatedImageArray,
-        });
-    } catch (error) {
-        console.error("Error uploading images:", error);
-        res.status(500).json({ error: "Internal server error." });
-    }
+		res.status(200).json({
+			message: "Images uploaded and saved successfully.",
+			images: updatedImageArray,
+		});
+	} catch (error) {
+		console.error("Error uploading images:", error);
+		res.status(500).json({ error: "Internal server error." });
+	}
 });
 
 function getRandomObjectFromArray(array) {
@@ -260,6 +262,171 @@ app.get("/fetchImages/:id", async (req, res) => {
 	let id = req.params.id;
 	let user = await dal.findUser(id);
 	res.json({ User: user });
+});
+
+app.get("/tax/:state", (req, res) => {
+	let state = req.params.state;
+	let tax = 0
+	state = state.toLowerCase()
+
+	switch (state) {
+        case 'alabama':
+            tax = 4
+			break
+        case 'alaska':
+            tax = 0
+			break
+        case 'arizona':
+            tax = 5.6
+			break
+        case 'arkansas':
+            tax = 6.5
+			break
+        case 'california':
+            tax = 7.25
+			break
+        case 'colorado':
+            tax = 2.9
+			break
+        case 'connecticut':
+            tax = 6.35
+			break
+        case 'delaware':
+            tax = 0
+			break
+        case 'florida':
+            tax = 6
+			break
+        case 'georgia':
+            tax = 4
+			break
+        case 'hawaii':
+            tax = 4
+			break
+        case 'idaho':
+            tax = 6
+			break
+        case 'illinois':
+            tax = 6.25
+			break
+        case 'indiana':
+            tax = 7
+			break
+        case 'iowa':
+            tax = 6
+			break
+        case 'kansas':
+            tax = 6.5
+			break
+        case 'kentucky':
+            tax = 6
+			break
+        case 'louisiana':
+            tax = 4.45
+			break
+        case 'maine':
+            tax = 5.5
+			break
+        case 'maryland':
+            tax = 6
+			break
+        case 'massachusetts':
+            tax = 6.25
+			break
+        case 'michigan':
+			tax = 6
+			break
+        case 'minnesota':
+            tax = 6.88
+			break
+        case 'mississippi':
+            tax = 7
+			break
+        case 'missouri':
+            tax = 4.22
+			break
+        case 'montana':
+            tax = 0
+			break
+        case 'nebraska':
+            tax = 5.5
+			break
+        case 'nevada':
+            tax = 6.85
+			break
+        case 'new hampshire':
+            tax = 0
+			break
+        case 'new jersey':
+            tax = 6.63
+			break
+        case 'new mexico':
+            tax = 5.13
+			break
+        case 'new york':
+            tax = 4
+			break
+        case 'north carolina':
+            tax = 4.75
+			break
+        case 'north dakota':
+            tax = 5
+			break
+        case 'ohio':
+            tax = 5.75
+			break
+        case 'oklahoma':
+            tax = 4.5
+			break
+        case 'oregon':
+            tax = 0
+			break
+        case 'pennsylvania':
+            tax = 6
+			break
+        case 'rhode island':
+            tax = 7
+			break
+        case 'south carolina':
+            tax = 6
+			break
+        case 'south dakota':
+            tax = 4.5
+			break
+        case 'tennessee':
+            tax = 7
+			break
+        case 'texas':
+            tax = 6.25
+			break
+        case 'utah':
+            tax = 6.1
+			break
+        case 'vermont':
+            tax = 6
+			break
+        case 'virginia':
+            tax = 5.3
+			break
+        case 'washington':
+            tax = 6.5
+			break
+        case 'west virginia':
+            tax = 6
+			break
+        case 'wisconsin':
+            tax = 5
+			break
+        case 'wyoming':
+            tax = 4
+			break
+        default:
+            return 'Invalid state name';
+    }
+
+	tax = tax / 100
+
+	return res.json(tax)
 });
 
 app.listen(port, () => {

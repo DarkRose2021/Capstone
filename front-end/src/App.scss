@@ -23,7 +23,7 @@ a:visited {
 	color: $error !important;
 	font-weight: bolder !important;
 	margin-bottom: 0.1% !important;
-	// text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;	
+	text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;	
 }
 
 .lightError{
@@ -747,6 +747,12 @@ footer {
 			float: right;
 			color: $yellow;
 			font-weight: bold;
+		}
+		.qty{
+			margin-left: 1%;
+		}
+		.text-muted {
+			color: #8e8e8e !important;
 		}
 	}
 	.total {

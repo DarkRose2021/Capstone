@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const Confirm = (props) => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
-	const [currentDate, setCurrentDate] = useState(new Date());
 	const [orderID, setOrderID] = useState(null);
+	const [tax, setTax] = useState(null);
 	let email = null;
 	const location = useLocation();
 	const { data, products, cart } = location.state || {};
-
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -39,6 +38,18 @@ const Confirm = (props) => {
 		return "****"; // Return default if card number is invalid
 	};
 
+	useEffect(() => {
+		const url = `http://localhost:5000/tax/${data.state}`;
+		fetch(url)
+			.then((r) => r.json())
+			.then((data) => {
+				console.log(data);
+				setTax(data);
+				// window.location.reload();
+			})
+			.catch((err) => console.log(err));
+	}, [data]);
+
 	function getProductQty(productId) {
 		if (cart) {
 			const productInCart = cart.Products.find(
@@ -53,6 +64,29 @@ const Confirm = (props) => {
 		return qty * price;
 	}
 
+	function taxes(qty, price, tax) {
+		let totalSalesTax = 0;
+		for (let i = 0; i < qty; i++) {
+			let salesTax = tax * price;
+			totalSalesTax += salesTax;
+		}
+		return totalSalesTax;
+	}
+
+	function totalSalesTax(products, tax) {
+		let totalTax = 0;
+
+		if (products) {
+			products.forEach((product) => {
+				const quantity = getProductQty(product._id);
+				const productTax = taxes(quantity, product.Price, tax);
+				totalTax += productTax;
+			});
+		}
+
+		return totalTax;
+	}
+
 	function total() {
 		let total = 0;
 		if (cart && products) {
@@ -64,18 +98,18 @@ const Confirm = (props) => {
 		return total;
 	}
 
-	useEffect(() =>{
-		let id = cart.UserID
+	useEffect(() => {
+		let id = cart.UserID;
 		let url = `http://localhost:5000/clearCart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {})
 			.catch((err) => console.log(err));
-	}, [data])
+	}, [data]);
 
 	return (
 		<div>
-			{roles?.includes("Admin") || roles?.includes("Client")  ? (
+			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					<h1>Your Order has been confirmed!</h1>
 					<div className="order-con">
@@ -105,18 +139,31 @@ const Confirm = (props) => {
 							<div className="conProducts">
 								{products?.map((product) => (
 									<>
-									{/* might make this something similar to the top part */}
-									<div key={product._id}>
-										<span>{product.Name}</span>
-										<span>{product.Price}</span>
-										<span> {getProductQty(product._id)}</span>
-										<span className="prices">${prices(getProductQty(product._id), product.Price)}</span>
-									</div></>
+										<div key={product._id}>
+											<div>
+												{product.Name}
+												<span className="prices">
+													${prices(getProductQty(product._id), product.Price)}
+												</span>
+												<br />
+												<span className="qty text-muted">
+													Qty: {getProductQty(product._id)}
+												</span>
+											</div>
+										</div>
+										<br />
+										<hr className="productDivide" />
+									</>
 								))}
 							</div>
-							<hr />
+
 							<div>
-								<div className="total">Total: <b>${total()}</b></div>
+								<div className="total">
+									Tax: ${totalSalesTax(products, tax)} <br />
+								</div>
+								<div className="total">
+									Total: <b>${total() + totalSalesTax(products, tax)}</b>
+								</div>
 							</div>
 							<hr />
 							<div>

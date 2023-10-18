@@ -21,13 +21,14 @@ const Checkout = () => {
 	const [cart, setCart] = useState(null);
 	const [products, setProducts] = useState(null);
 	const [user, setUser] = useState(null);
+	const [tax, setTax] = useState(null);
 	let email = null;
 
 	let navigate = useNavigate();
 	const routeChange = () => {
 		let path = `/confirm`;
 		navigate(path, {
-			state: { data: sendData, products: products, cart: cart },
+			state: { data: sendData, products: products, cart: cart, tax: tax },
 		});
 	};
 
@@ -140,8 +141,8 @@ const Checkout = () => {
 					return response.json();
 				})
 				.then((responseData) => {
-					console.log(responseData);
 					setSendData(responseData.Body);
+					setTax(responseData.Tax)
 					setShowPopup(true);
 
 					emailjs
@@ -331,7 +332,7 @@ const Checkout = () => {
 												<div className="col-sm-6">
 													<label htmlFor="firstName" className="form-label">
 														First name{" "}
-														<span className="required">*Required</span>
+														<span className="required">*</span>
 													</label>
 													<input
 														type="text"
@@ -365,7 +366,7 @@ const Checkout = () => {
 												<div className="col-sm-6">
 													<label htmlFor="lastName" className="form-label">
 														Last name{" "}
-														<span className="required">*Required</span>
+														<span className="required">*</span>
 													</label>
 													<input
 														type="text"
@@ -397,7 +398,7 @@ const Checkout = () => {
 
 												<div className="col-12">
 													<label htmlFor="email" className="form-label">
-														Email <span className="required">*Required</span>
+														Email <span className="required">*</span>
 													</label>
 													<input
 														type="email"
@@ -429,7 +430,7 @@ const Checkout = () => {
 
 												<div className="col-12">
 													<label htmlFor="address" className="form-label">
-														Address <span className="required">*Required</span>
+														Address <span className="required">*</span>
 													</label>
 													<input
 														type="text"
@@ -468,7 +469,7 @@ const Checkout = () => {
 
 												<div className="col-md-5">
 													<label htmlFor="country" className="form-label">
-														Country <span className="required">*Required</span>
+														Country <span className="required">*</span>
 													</label>
 													<select
 														className={`form-select ${
@@ -496,7 +497,7 @@ const Checkout = () => {
 
 												<div className="col-md-4">
 													<label htmlFor="state" className="form-label">
-														State <span className="required">*Required</span>
+														State <span className="required">*</span>
 													</label>
 													<select
 														className={`form-select ${
@@ -575,7 +576,7 @@ const Checkout = () => {
 
 												<div className="col-md-3">
 													<label htmlFor="zip" className="form-label">
-														Zip <span className="required">*Required</span>
+														Zip <span className="required">*</span>
 													</label>
 													<input
 														type="number"
@@ -635,7 +636,7 @@ const Checkout = () => {
 																className="form-label"
 															>
 																First name{" "}
-																<span className="required">*Required</span>
+																<span className="required">*</span>
 															</label>
 															<input
 																type="text"
@@ -672,7 +673,7 @@ const Checkout = () => {
 																className="form-label"
 															>
 																Last name{" "}
-																<span className="required">*Required</span>
+																<span className="required">*</span>
 															</label>
 															<input
 																type="text"
@@ -710,7 +711,7 @@ const Checkout = () => {
 																className="form-label"
 															>
 																Address{" "}
-																<span className="required">*Required</span>
+																<span className="required">*</span>
 															</label>
 															<input
 																name="shipAddress"
@@ -755,7 +756,7 @@ const Checkout = () => {
 																className="form-label"
 															>
 																Country{" "}
-																<span className="required">*Required</span>
+																<span className="required">*</span>
 															</label>
 															<select
 																name="shipCountry"
@@ -785,7 +786,7 @@ const Checkout = () => {
 														<div className="col-md-4">
 															<label htmlFor="shipState" className="form-label">
 																State{" "}
-																<span className="required">*Required</span>
+																<span className="required">*</span>
 															</label>
 															<select
 																defaultValue={""}
@@ -879,7 +880,7 @@ const Checkout = () => {
 
 														<div className="col-md-3">
 															<label htmlFor="shipState" className="form-label">
-																Zip <span className="required">*Required</span>
+																Zip <span className="required">*</span>
 															</label>
 															<input
 																type="number"
@@ -915,7 +916,7 @@ const Checkout = () => {
 												<div className="col-md-6">
 													<label htmlFor="ccName" className="form-label">
 														Name on card{" "}
-														<span className="required">*Required</span>
+														<span className="required">*</span>
 													</label>
 													<input
 														type="text"
@@ -955,7 +956,7 @@ const Checkout = () => {
 												<div className="col-md-6">
 													<label htmlFor="ccNumber" className="form-label">
 														Card number{" "}
-														<span className="required">*Required</span>
+														<span className="required">*</span>
 													</label>
 													<input
 														type="number"
@@ -993,7 +994,7 @@ const Checkout = () => {
 												<div className="col-md-3">
 													<label htmlFor="ccExpiration" className="form-label">
 														Expiration{" "}
-														<span className="required">*Required</span>
+														<span className="required">*</span>
 													</label>
 													<input
 														type="text"
@@ -1018,7 +1019,7 @@ const Checkout = () => {
 
 												<div className="col-md-3">
 													<label htmlFor="ccCvv" className="form-label">
-														CVV <span className="required">*Required</span>
+														CVV <span className="required">*</span>
 													</label>
 													<input
 														type="number"
