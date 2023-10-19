@@ -20,7 +20,6 @@ app.use(
 );
 app.use(cors());
 app.use(express.static("public"));
-// app.use('/public/images', express.static('/public/'));
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
@@ -200,6 +199,7 @@ app.post("/editImgs/:id", async (req, res) => {
 		for (let index = 0; index < images.length; index++) {
 			const img = images[index];
 			const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
+			console.log(imageName)
 
 			const imagePath = path.join(userImagePath, imageName);
 
