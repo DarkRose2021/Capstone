@@ -402,21 +402,19 @@ function App() {
 			</div>
 			<footer className="footer">
 				<div className="container">
-					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
-					<br />
-					All text generated with ChatGPT - All images from{" "}
+					
+					<span className="center">All text generated with ChatGPT - All images from{" "}
 					<a
 						href="https://www.pexels.com/"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
 						Pexels
-					</a>
-					<br />
-					<b>
+					</a></span><span className="left"><b className="right">
 						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
 						INFORMATION ON THIS WEBSITE
-					</b>
+					</b></span>
+					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 				</div>
 			</footer>
 		</div>
