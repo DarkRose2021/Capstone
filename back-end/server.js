@@ -130,17 +130,17 @@ app.get("/deleteUser/:id", async (req, res) => {
 app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 	let id = req.params.id;
 	let imageUrl = req.params.imageUrl;
-	const userImagePath = path.join(__dirname, "public", "images", id, "/");
+	// const userImagePath = path.join(__dirname, "public", "images", id, "/");
 	dal.deleteImage(id, imageUrl);
 	let user = await dal.findUser(id);
 
-	fs.unlink(userImagePath + imageUrl, (err) => {
-		if (err) {
-			throw err;
-		}
+	// fs.unlink(userImagePath + imageUrl, (err) => {
+	// 	if (err) {
+	// 		throw err;
+	// 	}
 
-		console.log("Delete File successfully.");
-	});
+	// 	console.log("Delete File successfully.");
+	// });
 	res.json({ Message: "Image Deleted", User: user });
 });
 
