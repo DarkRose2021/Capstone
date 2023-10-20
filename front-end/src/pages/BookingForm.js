@@ -5,13 +5,15 @@ import { ErrorMessage } from "@hookform/error-message";
 const BookingForm = () => {
 	const {
 		register,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 		handleSubmit,
 		watch,
+		reset,
 	} = useForm({
 		criteriaMode: "all",
 	});
 	const [currentDate, setCurrentDate] = useState(new Date());
+	const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		// Function to update the date every second
@@ -29,7 +31,7 @@ const BookingForm = () => {
 		day: "numeric",
 	});
 
-    const namePattern = /^[A-Za-z\s]+$/;
+	const namePattern = /^[A-Za-z\s]+$/;
 	const validateName = (value) => {
 		if (namePattern.test(value)) {
 			return true;
@@ -38,9 +40,12 @@ const BookingForm = () => {
 	};
 
 	const onSubmit = (data) => {
-		
-		data.date = formattedDate
-		console.log(data)
+		data.date = formattedDate;
+		//  http://localhost:5000/
+		if (isSubmitting) {
+			return;
+		}
+
 		fetch("https://mane-frame-backend.onrender.com/bookingInfo", {
 			method: "POST",
 			headers: {
@@ -50,9 +55,14 @@ const BookingForm = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
-				// setUser(result);
+					setMessage("Data submitted successfully!");
+					reset();
+					setTimeout(() => {
+						setMessage("");
+					}, 3000);
 			})
 			.catch((error) => {
+				setMessage("An error occurred. Please try again.");
 				console.error(error);
 			});
 	};
@@ -62,17 +72,19 @@ const BookingForm = () => {
 			<div className="form">
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<label htmlFor="name">Full Name<span className="required">*</span></label>
+						<label htmlFor="name">
+							Full Name<span className="required">*</span>
+						</label>
 						<br />
 						<input
 							id="name"
 							name="name"
 							type="text"
-                            placeholder="Full Name"
+							placeholder="Full Name"
 							{...register("name", {
 								required: "Name is required",
-                                validate: validateName,
-                                minLength: {
+								validate: validateName,
+								minLength: {
 									value: 2,
 									message: "Name can't be shorter than 2 characters",
 								},
@@ -81,7 +93,6 @@ const BookingForm = () => {
 									message: "Name cannot exceed 100 characters",
 								},
 							})}
-							
 						/>
 						<ErrorMessage
 							errors={errors}
@@ -92,18 +103,20 @@ const BookingForm = () => {
 											<p key={type} className="error">
 												{message}
 											</p>
-									  ))
+									))
 									: null
 							}
 						/>
 						<br />
-						<label htmlFor="email">Email<span className="required">*</span></label>
+						<label htmlFor="email">
+							Email<span className="required">*</span>
+						</label>
 						<br />
 						<input
 							id="email"
 							name="email"
 							type="email"
-                            placeholder="example@mail.com"
+							placeholder="example@mail.com"
 							{...register("email", {
 								required: "Email is required",
 								pattern: {
@@ -130,18 +143,20 @@ const BookingForm = () => {
 							}
 						/>
 						<br />
-						<label htmlFor="phnumber">Phone Number<span className="required">*</span></label>
+						<label htmlFor="phnumber">
+							Phone Number<span className="required">*</span>
+						</label>
 						<br />
 						<input
 							id="phnumber"
 							name="phnumber"
 							type="tel"
-                            placeholder="123-456-7890"
+							placeholder="123-456-7890"
 							{...register("phnumber", {
 								required: "Phone Number is required",
-                                pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/,
+								pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/,
 								// minLength: 7,
-                                // maxLength: 7
+								// maxLength: 7
 							})}
 						/>
 						<ErrorMessage
@@ -158,16 +173,17 @@ const BookingForm = () => {
 							}
 						/>
 						<br />
-						<label htmlFor="location">Location<span className="required">*</span></label>
+						<label htmlFor="location">
+							Location<span className="required">*</span>
+						</label>
 						<br />
 						<input
 							id="location"
 							name="location"
 							type="text"
-                            placeholder="Vague Area"
+							placeholder="Vague Area"
 							{...register("location", {
 								required: "Location is required",
-								
 							})}
 						/>
 						<ErrorMessage
@@ -186,14 +202,11 @@ const BookingForm = () => {
 						<br />
 						<label htmlFor="msg">Message</label>
 						<br />
-						<textarea
-							id="msg"
-							name="msg"
-							{...register("msg")}
-						/>
+						<textarea id="msg" name="msg" {...register("msg")} />
 						<br />
 						<label htmlFor="session">
-							Type of session you are interested in?<span className="required">*</span>
+							Type of session you are interested in?
+							<span className="required">*</span>
 						</label>
 						<br />
 						<select
@@ -204,7 +217,9 @@ const BookingForm = () => {
 								required: "You must select an option",
 							})}
 						>
-							<option value={""} disabled>Select One</option>
+							<option value={""} disabled>
+								Select One
+							</option>
 							<option value={"Equine portrait"}>Equine portrait</option>
 							<option value={"Event photography"}>Event photography</option>
 							<option value={"Fine art photography"}>
@@ -237,8 +252,15 @@ const BookingForm = () => {
 						<br />
 						<label htmlFor="hearAbout">How did you hear about me?</label>
 						<br />
-						<select id="hearAbout" name="hearAbout" defaultValue="" {...register("hearAbout")}>
-							<option value={""} disabled>Select One</option>
+						<select
+							id="hearAbout"
+							name="hearAbout"
+							defaultValue=""
+							{...register("hearAbout")}
+						>
+							<option value={""} disabled>
+								Select One
+							</option>
 							<option value={"facebook"}>Facebook</option>
 							<option value={"instagram"}>Instagram</option>
 							<option value={"word of mouth"}>Word of Mouth</option>
@@ -246,9 +268,20 @@ const BookingForm = () => {
 							<option value={"other"}>Other</option>
 						</select>
 						<label hidden htmlFor="date"></label>
-						<input type="text" hidden id="date" name="date" value={formattedDate} disabled {...register("date")} />
-						<button type="submit">Submit</button>
+						<input
+							type="text"
+							hidden
+							id="date"
+							name="date"
+							value={formattedDate}
+							disabled
+							{...register("date")}
+						/>
+						<button type="submit" disabled={isSubmitting}>
+							{isSubmitting ? "Submitting..." : "Submit"}
+						</button>
 					</form>
+					{message && <p className="sub">{message}</p>}
 				</div>
 			</div>
 		</div>
