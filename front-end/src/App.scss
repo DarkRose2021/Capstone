@@ -23,11 +23,13 @@ a:visited {
 	color: $error !important;
 	font-weight: bolder !important;
 	margin-bottom: 0.1% !important;
-	text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;	
+	text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,
+		0.5px 0.5px 0 #000;
 }
 
-.lightError{
-	text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;
+.lightError {
+	text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,
+		0.5px 0.5px 0 #000;
 	font-size: 1em;
 }
 
@@ -378,7 +380,7 @@ footer {
 		@include borderRadiusContainers;
 		margin: 3%;
 		padding: 1%;
-		width: 65%;
+		max-width: 65%;
 		margin-left: 20%;
 	}
 	.name {
@@ -464,7 +466,8 @@ footer {
 		@include button;
 		@include flex-center;
 		button {
-			width: 15vw;
+			@include button;
+			max-width: 15vw;
 			padding: 0.5%;
 		}
 	}
@@ -490,6 +493,7 @@ footer {
 
 	.prices {
 		color: $yellow;
+		float: right;
 	}
 
 	.bi {
@@ -748,7 +752,7 @@ footer {
 			color: $yellow;
 			font-weight: bold;
 		}
-		.qty{
+		.qty {
 			margin-left: 1%;
 		}
 		.text-muted {
@@ -761,12 +765,12 @@ footer {
 	}
 }
 
-.footer{
-	.container{
+.footer {
+	.container {
 		max-width: 100%;
 		font-size: large;
-		span{
-			margin-right: 1.3%; 
+		span {
+			margin-right: 1.3%;
 		}
 	}
 }

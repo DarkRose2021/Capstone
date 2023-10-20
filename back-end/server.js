@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require("uuid");
 const fsPromises = require("fs").promises;
 const path = require("path");
 var bcrypt = require("bcryptjs");
-const { start } = require("repl");
 const fs = require("fs");
 
 const dal = require("./DAL").dal;

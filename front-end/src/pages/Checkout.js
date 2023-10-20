@@ -306,8 +306,8 @@ const Checkout = () => {
 																	deleteItem(cart.UserID, product._id)
 																}
 																xmlns="http://www.w3.org/2000/svg"
-																width="100"
 																fill="#C41010"
+																width={"150"}
 																className="bi bi-cart-x-fill"
 																viewBox="0 0 16 16"
 															>
