@@ -2,6 +2,7 @@ import logo from "./logo.png";
 import "./App.scss";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { inject } from '@vercel/analytics';
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,6 +25,7 @@ import ShowClientPics from "./pages/ShowClientPics";
 import BookingForm from "./pages/BookingForm";
 
 function App() {
+	inject();
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [email, setEmail] = useState(null);
 	const [roles, setRoles] = useState(null);
