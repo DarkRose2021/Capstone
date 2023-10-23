@@ -55,7 +55,7 @@ const Admin = () => {
 						<div className="users">
 							{allUsers.length > 0 ? (
 								allUsers.map((user) => (
-									<div key={user.Email} className="user">
+									<div key={user._id} className="user">
 										<h3>Name: {user.Name}</h3>
 										<h3>Email: {user.Email}</h3>
 										<h3>

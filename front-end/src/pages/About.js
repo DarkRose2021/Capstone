@@ -6,7 +6,7 @@ const About = () => {
 			<h1>About The Owner</h1>
 			<div className="about-txt">
 				<div>
-					<img src="/assets/pexels-efigie-lima-marcos-11831355.jpg" alt="a person petting a horse" />
+					<img src="/assets/AboutMe.png" alt="a person petting a horse" />
 					<p>
 						Hi there, my name is Katie King, and I am the proud owner of Mane
 						Frame Photography. Ever since I was a child, I have been captivated

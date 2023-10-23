@@ -245,7 +245,7 @@ const Checkout = () => {
 	}
 
 	return (
-		<div className="container">
+		<div className="container moveItOver">
 			{showPopup && (
 				<>
 					<div className="popup-container">
