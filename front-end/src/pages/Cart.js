@@ -27,7 +27,7 @@ const Cart = () => {
 
 	function getCart() {
 		let id = user._id;
-		let url = `http://localhost:5000/cart/${id}`;
+		let url = `https://mane-frame-backend.onrender.com/cart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
@@ -38,7 +38,7 @@ const Cart = () => {
 	}
 
 	function loadAPI() {
-		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -50,7 +50,7 @@ const Cart = () => {
 	function getProducts() {
 		if (cart && cart.Products) {
 			const ids = cart.Products.map((product) => product.ProductID);
-			let getUrl = `http://localhost:5000/findProduct/${ids}`;
+			let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
 			fetch(getUrl)
 				.then((data) => data.json())
 				.then((data) => {
@@ -103,7 +103,7 @@ const Cart = () => {
 	}
 
 	function deleteItem(userId, id) {
-		const getUrl = `http://localhost:5000/deleteCart/${userId}/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteCart/${userId}/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {

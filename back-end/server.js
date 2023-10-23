@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const fsPromises = require("fs").promises;
 const path = require("path");
 var bcrypt = require("bcryptjs");
+const { start } = require("repl");
 const fs = require("fs");
 
 const dal = require("./DAL").dal;
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(cors());
 app.use(express.static("public"));
+// app.use('/public/images', express.static('/public/'));
 
 app.get("/", (req, res) => {
 	res.json("Welcome to the backend of my website");
@@ -57,9 +59,9 @@ app.get("/services", async (req, res) => {
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
-	let product = await dal.findProducts(id);
-	await dal.deleteCartItem(userId, id);
+	product = await dal.findProducts(id);
 	const user = await dal.showCart(userId);
+	dal.deleteCartItem(userId, id);
 	res.json({
 		Message: product.Name + " was deleted from your cart",
 		User: user,
@@ -82,7 +84,6 @@ app.post("/signup", async (req, res) => {
 
 app.post("/bookingInfo", async (req, res) => {
 	await dal.bookingInfo(req.body);
-	res.json({Message:"Added successfully"})
 });
 
 app.get("/cart/:id", async (req, res) => {
@@ -130,17 +131,17 @@ app.get("/deleteUser/:id", async (req, res) => {
 app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 	let id = req.params.id;
 	let imageUrl = req.params.imageUrl;
-	// const userImagePath = path.join(__dirname, "public", "images", id, "/");
+	const userImagePath = path.join(__dirname, "public", "images", id, "/");
 	dal.deleteImage(id, imageUrl);
 	let user = await dal.findUser(id);
 
-	// fs.unlink(userImagePath + imageUrl, (err) => {
-	// 	if (err) {
-	// 		throw err;
-	// 	}
+	fs.unlink(userImagePath + imageUrl, (err) => {
+		if (err) {
+			throw err;
+		}
 
-	// 	console.log("Delete File successfully.");
-	// });
+		console.log("Delete File successfully.");
+	});
 	res.json({ Message: "Image Deleted", User: user });
 });
 
@@ -199,7 +200,6 @@ app.post("/editImgs/:id", async (req, res) => {
 		for (let index = 0; index < images.length; index++) {
 			const img = images[index];
 			const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
-			console.log(imageName)
 
 			const imagePath = path.join(userImagePath, imageName);
 
@@ -211,7 +211,7 @@ app.post("/editImgs/:id", async (req, res) => {
 
 			updatedImageArray.push({
 				name: imageName,
-				url: `https://mane-frame-backend.onrender.com/images/${userId}/${imageName}`,
+				url: `http://localhost:5000/images/${userId}/${imageName}`,
 			});
 		}
 
