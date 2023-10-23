@@ -4,6 +4,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 const EditRoles = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -32,6 +33,7 @@ const EditRoles = () => {
 			.then((data) => data.json())
 			.then((data) => {
 				setUser(data.User[0]);
+				setLoading(false); // Set loading to false when the data is received
 			})
 			.catch((err) => console.log(err));
 	}
@@ -99,56 +101,77 @@ const EditRoles = () => {
 		<div>
 			{roles?.includes("Admin") ? (
 				<>
-				
-					{user ? <h1>Editing {user.Name}'s Roles</h1> : <></>}
-					<div className="role_flex">
-					<form onSubmit={handleSubmit} className="checkbox_form">
-						<label>
-							<input
-								type="checkbox"
-								className="form-check-input"
-								name="Client"
-								checked={checkboxes.Client}
-								onChange={handleCheckboxChange}
-							/>{" "}
-							Client
-						</label>
-						<br />
-						<label>
-							<input
-							className="form-check-input"
-								type="checkbox"
-								name="Admin"
-								checked={checkboxes.Admin}
-								onChange={handleCheckboxChange}
-							/>{" "}
-							Admin
-						</label>
-						<br />
-						<label className="disabled">
-							<input className="disabled form-check-input"
-								type="checkbox"
-								name="User"
-								checked={checkboxes.User}
-								onChange={handleCheckboxChange}
-								disabled
-							/>{" "}
-							User
-						</label>
-						<br />
-						<button type="submit">Submit</button>
-					</form>
-					{msg ? (
-						<>
-							<Navigate
-								to={"/adminHome"}
-								state={{ message: msg, name: user.Name }}
-							/>
-						</>
+					{loading ? ( // Display loading animation while loading is true
+						<div className="loading-container">
+							<div className="loadingio-spinner-spinner-la1rcf32xa">
+								<div className="ldio-t5ijoz38lif">
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+						</div>
 					) : (
-						<></>
+						<>
+							{user ? <h1>Editing {user.Name}'s Roles</h1> : <></>}
+							<div className="role_flex">
+								<form onSubmit={handleSubmit} className="checkbox_form">
+									<label>
+										<input
+											type="checkbox"
+											className="form-check-input"
+											name="Client"
+											checked={checkboxes.Client}
+											onChange={handleCheckboxChange}
+										/>{" "}
+										Client
+									</label>
+									<br />
+									<label>
+										<input
+											className="form-check-input"
+											type="checkbox"
+											name="Admin"
+											checked={checkboxes.Admin}
+											onChange={handleCheckboxChange}
+										/>{" "}
+										Admin
+									</label>
+									<br />
+									<label className="disabled">
+										<input
+											className="disabled form-check-input"
+											type="checkbox"
+											name="User"
+											checked={checkboxes.User}
+											onChange={handleCheckboxChange}
+											disabled
+										/>{" "}
+										User
+									</label>
+									<br />
+									<button type="submit">Submit</button>
+								</form>
+								{msg ? (
+									<>
+										<Navigate
+											to={"/adminHome"}
+											state={{ message: msg, name: user.Name }}
+										/>
+									</>
+								) : (
+									<></>
+								)}
+							</div>
+						</>
 					)}
-					</div>
 				</>
 			) : (
 				<>

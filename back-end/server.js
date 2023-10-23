@@ -57,9 +57,9 @@ app.get("/services", async (req, res) => {
 app.get("/deleteCart/:userId/:id", async (req, res) => {
 	userId = req.params.userId;
 	id = req.params.id;
-	product = await dal.findProducts(id);
+	let product = await dal.findProducts(id);
+	await dal.deleteCartItem(userId, id);
 	const user = await dal.showCart(userId);
-	dal.deleteCartItem(userId, id);
 	res.json({
 		Message: product.Name + " was deleted from your cart",
 		User: user,

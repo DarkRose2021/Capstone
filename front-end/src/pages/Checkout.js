@@ -7,6 +7,7 @@ const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [sameAsBilling, setSameAsBilling] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const {
 		register,
 		formState: { errors },
@@ -82,6 +83,7 @@ const Checkout = () => {
 			.then((data) => data.json())
 			.then((data) => {
 				setUser(data.User);
+				setLoading(false); // Set loading to false when the data is received
 			})
 			.catch((err) => console.log(err));
 	}
@@ -264,6 +266,24 @@ const Checkout = () => {
 			)}
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
+					{loading ? ( // Display loading animation while loading is true
+						<div className="loading-container">
+							<div className="loadingio-spinner-spinner-la1rcf32xa">
+								<div className="ldio-t5ijoz38lif">
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+						</div>
+					) : (<>
 					{cart?.Products.length > 0 ? (
 						<>
 							<main>
@@ -1081,7 +1101,7 @@ const Checkout = () => {
 							<h1>There's nothing in your cart!</h1>
 						</>
 					)}
-				</>
+				</>)}</>
 			) : (
 				<>
 					<h1>You don't have permission to view this page</h1>

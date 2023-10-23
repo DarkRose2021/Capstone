@@ -599,6 +599,22 @@ footer {
 		font-size: 1.4em;
 		color: $yellow;
 	}
+	.adminSearch{
+		@include flex-center;
+		div{
+			width: 35%;
+			@include border;
+			@include borderRadiusContainers;
+			background-color: $lightBrown;
+			padding: .5%;
+			input{
+				@include borderRadius;
+				margin: 1%;
+				width: 98%;
+			}
+		}
+		
+	}
 }
 
 .editImgsCont {

@@ -4,6 +4,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 const ShowClientPics = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
+	const [loading, setLoading] = useState(true);
 	let { id } = useParams();
 
 	useEffect(() => {
@@ -28,6 +29,7 @@ const ShowClientPics = () => {
 			.then((data) => {
 				setUser(data.User[0]);
 				setPics(data.User[0].Images);
+				setLoading(false); // Set loading to false when the data is received
 			})
 			.catch((err) => console.log(err));
 	}
@@ -52,26 +54,49 @@ const ShowClientPics = () => {
 		<div>
 			{roles?.includes("Admin") ? (
 				<>
-					{user ? (
-						<>
-							<h1>{user?.Name}'s Pictures</h1>
-							<div className="pics adminPics">
-								{pics?.map((pic) => (
-									<div key={pic.name}>
-											<img src={pic.url} />
-											<div className="delImage">
-											<button onClick={() => deleteImage(user._id, pic.name)}>
-												Delete Image
-											</button>
-										</div>
-									</div>
-								))}
+					{loading ? ( // Display loading animation while loading is true
+						<div className="loading-container">
+							<div className="loadingio-spinner-spinner-la1rcf32xa">
+								<div className="ldio-t5ijoz38lif">
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
 							</div>
-							<br />
-							<br />
-						</>
+						</div>
 					) : (
-						<></>
+						<>
+							{user ? (
+								<>
+									<h1>{user?.Name}'s Pictures</h1>
+									<div className="pics adminPics">
+										{pics?.map((pic) => (
+											<div key={pic.name}>
+												<img src={pic.url} />
+												<div className="delImage">
+													<button
+														onClick={() => deleteImage(user._id, pic.name)}
+													>
+														Delete Image
+													</button>
+												</div>
+											</div>
+										))}
+									</div>
+									<br />
+									<br />
+								</>
+							) : (
+								<></>
+							)}
+						</>
 					)}
 				</>
 			) : (

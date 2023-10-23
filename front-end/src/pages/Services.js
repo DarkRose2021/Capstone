@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Services = () => {
 	const [services, setServices] = useState(null);
-	const [loading, setLoading] = useState(true); // Add loading state
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const url = `https://mane-frame-backend.onrender.com/services`;
@@ -33,8 +33,8 @@ const Services = () => {
 			<h1>Services</h1>
 			{loading ? ( // Display loading animation while loading is true
 				<div className="loading-container">
-					<div class="loadingio-spinner-spinner-la1rcf32xa">
-						<div class="ldio-t5ijoz38lif">
+					<div className="loadingio-spinner-spinner-la1rcf32xa">
+						<div className="ldio-t5ijoz38lif">
 							<div></div>
 							<div></div>
 							<div></div>
