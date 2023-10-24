@@ -80,7 +80,7 @@ const Admin = () => {
 					) : (
 						<>
 							<div>
-								{msg ? <div className="userMsg">User was Deleted</div> : <></>}
+								{msg ? <div className="userMsg">User was disabled</div> : <></>}
 								<div className="adminSearch">
 									<div>
 										<input
@@ -109,7 +109,7 @@ const Admin = () => {
 													<button>Edit Roles</button>
 												</Link>
 												<button onClick={() => deleteUser(user._id)}>
-													Delete User
+													Disable User
 												</button>
 												{user.Roles?.includes("Client") ? (
 													<Link to={`/editImages/${user._id}`}>

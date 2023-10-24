@@ -123,9 +123,9 @@ app.get("/products", async (req, res) => {
 
 app.get("/deleteUser/:id", async (req, res) => {
 	let id = req.params.id;
-	dal.deleteUser(id);
+	await dal.disableUser(id);
 	let users = await dal.listUsers();
-	res.json({ Message: "User Deleted", Users: users });
+	res.json({ Message: "User Disabled", Users: users });
 });
 
 app.get("/deleteImages/:id/:imageUrl", async (req, res) => {

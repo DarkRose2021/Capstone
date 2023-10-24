@@ -39,6 +39,7 @@ const user = new Schema(
 		Password: { type: String, required: true },
 		Roles: Array,
 		Images: [],
+		Disabled: Boolean
 	},
 	{ collection: userCollection }
 );
@@ -110,6 +111,7 @@ exports.dal = {
 			Password: await bcrypt.hash(password, 10),
 			Roles: ["User", "Client"],
 			Images: [],
+			Disabled: false
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		if (existingUser.length > 0) {
@@ -212,14 +214,21 @@ exports.dal = {
 			);
 		}
 	},
-	deleteUser: async (id) => {
+	disableUser: async (id) => {
 		if (
 			userModel.collection.findOne({ _id: new mongodb.ObjectId(id) }) !== null
 		) {
-			await userModel.collection.deleteOne({ _id: new mongodb.ObjectId(id) });
-			await cartModel.collection.deleteOne({ UserID: id });
+			await userModel.collection.updateOne({ _id: new mongodb.ObjectId(id) }, { $set: { Disabled: true } });
 		}
 	},
+	// deleteUser: async (id) => {
+	// 	if (
+	// 		userModel.collection.findOne({ _id: new mongodb.ObjectId(id) }) !== null
+	// 	) {
+	// 		await userModel.collection.deleteOne({ _id: new mongodb.ObjectId(id) });
+	// 		await cartModel.collection.deleteOne({ UserID: id });
+	// 	}
+	// },
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
