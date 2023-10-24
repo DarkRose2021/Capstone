@@ -788,6 +788,24 @@ footer {
 	}
 }
 
+.bookingInfo{
+	@include flex-center;
+	@include button;
+	div{
+		background-color: $lightBrown;
+		@include border;
+		@include borderRadiusContainers;
+		padding: 1%;
+		max-width: 90vw;
+		button{
+			width: 97%;
+		}
+		b{
+			color: $yellow;
+		}
+	}
+}
+
 .footer {
 	.container {
 		max-width: 100%;

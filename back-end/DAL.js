@@ -283,4 +283,19 @@ exports.dal = {
 	getBookings: async () => {
 		return await bookingsModel.find({}).exec();
 	},
+	changeApproved: async (id) => {
+		let booking = await bookingsModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
+
+		if (booking !== null) {
+			await bookingsModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
+				{ $set: { Approved: !booking.Approved } }
+			);
+		}
+	},
+	findBooking: async (id) =>{
+		return await bookingsModel.collection.findOne({_id: new mongodb.ObjectId(id)})
+	}
 };

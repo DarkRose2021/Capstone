@@ -66,7 +66,16 @@ const Admin = () => {
 			.catch((err) => console.log(err));
 	}
 
-	function changeApproved() {}
+	function changeApproved(id) {
+		const getUrl = `http://localhost:5001/approve/${id}`;
+		fetch(getUrl)
+			.then((r) => r.json())
+			.then((data) => {
+				setBookings(data.Bookings);
+				setLoading(false);
+			})
+			.catch((err) => console.log(err));
+	}
 
 	return (
 		<div className="admincontainer">
@@ -199,8 +208,8 @@ const Admin = () => {
 											<h3>Approved: {booking.Approved ? "Yes" : "No"}</h3>
 											<h3>Contacted: {booking.Contacted ? "Yes" : "No"}</h3>
 											<h3>Date Requested: {booking.DateBooked}</h3>
-											<button>View More Info</button>
-											<button>Approve</button>
+											<Link to={`/BookingInfo/${booking._id}`}><button>View More Info</button></Link>
+											<button onClick={() => changeApproved(booking._id)}>Approve</button>
 										</div>
 									))}
 								</div>

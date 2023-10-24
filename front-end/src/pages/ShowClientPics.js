@@ -39,13 +39,15 @@ const ShowClientPics = () => {
 	}, [id]);
 
 	function deleteImage(id, imageUrl) {
+		setLoading(true)
 		const getUrl = `https://mane-frame-backend.onrender.com/deleteImages/${id}/${imageUrl}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
 				setUser(data.User);
 				setPics(data.User.Images);
-				window.location.reload();
+				loadAPI()
+				setLoading(false)
 			})
 			.catch((err) => console.log(err));
 	}

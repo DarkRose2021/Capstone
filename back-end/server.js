@@ -8,7 +8,7 @@ const { start } = require("repl");
 const fs = require("fs");
 
 const dal = require("./DAL").dal;
-const port = 5000;
+const port = 5001;
 const app = express();
 
 app.use(express.json({ limit: "150mb" }));
@@ -31,39 +31,38 @@ app.get("/login", async (req, res) => {});
 app.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
-  
-	try { 
-	  const found = await dal.findUserEmail(email);
-  
-	  if (!found) {
-		// No user found with the given email
-		res.json({ Message: "Invalid Email or password" });
-		return; // Return to avoid further execution
-	  }
-  
-	  if (found.Disabled) {
-		// Account is disabled
-		res.json({
-		  Message: "Your account was disabled."
-		});
-		return; // Return to avoid further execution
-	  }
-  
-	  // Check the password
-	  const checkPasswords = await bcrypt.compare(password, found.Password);
-  
-	  if (checkPasswords) {
-		res.json({ Message: `${found.Email} found`, User: found });
-	  } else {
-		// Password is incorrect
-		res.json({ Message: "Invalid Email or password" });
-	  }
+
+	try {
+		const found = await dal.findUserEmail(email);
+
+		if (!found) {
+			// No user found with the given email
+			res.json({ Message: "Invalid Email or password" });
+			return; // Return to avoid further execution
+		}
+
+		if (found.Disabled) {
+			// Account is disabled
+			res.json({
+				Message: "Your account was disabled.",
+			});
+			return; // Return to avoid further execution
+		}
+
+		// Check the password
+		const checkPasswords = await bcrypt.compare(password, found.Password);
+
+		if (checkPasswords) {
+			res.json({ Message: `${found.Email} found`, User: found });
+		} else {
+			// Password is incorrect
+			res.json({ Message: "Invalid Email or password" });
+		}
 	} catch (error) {
-	  console.error(error);
-	  res.status(500).json({ Message: "An error occurred" });
+		console.error(error);
+		res.status(500).json({ Message: "An error occurred" });
 	}
-  });
-  
+});
 
 app.get("/signup", async (req, res) => {
 	return res.json({ Message: "Getting the Signup Page" });
@@ -80,7 +79,7 @@ app.get("/deleteCart/:userId/:id", async (req, res) => {
 	await dal.deleteCartItem(userId, id);
 	let product = await dal.findProducts(id);
 	const user = await dal.showCart(userId);
-	
+
 	res.json({
 		Message: product.Name + " was deleted from your cart",
 		User: user[0],
@@ -285,173 +284,189 @@ app.get("/fetchImages/:id", async (req, res) => {
 
 app.get("/tax/:state", (req, res) => {
 	let state = req.params.state;
-	let tax = 0
-	state = state.toLowerCase()
+	let tax = 0;
+	state = state.toLowerCase();
 
 	switch (state) {
-        case 'alabama':
-            tax = 4
-			break
-        case 'alaska':
-            tax = 0
-			break
-        case 'arizona':
-            tax = 5.6
-			break
-        case 'arkansas':
-            tax = 6.5
-			break
-        case 'california':
-            tax = 7.25
-			break
-        case 'colorado':
-            tax = 2.9
-			break
-        case 'connecticut':
-            tax = 6.35
-			break
-        case 'delaware':
-            tax = 0
-			break
-        case 'florida':
-            tax = 6
-			break
-        case 'georgia':
-            tax = 4
-			break
-        case 'hawaii':
-            tax = 4
-			break
-        case 'idaho':
-            tax = 6
-			break
-        case 'illinois':
-            tax = 6.25
-			break
-        case 'indiana':
-            tax = 7
-			break
-        case 'iowa':
-            tax = 6
-			break
-        case 'kansas':
-            tax = 6.5
-			break
-        case 'kentucky':
-            tax = 6
-			break
-        case 'louisiana':
-            tax = 4.45
-			break
-        case 'maine':
-            tax = 5.5
-			break
-        case 'maryland':
-            tax = 6
-			break
-        case 'massachusetts':
-            tax = 6.25
-			break
-        case 'michigan':
-			tax = 6
-			break
-        case 'minnesota':
-            tax = 6.88
-			break
-        case 'mississippi':
-            tax = 7
-			break
-        case 'missouri':
-            tax = 4.22
-			break
-        case 'montana':
-            tax = 0
-			break
-        case 'nebraska':
-            tax = 5.5
-			break
-        case 'nevada':
-            tax = 6.85
-			break
-        case 'new hampshire':
-            tax = 0
-			break
-        case 'new jersey':
-            tax = 6.63
-			break
-        case 'new mexico':
-            tax = 5.13
-			break
-        case 'new york':
-            tax = 4
-			break
-        case 'north carolina':
-            tax = 4.75
-			break
-        case 'north dakota':
-            tax = 5
-			break
-        case 'ohio':
-            tax = 5.75
-			break
-        case 'oklahoma':
-            tax = 4.5
-			break
-        case 'oregon':
-            tax = 0
-			break
-        case 'pennsylvania':
-            tax = 6
-			break
-        case 'rhode island':
-            tax = 7
-			break
-        case 'south carolina':
-            tax = 6
-			break
-        case 'south dakota':
-            tax = 4.5
-			break
-        case 'tennessee':
-            tax = 7
-			break
-        case 'texas':
-            tax = 6.25
-			break
-        case 'utah':
-            tax = 6.1
-			break
-        case 'vermont':
-            tax = 6
-			break
-        case 'virginia':
-            tax = 5.3
-			break
-        case 'washington':
-            tax = 6.5
-			break
-        case 'west virginia':
-            tax = 6
-			break
-        case 'wisconsin':
-            tax = 5
-			break
-        case 'wyoming':
-            tax = 4
-			break
-        default:
-            return 'Invalid state name';
-    }
-
-	tax = tax / 100
-
-	return res.json(tax)
+		case "alabama":
+			tax = 4;
+			break;
+		case "alaska":
+			tax = 0;
+			break;
+		case "arizona":
+			tax = 5.6;
+			break;
+		case "arkansas":
+			tax = 6.5;
+			break;
+		case "california":
+			tax = 7.25;
+			break;
+		case "colorado":
+			tax = 2.9;
+			break;
+		case "connecticut":
+			tax = 6.35;
+			break;
+		case "delaware":
+			tax = 0;
+			break;
+		case "florida":
+			tax = 6;
+			break;
+		case "georgia":
+			tax = 4;
+			break;
+		case "hawaii":
+			tax = 4;
+			break;
+		case "idaho":
+			tax = 6;
+			break;
+		case "illinois":
+			tax = 6.25;
+			break;
+		case "indiana":
+			tax = 7;
+			break;
+		case "iowa":
+			tax = 6;
+			break;
+		case "kansas":
+			tax = 6.5;
+			break;
+		case "kentucky":
+			tax = 6;
+			break;
+		case "louisiana":
+			tax = 4.45;
+			break;
+		case "maine":
+			tax = 5.5;
+			break;
+		case "maryland":
+			tax = 6;
+			break;
+		case "massachusetts":
+			tax = 6.25;
+			break;
+		case "michigan":
+			tax = 6;
+			break;
+		case "minnesota":
+			tax = 6.88;
+			break;
+		case "mississippi":
+			tax = 7;
+			break;
+		case "missouri":
+			tax = 4.22;
+			break;
+		case "montana":
+			tax = 0;
+			break;
+		case "nebraska":
+			tax = 5.5;
+			break;
+		case "nevada":
+			tax = 6.85;
+			break;
+		case "new hampshire":
+			tax = 0;
+			break;
+		case "new jersey":
+			tax = 6.63;
+			break;
+		case "new mexico":
+			tax = 5.13;
+			break;
+		case "new york":
+			tax = 4;
+			break;
+		case "north carolina":
+			tax = 4.75;
+			break;
+		case "north dakota":
+			tax = 5;
+			break;
+		case "ohio":
+			tax = 5.75;
+			break;
+		case "oklahoma":
+			tax = 4.5;
+			break;
+		case "oregon":
+			tax = 0;
+			break;
+		case "pennsylvania":
+			tax = 6;
+			break;
+		case "rhode island":
+			tax = 7;
+			break;
+		case "south carolina":
+			tax = 6;
+			break;
+		case "south dakota":
+			tax = 4.5;
+			break;
+		case "tennessee":
+			tax = 7;
+			break;
+		case "texas":
+			tax = 6.25;
+			break;
+		case "utah":
+			tax = 6.1;
+			break;
+		case "vermont":
+			tax = 6;
+			break;
+		case "virginia":
+			tax = 5.3;
+			break;
+		case "washington":
+			tax = 6.5;
+			break;
+		case "west virginia":
+			tax = 6;
+			break;
+		case "wisconsin":
+			tax = 5;
+			break;
+		case "wyoming":
+			tax = 4;
+			break;
+		default:
+			return "Invalid state name";
+	}
+	tax = tax / 100;
+	return res.json(tax);
 });
 
-app.get("/bookings", async (req, res) =>{
+app.get("/bookings", async (req, res) => {
 	let bookings = await dal.getBookings();
-	res.json({Bookings: bookings})
-})
+	res.json({ Bookings: bookings });
+});
+
+app.get("/approve/:id", async (req, res) => {
+	let id = req.params.id;
+	await dal.changeApproved(id);
+	let booking = await dal.getBookings();
+	res.json({ Bookings: booking });
+});
+
+app.get("/findBooking/:id", async (req, res) => {
+	const id = req.params.id;
+	const booking = await dal.findBooking(id);
+  
+	if (booking) {
+	  res.json({ Booking: booking });
+	} else {
+	  res.status(404).json({ Message: "Booking not found" });
+	}
+  });
 
 app.listen(port, () => {
 	console.log("Listening on port " + port);

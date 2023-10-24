@@ -59,22 +59,22 @@ const Cart = () => {
 			}
 			if (ids.length > 0) {
 				let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
-			fetch(getUrl)
-				.then((data) => data.json())
-				.then((data) => {
-					setProducts(data);
-					setLoading(false);
-				})
-				.catch((err) => {
-					setErrorMsg(
-						"An error has occurred! Please come back later or contact us about the problem!"
-					);
-					console.log(err)
-					setLoading(false);
-				});
-			}else{
-				setProducts(null)
-				setLoading(false)
+				fetch(getUrl)
+					.then((data) => data.json())
+					.then((data) => {
+						setProducts(data);
+						setLoading(false);
+					})
+					.catch((err) => {
+						setErrorMsg(
+							"An error has occurred! Please come back later or contact us about the problem!"
+						);
+						console.log(err);
+						setLoading(false);
+					});
+			} else {
+				setProducts(null);
+				setLoading(false);
 			}
 		}
 	}
