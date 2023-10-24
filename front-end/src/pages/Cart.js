@@ -74,6 +74,7 @@ const Cart = () => {
 				});
 			}else{
 				setProducts(null)
+				setLoading(false)
 			}
 		}
 	}
