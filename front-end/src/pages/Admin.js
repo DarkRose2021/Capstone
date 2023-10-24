@@ -56,7 +56,7 @@ const Admin = () => {
 	function getBookings() {
 		setLoading(true);
 		setAllUsers([]);
-		const getUrl = `http://localhost:5000/bookings`;
+		const getUrl = `https://mane-frame-backend.onrender.com/bookings`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
