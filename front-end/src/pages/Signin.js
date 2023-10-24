@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		formState: { errors },
@@ -44,6 +45,7 @@ const Signin = () => {
 	}, [watch]);
 
 	const onSubmit = (data) => {
+		setLoading(true);
 		fetch("https://mane-frame-backend.onrender.com/signup", {
 			method: "POST",
 			headers: {
@@ -57,6 +59,7 @@ const Signin = () => {
 			})
 			.catch((error) => {
 				console.error(error);
+				setLoading(false);
 			});
 	};
 

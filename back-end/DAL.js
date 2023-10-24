@@ -275,4 +275,7 @@ exports.dal = {
 		};
 		await bookingsModel.collection.insertOne(newData);
 	},
+	getBookings: async () =>{
+		return await bookingsModel.find({}).exec()
+	}
 };

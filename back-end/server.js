@@ -31,21 +31,39 @@ app.get("/login", async (req, res) => {});
 app.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
-	try {
-		let found = await dal.findUserEmail(email);
-		let found_email = found.Email;
-
-		if (found) {
-			let checkPasswords = await bcrypt.compare(password, found.Password);
-
-			if (checkPasswords) {
-				res.json({ Message: `${found_email} found`, User: found });
-			}
-		}
-	} catch {
+  
+	try { 
+	  const found = await dal.findUserEmail(email);
+  
+	  if (!found) {
+		// No user found with the given email
 		res.json({ Message: "Invalid Email or password" });
+		return; // Return to avoid further execution
+	  }
+  
+	  if (found.Disabled) {
+		// Account is disabled
+		res.json({
+		  Message: "Your account was disabled."
+		});
+		return; // Return to avoid further execution
+	  }
+  
+	  // Check the password
+	  const checkPasswords = await bcrypt.compare(password, found.Password);
+  
+	  if (checkPasswords) {
+		res.json({ Message: `${found.Email} found`, User: found });
+	  } else {
+		// Password is incorrect
+		res.json({ Message: "Invalid Email or password" });
+	  }
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).json({ Message: "An error occurred" });
 	}
-});
+  });
+  
 
 app.get("/signup", async (req, res) => {
 	return res.json({ Message: "Getting the Signup Page" });
@@ -428,6 +446,11 @@ app.get("/tax/:state", (req, res) => {
 
 	return res.json(tax)
 });
+
+app.get("/bookings", async (req, res) =>{
+	let bookings = await dal.getBookings();
+	res.json({Bookings: bookings})
+})
 
 app.listen(port, () => {
 	console.log("Listening on port " + port);

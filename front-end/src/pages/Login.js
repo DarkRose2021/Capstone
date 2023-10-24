@@ -19,9 +19,10 @@ const Login = () => {
 	});
 
 	const location = useLocation();
+	// https://mane-frame-backend.onrender.com
 
 	const onSubmit = (data) => {
-		setLoading(true)
+		setLoading(true);
 		fetch(`https://mane-frame-backend.onrender.com/login`, {
 			method: "POST",
 			headers: {
@@ -31,6 +32,7 @@ const Login = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
+				console.log(result);
 				SetUser(result);
 				setLoading(false); // Set loading to false when the data is received
 			})
@@ -45,7 +47,7 @@ const Login = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user && user.Message !== "Invalid Email or password" && user.User) {
+		if (user && user.Message != "Invalid Email or password" && user.User) {
 			window.localStorage.setItem(
 				"Valid Email",
 				JSON.stringify(user.User.Email)
@@ -159,16 +161,34 @@ const Login = () => {
 								</label>
 								<br />
 								{user?.Message === "Invalid Email or password" ? (
-									<p className="error">{user?.Message}</p>
-								) : user?.Users !== null && user?.Message ? (
+									<div>
+										<p className="error">{user?.Message}</p>
+										{/* {user?.Message === "Your account was disabled." ? (
+											<p>
+												Please contact us at{" "}
+												<a href="mailto:maneframephotography2023@gmail.com">
+													maneframephotography2023@gmail.com
+												</a>
+											</p>
+										) : null} */}
+									</div>
+								) : user?.Message === "Your account was disabled." ? (
 									<>
-										<p>Successfully logged in</p>
-										{/* make it redirect to either the admin home or the client pics base on what role they have */}
-										<Navigate to={"/"} />
+										<p className="error">{user.Message}</p>
+										<p className="error">
+											Please contact us at:
+											<br />
+											<a href="mailto:maneframephotography2023@gmail.com">
+												maneframephotography2023@gmail.com
+											</a>
+										</p>
 									</>
-								) : (
-									<></>
-								)}
+								) : user?.Users !== null && user?.Message ? (
+									<div>
+										<p>Successfully logged in</p>
+										<Navigate to={"/"} />
+									</div>
+								) : null}
 
 								<button type="submit">Login</button>
 							</form>
