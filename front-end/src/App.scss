@@ -516,6 +516,11 @@ footer {
 	}
 }
 
+.clientPicBtn{
+	@include button;
+	@include flex-center;
+}
+
 .pics {
 	@include flex-center;
 	flex-wrap: wrap;
@@ -625,18 +630,15 @@ footer {
 			flex-wrap: wrap;
 			.flex {
 				@include flex-center();
-
 				flex-direction: row;
 				flex-wrap: wrap;
 			}
 		}
 	}
 	.btnDiv {
-		// @include flex-center();
 		flex-direction: block;
 		.buttons {
 			@include flex-center;
-			// width: 90vw
 		}
 	}
 

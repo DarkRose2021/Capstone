@@ -76,6 +76,12 @@ const ShowClientPics = () => {
 							{user ? (
 								<>
 									<h1>{user?.Name}'s Pictures</h1>
+									<div className="clientPicBtn">
+											<Link to={`/editImages/${id}`}>
+										<button>Edit Pictures</button>
+									</Link>
+									</div>
+									
 									<div className="pics adminPics">
 										{pics?.map((pic) => (
 											<div key={pic.name}>
