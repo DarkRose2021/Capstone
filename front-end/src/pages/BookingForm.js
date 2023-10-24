@@ -41,7 +41,7 @@ const BookingForm = () => {
 
 	const onSubmit = (data) => {
 		data.date = formattedDate;
-		//  http://localhost:5000/
+
 		if (isSubmitting) {
 			return;
 		}
@@ -55,17 +55,19 @@ const BookingForm = () => {
 		})
 			.then((response) => response.json())
 			.then((result) => {
-					setMessage("Data submitted successfully!");
-					reset();
-					setTimeout(() => {
-						setMessage("");
-					}, 3000);
+				console.log(result)
+				setMessage("Data submitted successfully!");
+				setTimeout(() => {
+					setMessage("");
+					reset(); // Reset the form after the success message disappears
+				}, 3000);
 			})
 			.catch((error) => {
 				setMessage("An error occurred. Please try again.");
 				console.error(error);
 			});
 	};
+
 	return (
 		<div className="booking">
 			<h1>Booking Request</h1>
@@ -103,7 +105,7 @@ const BookingForm = () => {
 											<p key={type} className="error">
 												{message}
 											</p>
-									))
+									  ))
 									: null
 							}
 						/>
@@ -155,8 +157,6 @@ const BookingForm = () => {
 							{...register("phnumber", {
 								required: "Phone Number is required",
 								pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/,
-								// minLength: 7,
-								// maxLength: 7
 							})}
 						/>
 						<ErrorMessage
@@ -202,7 +202,30 @@ const BookingForm = () => {
 						<br />
 						<label htmlFor="msg">Message</label>
 						<br />
-						<textarea id="msg" name="msg" {...register("msg")} />
+						<textarea
+							id="msg"
+							name="msg"
+							{...register("msg", {
+								required: false,
+								maxLength: {
+									value: 1000,
+									message: "Message must not exceed 1000 characters",
+								},
+							})}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="msg"
+							render={({ messages }) =>
+								messages
+									? Object.entries(messages).map(([type, message]) => (
+											<p key={type} className="error">
+												{message}
+											</p>
+									  ))
+									: null
+							}
+						/>
 						<br />
 						<label htmlFor="session">
 							Type of session you are interested in?

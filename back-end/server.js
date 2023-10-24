@@ -102,6 +102,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/bookingInfo", async (req, res) => {
 	await dal.bookingInfo(req.body);
+	res.json("submitted")
 });
 
 app.get("/cart/:id", async (req, res) => {

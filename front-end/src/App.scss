@@ -803,6 +803,11 @@ footer {
 		b{
 			color: $yellow;
 		}
+		.message{
+			max-width: 95%;
+			word-wrap: normal;
+			word-break: keep-all;
+		}
 	}
 }
 

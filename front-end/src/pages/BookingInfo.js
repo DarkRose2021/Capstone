@@ -61,7 +61,7 @@ const BookingInfo = () => {
 											<h3><b>Name:</b> {booking.Name}</h3>
 											<h3><b>Email:</b> {booking.Email}</h3>
 											<h3><b>Phone Number:</b> {booking.PhoneNumber}</h3>
-											<h3><b>
+											<h3 className="message"><b>
 												Message:</b>{" "}
 												{booking.Message
 													? booking.Message
