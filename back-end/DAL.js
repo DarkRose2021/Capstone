@@ -39,7 +39,7 @@ const user = new Schema(
 		Password: { type: String, required: true },
 		Roles: Array,
 		Images: [],
-		Disabled: Boolean
+		Disabled: Boolean,
 	},
 	{ collection: userCollection }
 );
@@ -111,7 +111,7 @@ exports.dal = {
 			Password: await bcrypt.hash(password, 10),
 			Roles: ["User", "Client"],
 			Images: [],
-			Disabled: false
+			Disabled: false,
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		if (existingUser.length > 0) {
@@ -215,10 +215,15 @@ exports.dal = {
 		}
 	},
 	disableUser: async (id) => {
-		if (
-			userModel.collection.findOne({ _id: new mongodb.ObjectId(id) }) !== null
-		) {
-			await userModel.collection.updateOne({ _id: new mongodb.ObjectId(id) }, { $set: { Disabled: true } });
+		let user = await userModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
+
+		if (user !== null) {
+			await userModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
+				{ $set: { Disabled: !user.Disabled } }
+			);
 		}
 	},
 	// deleteUser: async (id) => {
@@ -275,7 +280,7 @@ exports.dal = {
 		};
 		await bookingsModel.collection.insertOne(newData);
 	},
-	getBookings: async () =>{
-		return await bookingsModel.find({}).exec()
-	}
+	getBookings: async () => {
+		return await bookingsModel.find({}).exec();
+	},
 };

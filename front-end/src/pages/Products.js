@@ -122,7 +122,7 @@ const Products = () => {
 		<div className="products">
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
-					{loading ? ( // Display loading animation while loading is true
+					{loading ? (
 						<div className="loading-container">
 							<div className="loadingio-spinner-spinner-la1rcf32xa">
 								<div className="ldio-t5ijoz38lif">

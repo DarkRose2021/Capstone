@@ -8,8 +8,8 @@ const Cart = () => {
 	const [cart, setCart] = useState(null);
 	const [products, setProducts] = useState(null);
 	const [user, setUser] = useState(null);
-	const [msg, setMsg] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [msg, setMsg] = useState(null);
 	let email = null;
 
 	useEffect(() => {
@@ -31,8 +31,8 @@ const Cart = () => {
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
-				// console.log(data);
 				setCart(data[0]);
+				
 			})
 			.catch((err) => console.log(err));
 	}
@@ -49,13 +49,21 @@ const Cart = () => {
 
 	function getProducts() {
 		if (cart && cart.Products) {
-			const ids = cart.Products.map((product) => product.ProductID);
+			let ids = [];
+			const productsArray = cart.Products;
+
+			// Loop through the Products array and extract ProductID values
+			for (const product of productsArray) {
+				const productId = product.ProductID;
+				ids.push(productId);
+			}
+
 			let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
 			fetch(getUrl)
 				.then((data) => data.json())
 				.then((data) => {
 					setProducts(data);
-					setLoading(false);
+					setLoading(false)
 				})
 				.catch((err) => console.log(err));
 		}
@@ -78,7 +86,7 @@ const Cart = () => {
 	}, [cart]);
 
 	function getProductQty(productId) {
-		if (cart && cart.Products) {
+		if (cart) {
 			const productInCart = cart.Products.find(
 				(product) => product.ProductID === productId
 			);
@@ -109,7 +117,6 @@ const Cart = () => {
 			.then((data) => {
 				setCart(data.User);
 				setMsg(data.Message);
-				window.location.reload();
 			})
 			.catch((err) => console.log(err));
 	}
@@ -118,7 +125,7 @@ const Cart = () => {
 		<div className="container">
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
-					{loading ? ( // Display loading animation while loading is true
+					{loading ? (
 						<div className="loading-container">
 							<div className="loadingio-spinner-spinner-la1rcf32xa">
 								<div className="ldio-t5ijoz38lif">
@@ -156,7 +163,7 @@ const Cart = () => {
 																	<h4 className="my-0">{product.Name}</h4>
 																	<small>{product.BriefDescription}</small>
 																	<br />
-																	{/* {cart.product.ProductID} */}
+																	{cart.Products.ProductID}
 																	{/* add something to decease the qty */}
 																	<small>
 																		Qty: {getProductQty(product._id)}

@@ -43,7 +43,7 @@ const Admin = () => {
 	}, [allUsers, searchQuery]);
 
 	function deleteUser(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/deleteUser/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -65,6 +65,8 @@ const Admin = () => {
 			})
 			.catch((err) => console.log(err));
 	}
+
+	function changeApproved() {}
 
 	return (
 		<div className="admincontainer">
@@ -98,11 +100,6 @@ const Admin = () => {
 							<div>
 								{allUsers.length > 0 ? (
 									<>
-										{msg ? (
-											<div className="userMsg">User was disabled</div>
-										) : (
-											<></>
-										)}
 										<div className="adminSearch">
 											<div>
 												<input
@@ -136,7 +133,7 @@ const Admin = () => {
 													<button>Edit Roles</button>
 												</Link>
 												<button onClick={() => deleteUser(user._id)}>
-													Disable User
+													{user.Disabled ? "Enable User" : "Disable User"}
 												</button>
 												{user.Roles?.includes("Client") ? (
 													<Link to={`/editImages/${user._id}`}>
@@ -171,7 +168,7 @@ const Admin = () => {
 													<button>Edit Roles</button>
 												</Link>
 												<button onClick={() => deleteUser(user._id)}>
-													Disable User
+													{user.Disabled ? "Enable User" : "Disable User"}
 												</button>
 												{user.Roles?.includes("Client") ? (
 													<Link to={`/editImages/${user._id}`}>
