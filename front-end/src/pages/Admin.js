@@ -67,7 +67,7 @@ const Admin = () => {
 	}
 
 	function changeApproved(id) {
-		const getUrl = `http://localhost:5001/approve/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/approve/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -201,17 +201,29 @@ const Admin = () => {
 								</div>
 
 								<div className="users">
-									{bookings.map((booking) => (
-										<div key={booking._id} className="user">
-											<h3>Sender's Name: {booking.Name}</h3>
-											<h3>Sender's Email: {booking.Email}</h3>
-											<h3>Approved: {booking.Approved ? "Yes" : "No"}</h3>
-											<h3>Contacted: {booking.Contacted ? "Yes" : "No"}</h3>
-											<h3>Date Requested: {booking.DateBooked}</h3>
-											<Link to={`/BookingInfo/${booking._id}`}><button>View More Info</button></Link>
-											<button onClick={() => changeApproved(booking._id)}>Approve</button>
-										</div>
-									))}
+									{bookings.length > 0 ? (
+										<>
+											{bookings.map((booking) => (
+												<div key={booking._id} className="user">
+													<h3>Sender's Name: {booking.Name}</h3>
+													<h3>Sender's Email: {booking.Email}</h3>
+													<h3>Approved: {booking.Approved ? "Yes" : "No"}</h3>
+													<h3>Contacted: {booking.Contacted ? "Yes" : "No"}</h3>
+													<h3>Date Requested: {booking.DateBooked}</h3>
+													<Link to={`/BookingInfo/${booking._id}`}>
+														<button>View More Info</button>
+													</Link>
+													<button onClick={() => changeApproved(booking._id)}>
+														Approve
+													</button>
+												</div>
+											))}
+										</>
+									) : (
+										<>
+											<h1>No Booking Requests</h1>
+										</>
+									)}
 								</div>
 							</div>
 						</>

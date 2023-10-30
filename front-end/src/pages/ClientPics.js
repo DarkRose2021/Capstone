@@ -47,40 +47,41 @@ const ClientPics = () => {
 	return (
 		<div>
 			{roles?.includes("Client") ? (
-				loading ? ( // Display loading animation while loading is true
-					<div className="loading-container">
-						<div class="loadingio-spinner-spinner-la1rcf32xa">
-							<div class="ldio-t5ijoz38lif">
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-							</div>
-						</div>
-					</div>
-				) : (
-					<>
-						{pics && pics.length > 0 ? (
-							<h1>Your Pictures</h1>
-						) : (
-							<h1>No pictures to show right now</h1>
-						)}
-						<div className="pics">
-							{pics?.map((pic) => (
-								<a onClick={() => downloadImage(pic.url, pic.name)}>
-									<img src={pic.url} />
-								</a>
-							))}
-						</div>
-						<br />
-					</>
-				)
+				// loading ? ( // Display loading animation while loading is true
+				// 	<div className="loading-container">
+				// 		<div class="loadingio-spinner-spinner-la1rcf32xa">
+				// 			<div class="ldio-t5ijoz38lif">
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 				<div></div>
+				// 			</div>
+				// 		</div>
+				// 	</div>
+				// ) : (
+				// 	<>
+				// 		{pics && pics.length > 0 ? (
+				// 			<h1>Your Pictures</h1>
+				// 		) : (
+				// 			<h1>No pictures to show right now</h1>
+				// 		)}
+				// 		<div className="pics">
+				// 			{pics?.map((pic) => (
+				// 				<a onClick={() => downloadImage(pic.url, pic.name)}>
+				// 					<img src={pic.url} />
+				// 				</a>
+				// 			))}
+				// 		</div>
+				// 		<br />
+				// 	</>
+				// )
+				<h2 className="error">This page currently isn't working. Please give the team some time to fix it!</h2>
 			) : (
 				<>
 					<h1>You don't have permission to view this page</h1>

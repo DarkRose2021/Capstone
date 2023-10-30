@@ -57,9 +57,9 @@ const BookingForm = () => {
 			.then((result) => {
 				console.log(result)
 				setMessage("Data submitted successfully!");
+				reset();
 				setTimeout(() => {
 					setMessage("");
-					reset(); // Reset the form after the success message disappears
 				}, 3000);
 			})
 			.catch((error) => {
