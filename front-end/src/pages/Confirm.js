@@ -45,7 +45,6 @@ const Confirm = (props) => {
 			.then((data) => {
 				console.log(data);
 				setTax(data);
-				// window.location.reload();
 			})
 			.catch((err) => console.log(err));
 	}, [data]);

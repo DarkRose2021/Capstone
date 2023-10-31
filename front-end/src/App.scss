@@ -27,6 +27,11 @@ a:visited {
 		0.5px 0.5px 0 #000;
 }
 
+.errorCenter{
+	@include flex-center;
+	font-size: 1.3em;
+}
+
 .lightError {
 	text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000,
 		0.5px 0.5px 0 #000;

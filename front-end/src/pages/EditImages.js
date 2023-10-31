@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const uploadImagesToBackend = async (images, id) => {
 	// Send the images to the backend using an API call
 	try {
-		await fetch(`https://mane-frame-backend.onrender.com/editImgs/${id}`, {
+		await fetch(`http://localhost:5000/editImgs/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -41,7 +41,7 @@ const EditImages = () => {
 	}, []);
 
 	const [images, setImages] = useState([]);
-	const maxNumber = 50;
+	const maxNumber = 11;
 
 	const onChange = async (imageList, addUpdateIndex) => {
 		setImages(imageList.filter((img) => img !== null));
@@ -55,7 +55,7 @@ const EditImages = () => {
 	};
 
 	useEffect(() => {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUser/${id}`;
+		let getUrl = `http://localhost:5000/findUser/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -91,51 +91,74 @@ const EditImages = () => {
 							onImageRemove,
 							isDragging,
 							dragProps,
+							errors
 						}) => (
-							// write your building UI
-							<div className="btnDiv">
-								<div className="buttons">
-									<button
-										style={isDragging ? { color: "red" } : undefined}
-										onClick={onImageUpload}
-										{...dragProps}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="16"
-											height="16"
-											fill="currentColor"
-											className="bi bi-upload"
-											viewBox="0 0 16 16"
+							<div>
+								{errors && (
+									<div>
+										{errors.maxNumber && (
+											<span className="error errorCenter">Number of selected images exceed {maxNumber}</span>
+										)}
+										{errors.acceptType && (
+											<span className="error errorCenter">Your selected file type is not allowed. The allowed types are jpg, jpeg, and png</span>
+										)}
+										{errors.maxFileSize && (
+											<span className="error errorCenter">Selected file size exceeds maxFileSize</span>
+										)}
+										{errors.resolution && (
+											<span className="error errorCenter">
+												Selected file does not match your desired resolution
+											</span>
+										)}
+									</div>
+								)}
+
+								<div className="btnDiv">
+									<div className="buttons">
+										<button
+											style={isDragging ? { color: "red" } : undefined}
+											onClick={onImageUpload}
+											{...dragProps}
 										>
-											<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-											<path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-										</svg>{" "}
-										Click or Drop here
-									</button>
-									&nbsp;
-									<button onClick={onImageRemoveAll}>Remove all images</button>
-									&nbsp;
-									<button onClick={handleUploadImages}>Upload Images</button>
-									&nbsp;
-									<button onClick={handleShowPictures}>Show Pictures</button>
-								</div>
-								<div className="upload__image-wrapper">
-									<div className="flex">
-										{msg ? <h2>{msg}</h2> : <></>}
-										{imageList.map((image, index) => (
-											<div key={index} className="image-item">
-												<img src={image["url"]} alt="" width="100" />
-												<div className="image-item__btn-wrapper">
-													<button onClick={() => onImageUpdate(index)}>
-														Update
-													</button>
-													<button onClick={() => onImageRemove(index)}>
-														Remove
-													</button>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="16"
+												height="16"
+												fill="currentColor"
+												className="bi bi-upload"
+												viewBox="0 0 16 16"
+											>
+												<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+												<path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+											</svg>{" "}
+											Click or Drop here
+										</button>
+										&nbsp;
+										<button onClick={onImageRemoveAll}>
+											Remove all images
+										</button>
+										&nbsp;
+										<button onClick={handleUploadImages}>Upload Images</button>
+										&nbsp;
+										<button onClick={handleShowPictures}>Show Pictures</button>
+									</div>
+									<div className="upload__image-wrapper">
+										<div className="flex">
+											{msg ? <h2>{msg}</h2> : <></>}
+											{imageList.map((image, index) => (
+												<div key={index} className="image-item">
+													<img src={image["url"]} alt="" width="100" />
+													<div className="image-item__btn-wrapper">
+														<button onClick={() => onImageUpdate(index)}>
+															Update
+														</button>
+														<button onClick={() => onImageRemove(index)}>
+															Remove
+														</button>
+													</div>
 												</div>
-											</div>
-										))}
+											))}
+										</div>
 									</div>
 								</div>
 							</div>

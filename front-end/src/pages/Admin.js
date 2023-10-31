@@ -8,6 +8,8 @@ const Admin = () => {
 	const [msg, setMsg] = useState(null);
 	const [bookings, setBookings] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [btnBookingPressed, setBtnBookingPressed] = useState(false);
+	const [btnUserPressed, setBtnUserPressed] = useState(false);
 	const [filteredUsers, setFilteredUsers] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 
@@ -25,6 +27,8 @@ const Admin = () => {
 
 	function listUsers() {
 		setLoading(true);
+		setBtnUserPressed(true)
+		setBtnBookingPressed(false)
 		setBookings([]);
 		fetch("https://mane-frame-backend.onrender.com/listUsers")
 			.then((response) => response.json())
@@ -56,6 +60,8 @@ const Admin = () => {
 	function getBookings() {
 		setLoading(true);
 		setAllUsers([]);
+		setBtnUserPressed(false)
+		setBtnBookingPressed(true)
 		const getUrl = `https://mane-frame-backend.onrender.com/bookings`;
 		fetch(getUrl)
 			.then((r) => r.json())
@@ -201,28 +207,40 @@ const Admin = () => {
 								</div>
 
 								<div className="users">
-									{bookings.length > 0 ? (
+									{bookings && btnBookingPressed ? (
 										<>
-											{bookings.map((booking) => (
-												<div key={booking._id} className="user">
-													<h3>Sender's Name: {booking.Name}</h3>
-													<h3>Sender's Email: {booking.Email}</h3>
-													<h3>Approved: {booking.Approved ? "Yes" : "No"}</h3>
-													<h3>Contacted: {booking.Contacted ? "Yes" : "No"}</h3>
-													<h3>Date Requested: {booking.DateBooked}</h3>
-													<Link to={`/BookingInfo/${booking._id}`}>
-														<button>View More Info</button>
-													</Link>
-													<button onClick={() => changeApproved(booking._id)}>
-														Approve
-													</button>
-												</div>
-											))}
+											{bookings.length > 0 ? (
+												<>
+													{bookings.map((booking) => (
+														<div key={booking._id} className="user">
+															<h3><b>Sender's Name:</b> {booking.Name}</h3>
+															<h3><b>Sender's Email:</b> {booking.Email}</h3>
+															<h3>
+																<b>Approved:</b> {booking.Approved ? "Yes" : "No"}
+															</h3>
+															<h3>
+															<b>Contacted:</b> {booking.Contacted ? "Yes" : "No"}
+															</h3>
+															<h3><b>Date Requested:</b> {booking.DateBooked}</h3>
+															<Link to={`/BookingInfo/${booking._id}`}>
+																<button>View More Info</button>
+															</Link>
+															<button
+																onClick={() => changeApproved(booking._id)}
+															>
+																Approve
+															</button>
+														</div>
+													))}
+												</>
+											) : (
+												<>
+													<h1>No Booking Requests</h1>
+												</>
+											)}
 										</>
 									) : (
-										<>
-											<h1>No Booking Requests</h1>
-										</>
+										<></>
 									)}
 								</div>
 							</div>

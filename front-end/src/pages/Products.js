@@ -30,7 +30,7 @@ const Products = () => {
 	}, []);
 
 	function getProducts() {
-		let url = `https://mane-frame-backend.onrender.com/products`;
+		let url = `http://localhost:5000/products`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
@@ -41,7 +41,7 @@ const Products = () => {
 	}
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -69,11 +69,11 @@ const Products = () => {
 		let dataToSend = {
 			items: items,
 		};
-		console.log(dataToSend);
 
-		let getUrl = `https://mane-frame-backend.onrender.com/addToCart/${JSON.stringify(
+		let getUrl = `http://localhost:5000/addToCart/${JSON.stringify(
 			dataToSend
 		)}`;
+		console.log(dataToSend)
 		fetch(getUrl, {
 			method: "POST",
 			headers: {
@@ -157,41 +157,12 @@ const Products = () => {
 														<p className="card-text">{product.Description}</p>
 														<h4 className="card-price">${product.Price}</h4>
 														<div>
-															{/* + */}
-															{/* add input for the + and - later */}
-															<svg
-																xmlns="http://www.w3.org/2000/svg"
-																width="16"
-																height="16"
-																fill="currentColor"
-																className="bi bi-plus-lg"
-																viewBox="0 0 16 16"
-															>
-																<path
-																	fillRule="evenodd"
-																	d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-																/>
-															</svg>{" "}
 															<input
 																className="customQty"
 																type="number"
 																value={productQuantities[product._id] || 1}
 																onChange={(e) => handleChange(e, product._id)}
-															/>{" "}
-															{/* - */}
-															<svg
-																xmlns="http://www.w3.org/2000/svg"
-																width="16"
-																height="16"
-																fill="currentColor"
-																className="bi bi-dash-lg"
-																viewBox="0 0 16 16"
-															>
-																<path
-																	fillRule="evenodd"
-																	d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-																/>
-															</svg>
+															/>
 														</div>
 														<div>
 															<button onClick={() => addToCart(product._id)}>

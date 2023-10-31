@@ -214,6 +214,12 @@ exports.dal = {
 			);
 		}
 	},
+	editQty: async (userId, productId, qty) =>{
+		await cartModel.updateOne(
+			{UserID: userId, "Products.ProductID": productId},
+			{ $set: {"Products.$.Qty":qty} }
+		)
+	},
 	disableUser: async (id) => {
 		let user = await userModel.collection.findOne({
 			_id: new mongodb.ObjectId(id),
@@ -237,9 +243,9 @@ exports.dal = {
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
-			{ $pull: { Images: { name: imageUrl } } }
-		);
+			{$pull: {Images: {name: imageUrl}}})
 	},
+
 	showCart: async (id) => {
 		return await cartModel.find({ UserID: id }).exec();
 	},
