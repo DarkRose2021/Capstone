@@ -27,7 +27,7 @@ a:visited {
 		0.5px 0.5px 0 #000;
 }
 
-.errorCenter{
+.errorCenter {
 	@include flex-center;
 	font-size: 1.3em;
 }
@@ -266,6 +266,13 @@ footer {
 	}
 }
 
+.fc-bg-event{
+	background-color: #9E7B9B !important;
+	opacity: 75% !important;
+	text-wrap: wrap;
+
+}
+
 .fc-theme-standard td,
 .fc-theme-standard th {
 	border: 1px solid black;
@@ -430,7 +437,7 @@ footer {
 		.no-border {
 			border: none;
 		}
-		.sub{
+		.sub {
 			text-align: center;
 			color: $yellow;
 			font-weight: bold;
@@ -521,7 +528,7 @@ footer {
 	}
 }
 
-.clientPicBtn{
+.clientPicBtn {
 	@include button;
 	@include flex-center;
 }
@@ -609,15 +616,15 @@ footer {
 		font-size: 1.4em;
 		color: $yellow;
 	}
-	.adminSearch{
+	.adminSearch {
 		@include flex-center;
-		div{
+		div {
 			width: 35%;
 			@include border;
 			@include borderRadiusContainers;
 			background-color: $lightBrown;
-			padding: .5%;
-			input{
+			padding: 0.5%;
+			input {
 				@include borderRadius;
 				margin: 1%;
 				width: 98%;
@@ -793,27 +800,50 @@ footer {
 	}
 }
 
-.bookingInfo{
+.bookingInfo {
 	@include flex-center;
-	@include button;
-	div{
+	.info {
+		.btn {
+			background-color: $blue;
+			border: none;
+			padding: 1% 2%;
+			margin: 2%;
+			@include borderRadius();
+			width: 97%;
+			font-size: 1.2em;
+		}
+		.btn:hover {
+			background-color: $blue-hover;
+		}
+		.btn:active {
+			background-color: $blue-active;
+		}
+		.smallBtn{
+			width: 30%;
+			font-size: medium;
+		}
+		.react-datepicker__input-container input{
+			@include border-radius;
+			// width: 50%;
+		}
 		background-color: $lightBrown;
 		@include border;
 		@include borderRadiusContainers;
 		padding: 1%;
 		max-width: 90vw;
-		button{
-			width: 97%;
-		}
-		b{
+		b {
 			color: $yellow;
 		}
-		.message{
+		.message {
 			max-width: 95%;
 			word-wrap: normal;
 			word-break: keep-all;
 		}
 	}
+}
+
+.react-datepicker__day--holidays{
+	background-color: #9E7B9B !important;
 }
 
 .footer {
@@ -826,7 +856,7 @@ footer {
 	}
 }
 
-.loading-container{
+.loading-container {
 	@include flex-center;
 }
 

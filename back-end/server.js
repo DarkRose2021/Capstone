@@ -102,7 +102,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/bookingInfo", async (req, res) => {
 	await dal.bookingInfo(req.body);
-	res.json("submitted")
+	res.json("submitted");
 });
 
 app.get("/cart/:id", async (req, res) => {
@@ -135,14 +135,14 @@ app.post("/addToCart/:items", async (req, res) => {
 	dal.addToCart(data.items.UserID, data.items.Products, data.items.ProductQty);
 });
 
-app.get("/changeQty/:userId/:productId/:qty", async (req, res) =>{
-	let userId = req.params.userId
-	let productId = req.params.productId
-	let qty = req.params.qty
-	await dal.editQty(userId, productId, qty)
+app.get("/changeQty/:userId/:productId/:qty", async (req, res) => {
+	let userId = req.params.userId;
+	let productId = req.params.productId;
+	let qty = req.params.qty;
+	await dal.editQty(userId, productId, qty);
 	const user = await dal.showCart(userId);
-	return res.json(user)
-})
+	return res.json(user);
+});
 
 app.get("/products", async (req, res) => {
 	products = await dal.showProducts();
@@ -167,10 +167,10 @@ app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 		if (err) {
 			throw err;
 		}
-	
+
 		console.log("Delete File successfully.");
 	});
-	res.json({ Message: "Image Deleted", User: user});
+	res.json({ Message: "Image Deleted", User: user });
 });
 
 app.post("/checkout", async (req, res) => {
@@ -193,66 +193,66 @@ app.post("/editRoles/:id", async (req, res) => {
 });
 
 app.post("/editImgs/:id", async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const images = req.body.images;
+	try {
+		const userId = req.params.id;
+		const images = req.body.images;
 
-        const updatedImageArray = [];
-        const userImagePath = path.join(__dirname, "public", "images", userId);
+		const updatedImageArray = [];
+		const userImagePath = path.join(__dirname, "public", "images", userId);
 
-        // Check if the directory exists, if not, create it
-        try {
-            await fsPromises.access(userImagePath);
-        } catch (error) {
-            if (error.code === "ENOENT") {
-                await fsPromises.mkdir(userImagePath, { recursive: true });
-            } else {
-                throw error;
-            }
-        }
+		// Check if the directory exists, if not, create it
+		try {
+			await fsPromises.access(userImagePath);
+		} catch (error) {
+			if (error.code === "ENOENT") {
+				await fsPromises.mkdir(userImagePath, { recursive: true });
+			} else {
+				throw error;
+			}
+		}
 
-        // Determine the next available image index
-        let startIndex = 0;
-        try {
-            const existingImages = await fsPromises.readdir(userImagePath);
-            if (existingImages.length > 0) {
-                const lastImageName = existingImages[existingImages.length - 1];
-                const lastIndex = parseInt(lastImageName.match(/\d+/)[0]);
-                startIndex = lastIndex + 1;
-            }
-        } catch (error) {
-            // Handle error if the directory is empty or does not exist yet
-            console.error("Error reading existing images:", error);
-        }
+		// Determine the next available image index
+		let startIndex = 0;
+		try {
+			const existingImages = await fsPromises.readdir(userImagePath);
+			if (existingImages.length > 0) {
+				const lastImageName = existingImages[existingImages.length - 1];
+				const lastIndex = parseInt(lastImageName.match(/\d+/)[0]);
+				startIndex = lastIndex + 1;
+			}
+		} catch (error) {
+			// Handle error if the directory is empty or does not exist yet
+			console.error("Error reading existing images:", error);
+		}
 
-        for (let index = 0; index < images.length; index++) {
-            const img = images[index];
-            const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
+		for (let index = 0; index < images.length; index++) {
+			const img = images[index];
+			const imageName = `Image_${startIndex + index}.jpg`; // Continuing the number sequence
 
-            const imagePath = path.join(userImagePath, imageName);
+			const imagePath = path.join(userImagePath, imageName);
 
-            // Convert data URL to buffer
-            const imageData = Buffer.from(img.url.split(",")[1], "base64");
+			// Convert data URL to buffer
+			const imageData = Buffer.from(img.url.split(",")[1], "base64");
 
-            // Save the image data to file
-            await fsPromises.writeFile(imagePath, imageData);
+			// Save the image data to file
+			await fsPromises.writeFile(imagePath, imageData);
 
-            updatedImageArray.push({
-                name: imageName,
-                url: `http://localhost:5000/images/${userId}/${imageName}`,
-            });
-        }
+			updatedImageArray.push({
+				name: imageName,
+				url: `http://localhost:5000/images/${userId}/${imageName}`,
+			});
+		}
 
-        dal.addImgs(userId, updatedImageArray);
+		dal.addImgs(userId, updatedImageArray);
 
-        res.status(200).json({
-            message: "Images uploaded and saved successfully.",
-            images: updatedImageArray,
-        });
-    } catch (error) {
-        console.error("Error uploading images:", error);
-        res.status(500).json({ error: "Internal server error." });
-    }
+		res.status(200).json({
+			message: "Images uploaded and saved successfully.",
+			images: updatedImageArray,
+		});
+	} catch (error) {
+		console.error("Error uploading images:", error);
+		res.status(500).json({ error: "Internal server error." });
+	}
 });
 
 function getRandomObjectFromArray(array) {
@@ -463,20 +463,61 @@ app.get("/bookings", async (req, res) => {
 app.get("/approve/:id", async (req, res) => {
 	let id = req.params.id;
 	await dal.changeApproved(id);
-	let booking = await dal.getBookings();
-	res.json({ Bookings: booking });
+	let booking = await dal.findBooking(id);
+	res.json({ Booking: booking });
+});
+
+app.get("/contacted/:id", async (req, res) => {
+	let id = req.params.id;
+	await dal.changeContacted(id);
+	let booking = await dal.findBooking(id);
+	res.json({ Booking: booking });
+});
+
+app.post("/updateDate/:id", async (req, res) => {
+	let id = req.params.id;
+	let date = req.body.dateScheduled;
+	await dal.changeDateScheduled(id, date);
+	await dal.createEvent(date)
+	let booking = await dal.findBooking(id);
+	res.json({ Booking: booking });
 });
 
 app.get("/findBooking/:id", async (req, res) => {
 	const id = req.params.id;
 	const booking = await dal.findBooking(id);
-  
+
 	if (booking) {
-	  res.json({ Booking: booking });
+		res.json({ Booking: booking });
 	} else {
-	  res.status(404).json({ Message: "Booking not found" });
+		res.status(404).json({ Message: "Booking not found" });
 	}
-  });
+});
+
+app.post("/createEvent/:date", async (req, res) => {
+	let date = req.params.date;
+	await dal.createEvent(date);
+	let events = await dal.getEvents();
+	res.json({ Events: events });
+});
+
+app.post("/createHoliday/:date/:title", async (req, res) => {
+	let date = req.params.date;
+	let title = req.params.title;
+	await dal.createHoliday(date, title);
+	let events = await dal.getEvents();
+	res.json({ Events: events });
+});
+
+app.get("/getEvents", async (req, res) =>{
+	let events = await dal.getEvents()
+	res.json({ Events:  events});
+})
+
+app.get("/getSomeEvents", async (req, res) =>{
+	let events = await dal.getSomeEvents()
+	res.json({ Events:  events});
+})
 
 app.listen(port, () => {
 	console.log("Listening on port " + port);

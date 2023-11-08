@@ -6,11 +6,11 @@ var bcrypt = require("bcryptjs");
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
-const pictureCollection = "Pictures";
 const productCollection = "Products";
 const cartCollection = "Checkout";
 const serviceCollection = "Services";
 const bookingCollection = "Bookings";
+const eventsCollection = "Events";
 
 mongoose.connect(connectionString, {
 	useUnifiedTopology: true,
@@ -22,15 +22,6 @@ const connection = mongoose.connection;
 connection.once("open", () => {
 	console.log("mongoose connected");
 });
-
-const pic = new Schema(
-	{
-		name: String,
-		data_url: String,
-	},
-	{ collection: pictureCollection }
-);
-const picModel = mongoose.model("pic", pic);
 
 const user = new Schema(
 	{
@@ -99,6 +90,17 @@ const bookings = new Schema(
 	{ collection: bookingCollection }
 );
 const bookingsModel = mongoose.model("bookings", bookings);
+
+const events = new Schema(
+	{
+		title: String,
+		start: String,
+		backgroundColor: String,
+		borderColor: String,
+	},
+	{ collection: eventsCollection }
+);
+const eventsModel = mongoose.model("events", events);
 
 exports.dal = {
 	createUser: async (email, name, password) => {
@@ -214,11 +216,11 @@ exports.dal = {
 			);
 		}
 	},
-	editQty: async (userId, productId, qty) =>{
+	editQty: async (userId, productId, qty) => {
 		await cartModel.updateOne(
-			{UserID: userId, "Products.ProductID": productId},
-			{ $set: {"Products.$.Qty":qty} }
-		)
+			{ UserID: userId, "Products.ProductID": productId },
+			{ $set: { "Products.$.Qty": qty } }
+		);
 	},
 	disableUser: async (id) => {
 		let user = await userModel.collection.findOne({
@@ -243,7 +245,8 @@ exports.dal = {
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
-			{$pull: {Images: {name: imageUrl}}})
+			{ $pull: { Images: { name: imageUrl } } }
+		);
 	},
 
 	showCart: async (id) => {
@@ -301,7 +304,70 @@ exports.dal = {
 			);
 		}
 	},
-	findBooking: async (id) =>{
-		return await bookingsModel.collection.findOne({_id: new mongodb.ObjectId(id)})
-	}
+	changeContacted: async (id) => {
+		let booking = await bookingsModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
+
+		if (booking !== null) {
+			await bookingsModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
+				{ $set: { Contacted: !booking.Contacted } }
+			);
+		}
+	},
+	changeDateScheduled: async (id, date) => {
+		let booking = await bookingsModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
+
+		if (booking !== null) {
+			await bookingsModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
+				{ $set: { DateScheduled: date } }
+			);
+		}
+	},
+	findBooking: async (id) => {
+		return await bookingsModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
+	},
+	createEvent: async (date) => {
+		let event = {
+			title: "Photo shoot",
+			start: date,
+			backgroundColor: "#40797A",
+			borderColor: "#40797A",
+		};
+		let newEvent = await eventsModel.collection.insertOne(event);
+		return newEvent;
+	},
+	createHoliday: async (date, title) => {
+		let years = {
+			startyear: "2000",
+			endyear: "3000"
+		}
+		var regex = /\d{4}/;
+		let event = {
+			title: title,
+			start: date,
+			backgroundColor: "#9E7B9B",
+			borderColor: "#9E7B9B",
+			display: "background",
+			rrule: {
+				freq: "yearly",
+				dtstart: date.replace(regex, years.startyear),
+				until: date.replace(regex, years.endyear),
+			},
+		};
+		let newEvent = await eventsModel.collection.insertOne(event);
+		return newEvent;
+	},
+	getEvents: async () => {
+		return await eventsModel.find({}).exec();
+	},
+	getSomeEvents: async () => {
+		return await eventsModel.find({"title": "Photo shoot"}).exec();
+	},
 };

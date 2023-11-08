@@ -5,10 +5,12 @@ const Admin = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [allUsers, setAllUsers] = useState([]);
+	const [events, setEvents] = useState([]);
 	const [msg, setMsg] = useState(null);
 	const [bookings, setBookings] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [btnBookingPressed, setBtnBookingPressed] = useState(false);
+	const [btnEventsPressed, setBtnEventsPressed] = useState(false);
 	const [btnUserPressed, setBtnUserPressed] = useState(false);
 	const [filteredUsers, setFilteredUsers] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
@@ -28,12 +30,30 @@ const Admin = () => {
 	function listUsers() {
 		setLoading(true);
 		setBtnUserPressed(true)
+		setBtnEventsPressed(false)
 		setBtnBookingPressed(false)
 		setBookings([]);
+		setEvents([]);
 		fetch("https://mane-frame-backend.onrender.com/listUsers")
 			.then((response) => response.json())
 			.then((result) => {
 				setAllUsers(result);
+				setLoading(false); // Set loading to false when the data is received
+			});
+	}
+
+	function listEvents() {
+		setLoading(true);
+		setBtnUserPressed(false)
+		setBtnBookingPressed(false)
+		setBtnEventsPressed(true)
+		setBookings([]);
+		setAllUsers([]);
+		fetch("https://mane-frame-backend.onrender.com/getSomeEvents")
+			.then((response) => response.json())
+			.then((result) => {
+				console.log(result.Events)
+				setEvents(result.Events);
 				setLoading(false); // Set loading to false when the data is received
 			});
 	}
@@ -60,20 +80,11 @@ const Admin = () => {
 	function getBookings() {
 		setLoading(true);
 		setAllUsers([]);
+		setEvents([]);
 		setBtnUserPressed(false)
+		setBtnEventsPressed(false)
 		setBtnBookingPressed(true)
 		const getUrl = `https://mane-frame-backend.onrender.com/bookings`;
-		fetch(getUrl)
-			.then((r) => r.json())
-			.then((data) => {
-				setBookings(data.Bookings);
-				setLoading(false);
-			})
-			.catch((err) => console.log(err));
-	}
-
-	function changeApproved(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/approve/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -91,6 +102,7 @@ const Admin = () => {
 						<div>
 							<button onClick={getBookings}>Show Booking Requests</button>
 							<button onClick={listUsers}>Show Users</button>
+							<button onClick={listEvents}>Show Events</button>
 						</div>
 					</div>
 					{loading ? ( // Display loading animation while loading is true
@@ -207,6 +219,29 @@ const Admin = () => {
 								</div>
 
 								<div className="users">
+									{events && btnEventsPressed ? (
+										<>
+											{events.length > 0 ? (
+												<>
+													{events.map((event) => (
+														<div key={event._id} className="user">
+															<h3><b>Event Name:</b> {event.title}</h3>
+															<h3><b>Date:</b> {event.start}</h3>
+														</div>
+													))}
+												</>
+											) : (
+												<>
+													<h1>No Booking Requests</h1>
+												</>
+											)}
+										</>
+									) : (
+										<></>
+									)}
+								</div>
+
+								<div className="users">
 									{bookings && btnBookingPressed ? (
 										<>
 											{bookings.length > 0 ? (
@@ -222,14 +257,10 @@ const Admin = () => {
 															<b>Contacted:</b> {booking.Contacted ? "Yes" : "No"}
 															</h3>
 															<h3><b>Date Requested:</b> {booking.DateBooked}</h3>
+															<h3><b>Date Scheduled:</b> {booking.DateScheduled ? booking.DateScheduled : "Not Scheduled"}</h3>
 															<Link to={`/BookingInfo/${booking._id}`}>
 																<button>View More Info</button>
 															</Link>
-															<button
-																onClick={() => changeApproved(booking._id)}
-															>
-																Approve
-															</button>
 														</div>
 													))}
 												</>

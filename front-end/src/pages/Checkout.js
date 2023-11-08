@@ -171,7 +171,15 @@ const Checkout = () => {
 									Hi ${data.firstName} ${data.lastName} \n
 									Your order has been confirmed! \n
 									Date placed: ${formattedDate} \n
-									Shipping to: ${data.shipAddress ? data.shipAddress : data.address} ${data.shipAddress2 ? data.shipAddress2 : data.address2 ? data.address2 : ""}, ${data.shipState ? data.shipState : data.state} ${data.shipZip ? data.shipZip : data.zip} \n
+									Shipping to: ${data.shipAddress ? data.shipAddress : data.address} ${
+								data.shipAddress2
+									? data.shipAddress2
+									: data.address2
+									? data.address2
+									: ""
+							}, ${data.shipState ? data.shipState : data.state} ${
+								data.shipZip ? data.shipZip : data.zip
+							} \n
 									Thank you for your order! \n
 									-Mane Frame Photography
 
@@ -260,7 +268,7 @@ const Checkout = () => {
 	function updateQty(id, delta) {
 		let oldQty = getProductQty(id);
 		let newQty = oldQty + delta;
-		
+
 		if (newQty == 0) {
 			deleteItem(user._id, id);
 		} else {
@@ -341,48 +349,47 @@ const Checkout = () => {
 																		<small>{product.BriefDescription}</small>
 																		<br />
 																		<small>
-																				Qty:{" "}
-																				<span
-																					onClick={() =>
-																						updateQty(product._id, 1)
-																					}
+																			Qty:{" "}
+																			<span
+																				onClick={() =>
+																					updateQty(product._id, 1)
+																				}
+																			>
+																				<svg
+																					xmlns="http://www.w3.org/2000/svg"
+																					width="16"
+																					height="16"
+																					fill="currentColor"
+																					className="bi bi-plus-lg"
+																					viewBox="0 0 16 16"
 																				>
-																					<svg
-																						xmlns="http://www.w3.org/2000/svg"
-																						width="16"
-																						height="16"
-																						fill="currentColor"
-																						className="bi bi-plus-lg"
-																						viewBox="0 0 16 16"
-																					>
-																						<path
-																							fillRule="evenodd"
-																							d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-																						/>
-																					</svg>{" "}
-																				</span>
-																				{getProductQty(product._id)}{" "}
-																				<span
-																					onClick={() =>
-																						updateQty(product._id, -1)
-																					}
+																					<path
+																						fillRule="evenodd"
+																						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+																					/>
+																				</svg>{" "}
+																			</span>
+																			{getProductQty(product._id)}{" "}
+																			<span
+																				onClick={() =>
+																					updateQty(product._id, -1)
+																				}
+																			>
+																				<svg
+																					xmlns="http://www.w3.org/2000/svg"
+																					width="16"
+																					height="16"
+																					fill="currentColor"
+																					className="bi bi-dash-lg"
+																					viewBox="0 0 16 16"
 																				>
-																					<svg
-																						xmlns="http://www.w3.org/2000/svg"
-																						width="16"
-																						height="16"
-																						fill="currentColor"
-																						className="bi bi-dash-lg"
-																						viewBox="0 0 16 16"
-																					>
-																						<path
-																							fillRule="evenodd"
-																							d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-																						/>
-																					</svg>
-																				</span>
-																			</small>
-																		
+																					<path
+																						fillRule="evenodd"
+																						d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
+																					/>
+																				</svg>
+																			</span>
+																		</small>
 																	</div>
 
 																	<span className="prices">
@@ -1189,6 +1196,21 @@ const Checkout = () => {
 															/>
 														</div>
 													</div>
+
+													{/* <hr className="my-4" />
+
+													<div class="form-check">
+														<input
+															type="checkbox"
+															class="form-check-input"
+															name="save-info"
+															id="save-info"
+															{...register("save-info")}
+														/>
+														<label class="form-check-label" for="save-info">
+															Save this information for next time
+														</label>
+													</div> */}
 
 													<hr className="my-4" />
 

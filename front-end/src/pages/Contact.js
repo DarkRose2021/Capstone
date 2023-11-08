@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-// import rrulePlugin from '@fullcalendar/rrule'
+import rrulePlugin from "@fullcalendar/rrule";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
@@ -13,9 +14,11 @@ const Contact = () => {
 		html_message: "",
 	});
 	const [isSending, setIsSending] = useState(false);
+	const [events, setEvents] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const handleFormData = (event) => {
-		setIsSending(true)
+		setIsSending(true);
 		event.preventDefault();
 		emailjs
 			.send("service_iua6vej", "template_hnmq0z9", values, "jhFwa0eEmp0_7VOPv")
@@ -33,8 +36,18 @@ const Contact = () => {
 					console.log("FAILED...", error);
 				}
 			);
-			
 	};
+
+	useEffect(() => {
+		let url = `https://mane-frame-backend.onrender.com/getEvents`;
+		fetch(url)
+			.then((data) => data.json())
+			.then((data) => {
+				setEvents(data.Events);
+				setLoading(false);
+			})
+			.catch((err) => console.log(err));
+	}, []);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -43,136 +56,51 @@ const Contact = () => {
 			[name]: value,
 		}));
 	};
-	let events = [
-		{
-			title: "Photo shoot",
-			start: "2023-10-08",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-			eventDisplay: 'list-item'
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-09-23",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-09-03",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-09-16",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-08-12",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-08-17",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-08-27",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-08-01",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-08-08",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-09-19",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Photo shoot",
-			start: "2023-09-08",
-			backgroundColor: "#40797A",
-			borderColor: "#40797A",
-		},
-		{
-			title: "Christmas",
-			date: "2023-12-25",
-			backgroundColor: "#9E7B9B",
-			borderColor: "#9E7B9B",
-			allDay: true,
-			editable: false
-		},
-		{
-			title: "Christmas Eve",
-			date: "2023-12-24",
-			backgroundColor: "#9E7B9B",
-			borderColor: "#9E7B9B",
-			allDay: true,
-			editable: false
-		},
-		{
-			title: "New Years Eve",
-			date: "2023-12-31",
-			backgroundColor: "#9E7B9B",
-			borderColor: "#9E7B9B",
-			allDay: true,
-			editable: false
-		},
-		{
-			title: "Halloween",
-			date: "2023-10-31",
-			backgroundColor: "#9E7B9B",
-			borderColor: "#9E7B9B",
-			allDay: true,
-			editable: false
-		},
-		{
-			title: "New Years Day",
-			date: "2023-01-01",
-			backgroundColor: "#9E7B9B",
-			borderColor: "#9E7B9B",
-			allDay: true,
-			editable: false
-		},
-	];
 
 	return (
 		<div className="contact">
 			<h1>Contact Us</h1>
 			<div className="flex">
-				<div className="calenderDiv">
-					<FullCalendar
-						plugins={[dayGridPlugin]}
-						initialView="dayGridMonth"
-						weekends={true}
-						events={events}
-						handleWindowResize={true}
-					/>
-				</div>
+				{loading ? ( // Display loading animation while loading is true
+					<div className="loading-container">
+						<div className="loadingio-spinner-spinner-la1rcf32xa">
+							<div className="ldio-t5ijoz38lif">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					</div>
+				) : (
+					<>
+						<div className="calenderDiv">
+							<FullCalendar
+								plugins={[rrulePlugin, dayGridPlugin, interactionPlugin]}
+								initialView="dayGridMonth"
+								weekends={true}
+								events={events}
+								handleWindowResize={true}
+								// eventClick={}
+							/>
+						</div>
+					</>
+				)}
 
 				<div className="form">
 					<div>
 						<h3>Contact Us</h3>
 						<form onSubmit={handleFormData}>
 							<input type="hidden" name="contact_number" />
-							<label htmlFor="from_name">Name<span className="required">*</span></label>
+							<label htmlFor="from_name">
+								Name<span className="required">*</span>
+							</label>
 							<input
 								value={values.from_name}
 								onChange={handleInputChange}
@@ -183,7 +111,9 @@ const Contact = () => {
 								type="text"
 							/>
 
-							<label htmlFor="from_email">Email<span className="required">*</span></label>
+							<label htmlFor="from_email">
+								Email<span className="required">*</span>
+							</label>
 							<input
 								id="from_email"
 								name="from_email"
@@ -194,7 +124,9 @@ const Contact = () => {
 								onChange={handleInputChange}
 							/>
 
-							<label htmlFor="html_message">Message<span className="required">*</span></label>
+							<label htmlFor="html_message">
+								Message<span className="required">*</span>
+							</label>
 							<textarea
 								value={values.html_message}
 								onChange={handleInputChange}
@@ -206,13 +138,20 @@ const Contact = () => {
 								cols="25"
 							></textarea>
 
-							<button type="submit" className="btn" disabled={isSending}>{isSending ? 'Sending...' : 'Send Email'}</button>
+							<button type="submit" className="btn" disabled={isSending}>
+								{isSending ? "Sending..." : "Send Email"}
+							</button>
 						</form>
 						<h4>
 							Call us at <a href="tel:3853550184">(385)355-0184</a>
 						</h4>
 						<h4 className="email">
-							Email us at <a href="mailto:maneframephotography2023@gmail.com">maneframephotography2023<br />@gmail.com</a>
+							Email us at{" "}
+							<a href="mailto:maneframephotography2023@gmail.com">
+								maneframephotography2023
+								<br />
+								@gmail.com
+							</a>
 						</h4>
 					</div>
 				</div>
