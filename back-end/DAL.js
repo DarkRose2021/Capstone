@@ -7,7 +7,6 @@ var bcrypt = require("bcryptjs");
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
 const productCollection = "Products";
-const cartCollection = "Checkout";
 const serviceCollection = "Services";
 const bookingCollection = "Bookings";
 const eventsCollection = "Events";
@@ -31,6 +30,8 @@ const user = new Schema(
 		Roles: Array,
 		Images: [],
 		Disabled: Boolean,
+		Products: [{ ProductID: String, Qty: Number }],
+		CheckoutInfo: Object,
 	},
 	{ collection: userCollection }
 );
@@ -50,16 +51,6 @@ const products = new Schema(
 	{ collection: productCollection }
 );
 const productsModel = mongoose.model("products", products);
-
-const cart = new Schema(
-	{
-		UserID: String,
-		Products: [{ ProductID: String, Qty: Number }],
-	},
-	{ collection: cartCollection }
-);
-
-const cartModel = mongoose.model("cart", cart);
 
 const services = new Schema(
 	{
@@ -86,6 +77,7 @@ const bookings = new Schema(
 		Contacted: Boolean,
 		DateBooked: String,
 		DateScheduled: String,
+		EventID: String,
 	},
 	{ collection: bookingCollection }
 );
@@ -114,18 +106,14 @@ exports.dal = {
 			Roles: ["User", "Client"],
 			Images: [],
 			Disabled: false,
+			Products: [],
+			CheckoutInfo: {},
 		};
 		let existingUser = await userModel.collection.find(check).toArray();
 		if (existingUser.length > 0) {
 			return "";
 		} else {
 			let newUser = await userModel.collection.insertOne(user);
-			let id = newUser.insertedId.toString();
-			let data = {
-				UserID: id,
-				Products: [],
-			};
-			await cartModel.collection.insertOne(data);
 			return newUser;
 		}
 	},
@@ -170,7 +158,7 @@ exports.dal = {
 			return await userModel.findOne({ Email: email }).exec();
 		} catch (error) {
 			console.error("Error finding user:", error);
-			throw error; // Rethrow the error to be handled by the caller of this function.
+			throw error;
 		}
 	},
 	addProducts: async (name, price, des, briefdes, disimg, selectedimg) => {
@@ -195,13 +183,13 @@ exports.dal = {
 		return await productsModel.find({}).exec();
 	},
 	addToCart: async (id, product, qty) => {
-		const existingCartItem = await cartModel
-			.findOne({ UserID: id, "Products.ProductID": product })
+		const existingCartItem = await userModel
+			.findOne({ _id: new mongodb.ObjectId(id), "Products.ProductID": product })
 			.exec();
 
 		if (existingCartItem) {
-			await cartModel.updateOne(
-				{ UserID: id, "Products.ProductID": product },
+			await userModel.updateOne(
+				{ _id: new mongodb.ObjectId(id), "Products.ProductID": product },
 				{ $inc: { "Products.$.Qty": qty } }
 			);
 		} else {
@@ -210,15 +198,15 @@ exports.dal = {
 				Qty: qty,
 			};
 
-			await cartModel.updateOne(
-				{ UserID: id },
+			await userModel.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
 				{ $push: { Products: newItem } }
 			);
 		}
 	},
 	editQty: async (userId, productId, qty) => {
-		await cartModel.updateOne(
-			{ UserID: userId, "Products.ProductID": productId },
+		await userModel.updateOne(
+			{ _id: new mongodb.ObjectId(userId), "Products.ProductID": productId },
 			{ $set: { "Products.$.Qty": qty } }
 		);
 	},
@@ -234,23 +222,14 @@ exports.dal = {
 			);
 		}
 	},
-	// deleteUser: async (id) => {
-	// 	if (
-	// 		userModel.collection.findOne({ _id: new mongodb.ObjectId(id) }) !== null
-	// 	) {
-	// 		await userModel.collection.deleteOne({ _id: new mongodb.ObjectId(id) });
-	// 		await cartModel.collection.deleteOne({ UserID: id });
-	// 	}
-	// },
 	deleteImage: async (id, imageUrl) => {
 		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
 			{ $pull: { Images: { name: imageUrl } } }
 		);
 	},
-
 	showCart: async (id) => {
-		return await cartModel.find({ UserID: id }).exec();
+		return await userModel.find({ _id: new mongodb.ObjectId(id) }).exec();
 	},
 	findProducts: async (id) => {
 		let temp = await productsModel
@@ -259,14 +238,14 @@ exports.dal = {
 		return temp;
 	},
 	clearCart: async (id) => {
-		return await cartModel.updateOne(
-			{ UserID: id },
+		return await userModel.updateOne(
+			{ _id: new mongodb.ObjectId(id) },
 			{ $set: { Products: [] } }
 		);
 	},
 	deleteCartItem: async (cartID, productID) => {
-		await cartModel.collection.updateOne(
-			{ UserID: cartID },
+		await userModel.collection.updateOne(
+			{ _id: new mongodb.ObjectId(cartID) },
 			{ $pull: { Products: { ProductID: productID } } }
 		);
 	},
@@ -286,6 +265,7 @@ exports.dal = {
 			Contacted: false,
 			DateBooked: data.date,
 			DateScheduled: "",
+			EventID: "",
 		};
 		await bookingsModel.collection.insertOne(newData);
 	},
@@ -321,10 +301,34 @@ exports.dal = {
 			_id: new mongodb.ObjectId(id),
 		});
 
-		if (booking !== null) {
+		if (booking !== null && booking.EventID !== "") {
 			await bookingsModel.collection.updateOne(
 				{ _id: new mongodb.ObjectId(id) },
 				{ $set: { DateScheduled: date } }
+			);
+			await eventsModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(booking.EventID) },
+				{ $set: { start: date } }
+			);
+		} else if (booking !== null) {
+			let event = {
+				title: "Photo shoot",
+				clientName: booking.Name,
+				session: booking.Session,
+				start: date,
+				backgroundColor: "#40797A",
+				borderColor: "#40797A",
+			};
+			let newEvent = await eventsModel.collection.insertOne(event);
+			let newId = newEvent.insertedId.toString()
+			await bookingsModel.collection.updateOne(
+				{ _id: new mongodb.ObjectId(id) },
+				{
+					$set: {
+						EventID: newId,
+						DateScheduled: date
+					}
+				}
 			);
 		}
 	},
@@ -346,8 +350,8 @@ exports.dal = {
 	createHoliday: async (date, title) => {
 		let years = {
 			startyear: "2000",
-			endyear: "3000"
-		}
+			endyear: "3000",
+		};
 		var regex = /\d{4}/;
 		let event = {
 			title: title,
@@ -368,6 +372,13 @@ exports.dal = {
 		return await eventsModel.find({}).exec();
 	},
 	getSomeEvents: async () => {
-		return await eventsModel.find({"title": "Photo shoot"}).exec();
+		return await eventsModel.find({ title: "Photo shoot" }).exec();
 	},
+	saveInfo: async (email, info) => {
+		console.log(email)
+		await userModel.collection.updateOne(
+			{ Email: email },
+			{$set: {CheckoutInfo: info}}
+		)
+	}
 };

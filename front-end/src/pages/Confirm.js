@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { getProductQty, calculatePrice, calculateTotal, totalSalesTax  } from './CartUtils';
 
 const Confirm = (props) => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -39,67 +40,20 @@ const Confirm = (props) => {
 	};
 
 	useEffect(() => {
-		const url = `https://mane-frame-backend.onrender.com/tax/${data.state}`;
+		const url = `http://localhost:5000/tax/${data.state}`;
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {
-				console.log(data);
 				setTax(data);
 			})
 			.catch((err) => console.log(err));
 	}, [data]);
 
-	function getProductQty(productId) {
-		if (cart) {
-			const productInCart = cart.Products.find(
-				(product) => product.ProductID === productId
-			);
-			return productInCart ? productInCart.Qty : 0;
-		}
-		return 0;
-	}
-
-	function prices(qty, price) {
-		return qty * price;
-	}
-
-	function taxes(qty, price, tax) {
-		let totalSalesTax = 0;
-		for (let i = 0; i < qty; i++) {
-			let salesTax = tax * price;
-			totalSalesTax += salesTax;
-		}
-		return totalSalesTax;
-	}
-
-	function totalSalesTax(products, tax) {
-		let totalTax = 0;
-
-		if (products) {
-			products.forEach((product) => {
-				const quantity = getProductQty(product._id);
-				const productTax = taxes(quantity, product.Price, tax);
-				totalTax += productTax;
-			});
-		}
-
-		return totalTax;
-	}
-
-	function total() {
-		let total = 0;
-		if (cart && products) {
-			products.forEach((product) => {
-				const quantity = getProductQty(product._id);
-				total += prices(quantity, product.Price);
-			});
-		}
-		return total;
-	}
+	
 
 	useEffect(() => {
-		let id = cart.UserID;
-		let url = `https://mane-frame-backend.onrender.com/clearCart/${id}`;
+		let id = cart._id;
+		let url = `http://localhost:5000/clearCart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {})
@@ -142,11 +96,11 @@ const Confirm = (props) => {
 											<div>
 												{product.Name}
 												<span className="prices">
-													${prices(getProductQty(product._id), product.Price)}
+													${calculatePrice(getProductQty(cart, product._id), product.Price)}
 												</span>
 												<br />
 												<span className="qty text-muted">
-													Qty: {getProductQty(product._id)}
+													Qty: {getProductQty(cart, product._id)}
 												</span>
 											</div>
 										</div>
@@ -158,10 +112,10 @@ const Confirm = (props) => {
 
 							<div>
 								<div className="total">
-									Tax: ${totalSalesTax(products, tax)} <br />
+									Tax: ${totalSalesTax(cart, products, tax)} <br />
 								</div>
 								<div className="total">
-									Total: <b>${total() + totalSalesTax(products, tax)}</b>
+									Total: <b>${calculateTotal(cart, products) + totalSalesTax(cart, products, tax)}</b>
 								</div>
 							</div>
 							<hr />

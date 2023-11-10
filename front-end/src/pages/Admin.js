@@ -47,7 +47,7 @@ const Admin = () => {
 		setBtnUserPressed(false)
 		setBtnBookingPressed(false)
 		setBtnEventsPressed(true)
-		setBookings([]);
+		setBookings([]); 	
 		setAllUsers([]);
 		fetch("https://mane-frame-backend.onrender.com/getSomeEvents")
 			.then((response) => response.json())

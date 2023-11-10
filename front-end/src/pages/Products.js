@@ -73,7 +73,6 @@ const Products = () => {
 		let getUrl = `http://localhost:5000/addToCart/${JSON.stringify(
 			dataToSend
 		)}`;
-		console.log(dataToSend)
 		fetch(getUrl, {
 			method: "POST",
 			headers: {

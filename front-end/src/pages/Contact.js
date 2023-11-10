@@ -3,9 +3,9 @@ import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { ErrorMessage } from "@hookform/error-message";
-import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const Contact = () => {
 	const [values, setValues] = useState({
@@ -16,6 +16,8 @@ const Contact = () => {
 	const [isSending, setIsSending] = useState(false);
 	const [events, setEvents] = useState();
 	const [loading, setLoading] = useState(true);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState(null);
 
 	const handleFormData = (event) => {
 		setIsSending(true);
@@ -57,6 +59,18 @@ const Contact = () => {
 		}));
 	};
 
+	// Event click handler to open the modal and set the selected event
+	const handleEventClick = (info) => {
+		setSelectedEvent(info.event);
+		setIsModalOpen(true);
+	};
+
+	// Modal close handler
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		setSelectedEvent(null);
+	};
+
 	return (
 		<div className="contact">
 			<h1>Contact Us</h1>
@@ -87,7 +101,7 @@ const Contact = () => {
 								weekends={true}
 								events={events}
 								handleWindowResize={true}
-								// eventClick={}
+								eventClick={handleEventClick}
 							/>
 						</div>
 					</>
@@ -157,6 +171,26 @@ const Contact = () => {
 				</div>
 			</div>
 			<br />
+			<Modal show={isModalOpen} onHide={handleCloseModal} className="modal">
+				<Modal.Header closeButton>
+					<Modal.Title>Event Details</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					{selectedEvent && (
+						<div>
+							<span>{selectedEvent.title}</span> <br />
+							<span>Client: {selectedEvent.extendedProps.clientName}</span><br />
+							<span>Session: {selectedEvent.extendedProps.session}</span><br />
+							<span>Date: {selectedEvent.start.toISOString().split("T")[0]}</span>
+						</div>
+					)}
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleCloseModal}>
+						Close
+					</Button>
+				</Modal.Footer>
+			</Modal>
 		</div>
 	);
 };

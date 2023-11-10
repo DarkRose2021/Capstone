@@ -173,8 +173,12 @@ app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 	res.json({ Message: "Image Deleted", User: user });
 });
 
-app.post("/checkout", async (req, res) => {
+app.post("/checkout/:email", async (req, res) => {
+	let email = req.params.email
 	let body = req.body;
+	if(body.saveInfo){
+		await dal.saveInfo(email, body)
+	}
 	res.json({ Message: "data submitted to the back", Body: body });
 });
 
@@ -478,7 +482,7 @@ app.post("/updateDate/:id", async (req, res) => {
 	let id = req.params.id;
 	let date = req.body.dateScheduled;
 	await dal.changeDateScheduled(id, date);
-	await dal.createEvent(date)
+	// await dal.createEvent(date)
 	let booking = await dal.findBooking(id);
 	res.json({ Booking: booking });
 });

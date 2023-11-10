@@ -90,7 +90,7 @@ const BookingInfo = () => {
 				dateScheduled: dateScheduled, // Use the date part
 			};
 
-			fetch(`https://mane-frame-backend.onrender.com/updateDate/${booking._id}`, {
+			fetch(`http://localhost:5000/updateDate/${booking._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -272,16 +272,22 @@ const BookingInfo = () => {
 												)}
 											</h3>
 											{btnPressed ? (
+												<>
 												<button
 													className="btn"
 													onClick={sendSelectedDateToBackend}
 												>
 													Update Info
 												</button>
+												<button className="btn" onClick={() => {setBtnPressed(false)}}>Cancel Updating</button>
+												</>
 											) : (
+												<>
 												<button className="btn" onClick={() => update()}>
 													Change Info
 												</button>
+												
+												</>
 											)}
 										</div>
 									</div>

@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, redirect, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
+import { getProductQty, calculatePrice, calculateTotal, calculateTotalItems } from './CartUtils';
 
 const Checkout = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
-	const [roles, setRoles] = useState(null);
-	const [sameAsBilling, setSameAsBilling] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const {
-		register,
-		formState: { errors },
-		handleSubmit,
-		watch,
-	} = useForm({
-		criteriaMode: "all",
-	});
-	const [showPopup, setShowPopup] = useState(false);
-	const [sendData, setSendData] = useState(null);
-	const [currentDate, setCurrentDate] = useState(new Date());
-	const [cart, setCart] = useState(null);
-	const [products, setProducts] = useState(null);
-	const [user, setUser] = useState(null);
-	const [tax, setTax] = useState(null);
-	let email = null;
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [roles, setRoles] = useState(null);
+    const [sameAsBilling, setSameAsBilling] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+        watch,
+    } = useForm({
+        criteriaMode: "all",
+    });
+    const [showPopup, setShowPopup] = useState(false);
+    const [sendData, setSendData] = useState(null);
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [cart, setCart] = useState(null);
+    const [products, setProducts] = useState(null);
+    const [user, setUser] = useState(null);
+    const [tax, setTax] = useState(null);
+    let email = null;
 
-	let navigate = useNavigate();
-	const routeChange = () => {
-		let path = `/confirm`;
-		navigate(path, {
-			state: { data: sendData, products: products, cart: cart, tax: tax },
-		});
-	};
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = `/confirm`;
+        navigate(path, {
+            state: { data: sendData, products: products, cart: cart, tax: tax },
+        });
+    };
 
 	useEffect(() => {
 		// Function to update the date every second
@@ -68,17 +69,18 @@ const Checkout = () => {
 
 	function getCart() {
 		let id = user._id;
-		let url = `https://mane-frame-backend.onrender.com/cart/${id}`;
+		let url = `http://localhost:5000/cart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
+				// console.log(data[0].Products)
 				setCart(data[0]);
 			})
 			.catch((err) => console.log(err));
 	}
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -99,7 +101,7 @@ const Checkout = () => {
 		}
 
 		if (ids.length > 0) {
-			let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
+			let getUrl = `http://localhost:5000/findProduct/${ids}`;
 			fetch(getUrl)
 				.then((data) => data.json())
 				.then((data) => {
@@ -133,10 +135,9 @@ const Checkout = () => {
 		setSameAsBilling(event.target.checked);
 	};
 
-	//rework the entire submit?
 	const onSubmit = (data) => {
 		data.date = formattedDate;
-		const endpoint = `https://mane-frame-backend.onrender.com/checkout`;
+		const endpoint = `http://localhost:5000/checkout/${user.Email}`;
 
 		// Use the fetch API to post the data to the backend
 		fetch(endpoint, {
@@ -219,60 +220,24 @@ const Checkout = () => {
 		}
 	}, [cart]);
 
-	function getProductQty(productId) {
-		if (cart) {
-			const productInCart = cart.Products.find(
-				(product) => product.ProductID === productId
-			);
-			return productInCart ? productInCart.Qty : 0;
-		}
-		return 0;
-	}
-
-	function prices(qty, price) {
-		return qty * price;
-	}
-
-	function total() {
-		let total = 0;
-		if (cart && products) {
-			products.forEach((product) => {
-				const quantity = getProductQty(product._id);
-				total += prices(quantity, product.Price);
-			});
-		}
-		return total;
-	}
-
-	const calculateTotalItems = () => {
-		let totalItems = 0;
-		if (cart && products) {
-			products.forEach((product) => {
-				totalItems += getProductQty(product._id);
-			});
-		}
-		return totalItems;
-	};
-
 	function deleteItem(userId, id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/deleteCart/${userId}/${id}`;
+		const getUrl = `http://localhost:5000/deleteCart/${userId}/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
 				setCart(data.User);
-				// setMsg(data.Message);
 			})
 			.catch((err) => console.log(err));
 	}
 
 	function updateQty(id, delta) {
-		let oldQty = getProductQty(id);
+		let oldQty = getProductQty(cart, id);
 		let newQty = oldQty + delta;
 
 		if (newQty == 0) {
 			deleteItem(user._id, id);
 		} else {
-			const url = `https://mane-frame-backend.onrender.com/changeQty/${user._id}/${id}/${newQty}`;
+			const url = `http://localhost:5000/changeQty/${user._id}/${id}/${newQty}`;
 			fetch(url)
 				.then((r) => r.json())
 				.then((data) => {
@@ -333,7 +298,7 @@ const Checkout = () => {
 												<h4 className="d-flex justify-content-between align-items-center mb-3">
 													<span className="">Your cart</span>
 													<span className="badge bg-primary rounded-pill">
-														{calculateTotalItems()}
+														{calculateTotalItems(cart, products)}
 													</span>
 												</h4>
 												<ul className="list-group mb-3 cart">
@@ -341,7 +306,7 @@ const Checkout = () => {
 														products?.map((product) => (
 															<>
 																<li
-																	key={product.Name}
+																	key={product._id}
 																	className="list-group-item d-flex justify-content-between lh-sm"
 																>
 																	<div>
@@ -369,7 +334,7 @@ const Checkout = () => {
 																					/>
 																				</svg>{" "}
 																			</span>
-																			{getProductQty(product._id)}{" "}
+																			{getProductQty(cart, product._id)}{" "}
 																			<span
 																				onClick={() =>
 																					updateQty(product._id, -1)
@@ -394,14 +359,14 @@ const Checkout = () => {
 
 																	<span className="prices">
 																		$
-																		{prices(
-																			getProductQty(product._id),
+																		{calculatePrice(
+																			getProductQty(cart, product._id),
 																			product.Price
 																		)}
 																	</span>
 																	<svg
 																		onClick={() =>
-																			deleteItem(cart.UserID, product._id)
+																			deleteItem(user._id, product._id)
 																		}
 																		xmlns="http://www.w3.org/2000/svg"
 																		fill="#C41010"
@@ -419,7 +384,7 @@ const Checkout = () => {
 													)}
 													<li className="list-group-item d-flex justify-content-between total">
 														<span>Total (USD)</span>
-														<strong>${total()}</strong>
+														<strong>${calculateTotal(cart, products)}</strong>
 													</li>
 												</ul>
 											</div>
@@ -1197,20 +1162,20 @@ const Checkout = () => {
 														</div>
 													</div>
 
-													{/* <hr className="my-4" />
+													<hr className="my-4" />
 
 													<div class="form-check">
 														<input
 															type="checkbox"
 															class="form-check-input"
-															name="save-info"
-															id="save-info"
-															{...register("save-info")}
+															name="saveInfo"
+															id="saveInfo"
+															{...register("saveInfo")}
 														/>
-														<label class="form-check-label" for="save-info">
+														<label class="form-check-label" for="saveInfo">
 															Save this information for next time
 														</label>
-													</div> */}
+													</div>
 
 													<hr className="my-4" />
 
