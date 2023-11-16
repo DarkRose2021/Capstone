@@ -13,6 +13,7 @@ const Admin = () => {
 	const [btnEventsPressed, setBtnEventsPressed] = useState(false);
 	const [btnUserPressed, setBtnUserPressed] = useState(false);
 	const [filteredUsers, setFilteredUsers] = useState([]);
+	const [filteredBookings, setFilteredBookings] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
@@ -28,10 +29,11 @@ const Admin = () => {
 	}, []);
 
 	function listUsers() {
+		setSearchQuery("")
 		setLoading(true);
-		setBtnUserPressed(true)
-		setBtnEventsPressed(false)
-		setBtnBookingPressed(false)
+		setBtnUserPressed(true);
+		setBtnEventsPressed(false);
+		setBtnBookingPressed(false);
 		setBookings([]);
 		setEvents([]);
 		fetch("https://mane-frame-backend.onrender.com/listUsers")
@@ -44,15 +46,15 @@ const Admin = () => {
 
 	function listEvents() {
 		setLoading(true);
-		setBtnUserPressed(false)
-		setBtnBookingPressed(false)
-		setBtnEventsPressed(true)
-		setBookings([]); 	
+		setBtnUserPressed(false);
+		setBtnBookingPressed(false);
+		setBtnEventsPressed(true);
+		setBookings([]);
 		setAllUsers([]);
 		fetch("https://mane-frame-backend.onrender.com/getSomeEvents")
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result.Events)
+				console.log(result.Events);
 				setEvents(result.Events);
 				setLoading(false); // Set loading to false when the data is received
 			});
@@ -66,6 +68,26 @@ const Admin = () => {
 		setFilteredUsers(filtered);
 	}, [allUsers, searchQuery]);
 
+	useEffect(() => {
+		let filtered;
+		if (searchQuery === "approved") {
+			filtered = bookings.filter((booking) => booking.Approved === true);
+		} else if (searchQuery === "notApproved") {
+			filtered = bookings.filter((booking) => booking.Approved === false);
+		} else if (searchQuery === "date") {
+			filtered = bookings.filter(
+				(booking) => booking.DateScheduled.trim().length !== 0
+			);
+		} else if (searchQuery === "noDate") {
+			filtered = bookings.filter(
+				(booking) => booking.DateScheduled.trim().length === 0
+			);
+		} else if (searchQuery === "clear") {
+			setSearchQuery("");
+		}
+		setFilteredBookings(filtered);
+	}, [bookings, searchQuery]);
+
 	function deleteUser(id) {
 		const getUrl = `https://mane-frame-backend.onrender.com/${id}`;
 		fetch(getUrl)
@@ -78,12 +100,13 @@ const Admin = () => {
 	}
 
 	function getBookings() {
+		setSearchQuery("")
 		setLoading(true);
 		setAllUsers([]);
 		setEvents([]);
-		setBtnUserPressed(false)
-		setBtnEventsPressed(false)
-		setBtnBookingPressed(true)
+		setBtnUserPressed(false);
+		setBtnEventsPressed(false);
+		setBtnBookingPressed(true);
 		const getUrl = `https://mane-frame-backend.onrender.com/bookings`;
 		fetch(getUrl)
 			.then((r) => r.json())
@@ -143,7 +166,7 @@ const Admin = () => {
 								)}
 
 								<div className="users">
-									{searchQuery === "" ? (
+									{searchQuery === "" && allUsers ? (
 										allUsers.map((user) => (
 											<div key={user._id} className="user">
 												<h3>Name: {user.Name}</h3>
@@ -178,7 +201,7 @@ const Admin = () => {
 												)}
 											</div>
 										))
-									) : filteredUsers.length > 0 ? (
+									) : bookings.length === 0 && filteredUsers.length > 0 ? (
 										filteredUsers.map((user) => (
 											<div key={user._id} className="user">
 												<h3>Name: {user.Name}</h3>
@@ -214,7 +237,8 @@ const Admin = () => {
 											</div>
 										))
 									) : (
-										<p>No matching users found.</p>
+										// <p className="error">No matching users found.</p>
+										<></>
 									)}
 								</div>
 
@@ -225,8 +249,18 @@ const Admin = () => {
 												<>
 													{events.map((event) => (
 														<div key={event._id} className="user">
-															<h3><b>Event Name:</b> {event.title}</h3>
-															<h3><b>Date:</b> {event.start}</h3>
+															<h3>
+																<b>Event Name:</b> {event.title}
+															</h3>
+															<h3>
+																<b>Client Name:</b> {event.clientName}
+															</h3>
+															<h3>
+																<b>Session Type:</b> {event.session}
+															</h3>
+															<h3>
+																<b>Date:</b> {event.start}
+															</h3>
 														</div>
 													))}
 												</>
@@ -241,33 +275,113 @@ const Admin = () => {
 									)}
 								</div>
 
+								{bookings.length > 0 ? (
+									<>
+										<div className="filterBookings">
+											<div>
+												<select
+													value={searchQuery}
+													defaultValue=""
+													onChange={(e) => setSearchQuery(e.target.value)}
+												>
+													<option value={""} hidden disabled>
+														Filter Bookings By:
+													</option>
+													<option value={"approved"}>Approved</option>
+													<option value={"notApproved"}>Not Approved</option>
+													<option value={"date"}>Date Scheduled</option>
+													<option value={"noDate"}>Date Not Scheduled</option>
+													<option value={"clear"}>Clear Filter</option>
+												</select>
+											</div>
+										</div>
+									</>
+								) : (
+									<></>
+								)}
+
 								<div className="users">
-									{bookings && btnBookingPressed ? (
+									{searchQuery === "" && bookings ? (
 										<>
-											{bookings.length > 0 ? (
+											{bookings && btnBookingPressed ? (
 												<>
-													{bookings.map((booking) => (
-														<div key={booking._id} className="user">
-															<h3><b>Sender's Name:</b> {booking.Name}</h3>
-															<h3><b>Sender's Email:</b> {booking.Email}</h3>
-															<h3>
-																<b>Approved:</b> {booking.Approved ? "Yes" : "No"}
-															</h3>
-															<h3>
-															<b>Contacted:</b> {booking.Contacted ? "Yes" : "No"}
-															</h3>
-															<h3><b>Date Requested:</b> {booking.DateBooked}</h3>
-															<h3><b>Date Scheduled:</b> {booking.DateScheduled ? booking.DateScheduled : "Not Scheduled"}</h3>
-															<Link to={`/BookingInfo/${booking._id}`}>
-																<button>View More Info</button>
-															</Link>
-														</div>
-													))}
+													{bookings.length > 0 ? (
+														<>
+															{bookings.map((booking) => (
+																<div key={booking._id} className="user">
+																	<h3>
+																		<b>Sender's Name:</b> {booking.Name}
+																	</h3>
+																	<h3>
+																		<b>Sender's Email:</b> {booking.Email}
+																	</h3>
+																	<h3>
+																		<b>Approved:</b>{" "}
+																		{booking.Approved ? "Yes" : "No"}
+																	</h3>
+																	<h3>
+																		<b>Contacted:</b>{" "}
+																		{booking.Contacted ? "Yes" : "No"}
+																	</h3>
+																	<h3>
+																		<b>Date Requested:</b> {booking.DateBooked}
+																	</h3>
+																	<h3>
+																		<b>Date Scheduled:</b>{" "}
+																		{booking.DateScheduled
+																			? booking.DateScheduled
+																			: "Not Scheduled"}
+																	</h3>
+																	<Link to={`/BookingInfo/${booking._id}`}>
+																		<button>View More Info</button>
+																	</Link>
+																</div>
+															))}
+														</>
+													) : (
+														<>
+															<h1>No Booking Requests</h1>
+														</>
+													)}
 												</>
 											) : (
-												<>
-													<h1>No Booking Requests</h1>
-												</>
+												<></>
+											)}
+										</>
+									) : filteredBookings ? (
+										<>
+											{filteredBookings.length > 0 ? (
+												filteredBookings.map((booking) => (
+													<div key={booking._id} className="user">
+														<h3>
+															<b>Sender's Name:</b> {booking.Name}
+														</h3>
+														<h3>
+															<b>Sender's Email:</b> {booking.Email}
+														</h3>
+														<h3>
+															<b>Approved:</b> {booking.Approved ? "Yes" : "No"}
+														</h3>
+														<h3>
+															<b>Contacted:</b>{" "}
+															{booking.Contacted ? "Yes" : "No"}
+														</h3>
+														<h3>
+															<b>Date Requested:</b> {booking.DateBooked}
+														</h3>
+														<h3>
+															<b>Date Scheduled:</b>{" "}
+															{booking.DateScheduled
+																? booking.DateScheduled
+																: "Not Scheduled"}
+														</h3>
+														<Link to={`/BookingInfo/${booking._id}`}>
+															<button>View More Info</button>
+														</Link>
+													</div>
+												))
+											) : (
+												<p className="error">No matching bookings found.</p>
 											)}
 										</>
 									) : (

@@ -657,6 +657,19 @@ footer {
 			}
 		}
 	}
+
+	.filterBookings{
+		@include flex-center;
+		div{
+			select{
+				background-color: $blue;
+				@include borderRadius;
+				border: none;
+				padding: 2%;
+				cursor: pointer;
+			}
+		}
+	}
 }
 
 .editImgsCont {
