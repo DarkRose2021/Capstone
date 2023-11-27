@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
-import { getProductQty, calculatePrice, calculateTotal, calculateTotalItems } from './CartUtils';
+import {
+	getProductQty,
+	calculatePrice,
+	calculateTotal,
+	calculateTotalItems,
+} from "./CartUtils";
 
 const Checkout = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [roles, setRoles] = useState(null);
-    const [sameAsBilling, setSameAsBilling] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-        watch,
-    } = useForm({
-        criteriaMode: "all",
-    });
-    const [showPopup, setShowPopup] = useState(false);
-    const [sendData, setSendData] = useState(null);
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [cart, setCart] = useState(null);
-    const [products, setProducts] = useState(null);
-    const [user, setUser] = useState(null);
-    const [tax, setTax] = useState(null);
-    let email = null;
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [roles, setRoles] = useState(null);
+	const [sameAsBilling, setSameAsBilling] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+		setValue,
+	} = useForm({
+		criteriaMode: "all",
+	});
+	const [showPopup, setShowPopup] = useState(false);
+	const [sendData, setSendData] = useState(null);
+	const [currentDate, setCurrentDate] = useState(new Date());
+	const [cart, setCart] = useState(null);
+	const [products, setProducts] = useState(null);
+	const [user, setUser] = useState(null);
+	const [tax, setTax] = useState(null);
+	let email = null;
+	const location = useLocation();
+	const { data } = location.state || {};
 
-    let navigate = useNavigate();
-    const routeChange = () => {
-        let path = `/confirm`;
-        navigate(path, {
-            state: { data: sendData, products: products, cart: cart, tax: tax },
-        });
-    };
+	let navigate = useNavigate();
+	const routeChange = () => {
+		let path = `/ReviewOrder`;
+		navigate(path, {
+			state: { data: sendData, products: products, cart: cart, tax: tax },
+		});
+	};
 
 	useEffect(() => {
 		// Function to update the date every second
@@ -56,6 +63,35 @@ const Checkout = () => {
 		routeChange();
 	};
 
+	useEffect(() => {
+		if (data) {
+			// Prepopulate the form with data from the location
+			setValue("firstName", data.firstName);
+			setValue("lastName", data.lastName);
+			setValue("email", data.email);
+			setValue("address", data.address);
+			setValue("address2", data.address2 || "");
+			setValue("country", data.country);
+			setValue("state", data.state);
+			setValue("zip", data.zip);
+
+			// You can do the same for the shipping address fields if needed
+			setValue("shipFirstName", data.shipFirstName || setSameAsBilling(true));
+			setValue("shipLastName", data.shipLastName);
+			setValue("shipAddress", data.shipAddress);
+			setValue("shipAddress2", data.shipAddress2 || "");
+			setValue("shipCountry", data.shipCountry);
+			setValue("shipState", data.shipState);
+			setValue("shipZip", data.shipZip);
+
+			setValue("ccName", data.ccName);
+			setValue("ccNumber", data.ccNumber);
+			setValue("ccExpiration", data.ccExpiration);
+			setValue("ccCVV", data.ccCVV);
+			setValue("saveInfo", data.saveInfo);
+		}
+	}, [data, setValue]);
+
 	const cardNumberPattern = /^[0-9]{4}[0-9]{4}[0-9]{4}$/;
 	const ccvPattern = /^\d{3,4}$/;
 	const zipPattern = /^\d{5}$/;
@@ -69,7 +105,7 @@ const Checkout = () => {
 
 	function getCart() {
 		let id = user._id;
-		let url = `http://localhost:5000/cart/${id}`;
+		let url = `https://mane-frame-backend.onrender.com/cart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
@@ -80,7 +116,7 @@ const Checkout = () => {
 	}
 
 	function loadAPI() {
-		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -101,7 +137,7 @@ const Checkout = () => {
 		}
 
 		if (ids.length > 0) {
-			let getUrl = `http://localhost:5000/findProduct/${ids}`;
+			let getUrl = `https://mane-frame-backend.onrender.com/findProduct/${ids}`;
 			fetch(getUrl)
 				.then((data) => data.json())
 				.then((data) => {
@@ -137,7 +173,7 @@ const Checkout = () => {
 
 	const onSubmit = (data) => {
 		data.date = formattedDate;
-		const endpoint = `http://localhost:5000/checkout/${user.Email}`;
+		const endpoint = `https://mane-frame-backend.onrender.com/checkout/${user.Email}`;
 
 		// Use the fetch API to post the data to the backend
 		fetch(endpoint, {
@@ -221,7 +257,7 @@ const Checkout = () => {
 	}, [cart]);
 
 	function deleteItem(userId, id) {
-		const getUrl = `http://localhost:5000/deleteCart/${userId}/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteCart/${userId}/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -237,7 +273,7 @@ const Checkout = () => {
 		if (newQty == 0) {
 			deleteItem(user._id, id);
 		} else {
-			const url = `http://localhost:5000/changeQty/${user._id}/${id}/${newQty}`;
+			const url = `https://mane-frame-backend.onrender.com/changeQty/${user._id}/${id}/${newQty}`;
 			fetch(url)
 				.then((r) => r.json())
 				.then((data) => {
@@ -294,7 +330,7 @@ const Checkout = () => {
 										</div>
 
 										<div className="row g-5 checkoutform">
-											<div className="col-md-5 col-lg-4 order-md-last ">
+											<div className="col-md-5 col-lg-4 order-md-last productDiv">
 												<h4 className="d-flex justify-content-between align-items-center mb-3">
 													<span className="">Your cart</span>
 													<span className="badge bg-primary rounded-pill">
@@ -1172,7 +1208,7 @@ const Checkout = () => {
 															id="saveInfo"
 															{...register("saveInfo")}
 														/>
-														<label class="form-check-label" for="saveInfo">
+														<label class="form-check-label" htmlFor="saveInfo">
 															Save this information for next time
 														</label>
 													</div>
@@ -1204,7 +1240,6 @@ const Checkout = () => {
 					{/* <Navigate to={"/login"} /> */}
 				</>
 			)}
-
 			<br />
 			<br />
 			<br />

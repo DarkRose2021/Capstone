@@ -284,7 +284,6 @@ footer {
 	background-color: #9e7b9b !important;
 	opacity: 75% !important;
 	white-space: normal !important;
-	
 }
 
 .fc-event-title {
@@ -491,11 +490,16 @@ footer {
 		.text-muted {
 			color: #8e8e8e !important;
 		}
+		.productDiv{
+			max-height: 78% !important;
+		}
 		.cart {
 			background-color: $darkbrown;
 			@include border-brown;
 			@include borderRadiusContainers;
 			@include button;
+			max-height: 78%;
+			overflow: scroll;
 		}
 		.list-group-item {
 			background-color: $darkbrown;
@@ -551,6 +555,27 @@ footer {
 		-o-transition: all 1s ease;
 		-ms-transition: all 1s ease;
 		transition: all 1s ease;
+	}
+}
+
+.review {
+	h3 {
+		color: $yellow;
+	}
+	.reviewCart {
+		@extend .cart;
+		background-color: $lightBrown;
+		border: 0px;
+		border-radius: 0px;
+		.list-group-item {
+			background-color: $lightBrown;
+			border-color: 0px;
+			border-bottom-color: black;
+		}
+	}
+	.lastProductHr {
+		color: #000;
+		opacity: 100%;
 	}
 }
 
@@ -658,10 +683,10 @@ footer {
 		}
 	}
 
-	.filterBookings{
+	.filterBookings {
 		@include flex-center;
-		div{
-			select{
+		div {
+			select {
 				background-color: $blue;
 				@include borderRadius;
 				border: none;
@@ -805,6 +830,10 @@ footer {
 
 .order-con {
 	@include flex-center;
+	hr {
+		color: #000;
+		opacity: 100%;
+	}
 	.order {
 		background-color: $lightBrown;
 		@include border;
@@ -836,6 +865,31 @@ footer {
 	.total {
 		text-align: right;
 		color: $yellow;
+	}
+
+	.centerInfo {
+		@include button;
+		&.with-shipping{
+			@include flex-between();			
+		}
+		&.without-shipping{
+			@include flex-center();
+			flex-direction: row;
+			div{
+				width: 50%;
+				div{
+					width: 100%;
+				}
+			}
+		}
+		div {
+			text-align: center;
+		}
+	}
+
+	.centerBtn{
+		@extend.centerInfo;
+		@include flex-between();
 	}
 }
 

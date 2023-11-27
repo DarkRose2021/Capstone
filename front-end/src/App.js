@@ -24,6 +24,7 @@ import EditImages from "./pages/EditImages";
 import ShowClientPics from "./pages/ShowClientPics";
 import BookingForm from "./pages/BookingForm";
 import BookingInfo from "./pages/BookingInfo";
+import ReviewOrder from "./pages/ReviewOrder";
 
 function App() {
 	inject();
@@ -399,6 +400,7 @@ function App() {
 							<Route path="/ShowImages/:id" element={<ShowClientPics />} />
 							<Route path="/BookingForm" element={<BookingForm />} />
 							<Route path="/BookingInfo/:id" element={<BookingInfo />} />
+							<Route path="/ReviewOrder" element={<ReviewOrder />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</div>

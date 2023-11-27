@@ -455,7 +455,7 @@ app.get("/tax/:state", (req, res) => {
 		default:
 			return "Invalid state name";
 	}
-	tax = tax / 100;
+	tax = Number((tax / 100)).toPrecision(2);
 	return res.json(tax);
 });
 
