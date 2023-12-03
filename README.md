@@ -1,10 +1,14 @@
 # Mane Frame Photography
 
+### This project was developed with the intent of my college Capstone, a 10 week challenge, and was meant to demonstrate my abilities by developing a project by myself
+
 This website is a simple demo of an e-commerce website. There's three different views, all users, clients, and admins.
 
 I made this with Reactjs, Nodejs/Expressjs backend, and a Mongodb database. I pulled in a lot of node packages for various things
 
-I'm hoping to move this from using local storage to something better, either cookies or sessions
+# Future Roadmap
+    [] Move away from local storage to either sessions or cookies
+    [] Go through all files and code and restructure to be cleaner and more organized
 
 # How to run the project
 If you want to run this on your computer then:
