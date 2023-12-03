@@ -27,4 +27,4 @@ Otherwise you can go to: https://www.maneframephotography.com/
 This was a solo project to show off what I had learned while at college.
 
 # License
-Anyone can report that there is a bug, or any suggestions, but I'd prefer people not 
+Anyone can report that there is a bug, or any suggestions
