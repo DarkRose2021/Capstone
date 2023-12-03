@@ -2,7 +2,7 @@ import logo from "./logo.png";
 import "./App.scss";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { inject } from '@vercel/analytics';
+import { inject } from "@vercel/analytics";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -199,22 +199,6 @@ function App() {
 																		roles.includes("Admin")) ? (
 																		<li>
 																			<Link
-																				to="/checkout"
-																				className="dropdown-item"
-																			>
-																				Checkout
-																			</Link>
-																		</li>
-																	) : (
-																		<></>
-																	)}
-																</li>
-																<li>
-																	{loggedIn === true &&
-																	(roles.includes("Client") ||
-																		roles.includes("Admin")) ? (
-																		<li>
-																			<Link
 																				to="/cart"
 																				className="dropdown-item"
 																			>
@@ -225,6 +209,7 @@ function App() {
 																		<></>
 																	)}
 																</li>
+
 																{loggedIn === true &&
 																roles.includes("Client") ? (
 																	<li>
@@ -292,21 +277,19 @@ function App() {
 														(roles.includes("Client") ||
 															roles.includes("Admin")) ? (
 															<li className="nav-item">
-																<Link to="/checkout" className="nav-link">
-																	Checkout
+																<Link to="/cart" className="nav-link">
+																	Cart
 																</Link>
 															</li>
 														) : (
 															<></>
 														)}
-
-														
 														{loggedIn === true &&
 														(roles.includes("Client") ||
 															roles.includes("Admin")) ? (
 															<li className="nav-item">
-																<Link to="/cart" className="nav-link">
-																	Cart
+																<Link to="/checkout" className="nav-link">
+																	Checkout
 																</Link>
 															</li>
 														) : (
@@ -335,7 +318,7 @@ function App() {
 									{/* only show when a user is logged in */}
 									{loggedIn === true ? (
 										<>
-											{isMobile ? ( 
+											{isMobile ? (
 												<>
 													<li className="welcome dropdown">
 														<a
@@ -408,18 +391,22 @@ function App() {
 			</div>
 			<footer className="footer">
 				<div className="container">
-					
-					<span className="center">All text generated with ChatGPT - All images from{" "}
-					<a
-						href="https://www.pexels.com/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Pexels
-					</a></span><span className="left"><b className="right">
-						THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
-						INFORMATION ON THIS WEBSITE
-					</b></span>
+					<span className="center">
+						All text generated with ChatGPT - All images from{" "}
+						<a
+							href="https://www.pexels.com/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Pexels
+						</a>
+					</span>
+					<span className="left">
+						<b className="right">
+							THIS WEBSITE IS NOT FOR A REAL BUSINESS. DO NOT PUT ANY PERSONAL
+							INFORMATION ON THIS WEBSITE
+						</b>
+					</span>
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 				</div>
 			</footer>

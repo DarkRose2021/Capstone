@@ -87,10 +87,39 @@ const Checkout = () => {
 			setValue("ccName", data.ccName);
 			setValue("ccNumber", data.ccNumber);
 			setValue("ccExpiration", data.ccExpiration);
-			setValue("ccCVV", data.ccCVV);
+			setValue("ccv", data.ccv);
 			setValue("saveInfo", data.saveInfo);
 		}
 	}, [data, setValue]);
+
+	useEffect(() => {
+		if (user && user.CheckoutInfo && data == null) {
+			// Prepopulate the form with data from the location
+			setValue("firstName", user.CheckoutInfo.firstName);
+			setValue("lastName", user.CheckoutInfo.lastName);
+			setValue("email", user.CheckoutInfo.email);
+			setValue("address", user.CheckoutInfo.address);
+			setValue("address2", user.CheckoutInfo.address2 || "");
+			setValue("country", user.CheckoutInfo.country);
+			setValue("state", user.CheckoutInfo.state);
+			setValue("zip", user.CheckoutInfo.zip);
+
+			// You can do the same for the shipping address fields if needed
+			setValue("shipFirstName", user.CheckoutInfo.shipFirstName || setSameAsBilling(true));
+			setValue("shipLastName", user.CheckoutInfo.shipLastName);
+			setValue("shipAddress", user.CheckoutInfo.shipAddress);
+			setValue("shipAddress2", user.CheckoutInfo.shipAddress2 || "");
+			setValue("shipCountry", user.CheckoutInfo.shipCountry);
+			setValue("shipState", user.CheckoutInfo.shipState);
+			setValue("shipZip", user.CheckoutInfo.shipZip);
+
+			setValue("ccName", user.CheckoutInfo.ccName);
+			setValue("ccNumber", user.CheckoutInfo.ccNumber);
+			setValue("ccExpiration", user.CheckoutInfo.ccExpiration);
+			setValue("ccv", user.CheckoutInfo.ccv);
+			setValue("saveInfo", user.CheckoutInfo.saveInfo);
+		}
+	}, [user, setValue]);
 
 	const cardNumberPattern = /^[0-9]{4}[0-9]{4}[0-9]{4}$/;
 	const ccvPattern = /^\d{3,4}$/;
@@ -248,6 +277,7 @@ const Checkout = () => {
 		if (user) {
 			getCart();
 		}
+		console.log(user)
 	}, [user]);
 
 	useEffect(() => {
