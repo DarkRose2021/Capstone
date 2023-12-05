@@ -455,8 +455,8 @@ app.get("/tax/:state", (req, res) => {
 		default:
 			return "Invalid state name";
 	}
-	tax = Number((tax / 100)).toPrecision(2);
-	return res.json(tax);
+	tax = Number((tax / 100)).toFixed(2);
+	return res.json(tax.toFixed(2));
 });
 
 app.get("/bookings", async (req, res) => {

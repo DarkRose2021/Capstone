@@ -1,0 +1,62 @@
+.contact {
+	.flex {
+		margin-top: 3%;
+		display: flex;
+		flex-direction: row;
+		margin-left: 15%;
+		margin-right: auto;
+		.form {
+			@include border();
+			@include borderRadiusContainers;
+			margin-left: 10%;
+			width: 25%;
+			background-color: $lightBrown;
+			padding: 2%;
+			@include button;
+			div {
+				h3 {
+					text-align: center;
+					color: $yellow;
+				}
+				form {
+					margin: 1%;
+				}
+				input,
+				textarea {
+					margin: 2%;
+					width: 100%;
+					@include borderRadius();
+				}
+				.btn {
+					width: 100%;
+					background-color: $blue;
+					border: none;
+					padding: 1% 2%;
+					margin: 2%;
+					@include borderRadius();
+					font-size: 1.2em;
+				}
+				.btn:hover {
+					background-color: $blue-hover;
+					color: black;
+				}
+				.btn:active {
+					background-color: $blue-active;
+					color: black;
+				}
+				h4 {
+					margin-top: 2%;
+					text-align: center;
+					a {
+						font-weight: bold;
+					}
+				}
+			}
+			.calenderDiv {
+				background-color: $lightBrown !important;
+			}
+		}
+	}
+}
+
+@import './fcCalendar.scss';

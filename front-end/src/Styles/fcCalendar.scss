@@ -1,0 +1,78 @@
+.fc {
+	@include borderRadiusContainers;
+	@include border;
+	background-color: $lightBrown !important;
+	padding: 2%;
+	width: 40vw;
+	height: 70.8vh;
+	a {
+		color: $color;
+		text-decoration: none !important;
+	}
+	th {
+		background-color: $darkbrown;
+		a {
+			color: $blue;
+		}
+	}
+}
+
+.fc-bg-event {
+	background-color: #9e7b9b !important;
+	opacity: 75% !important;
+	white-space: normal !important;
+}
+
+.fc-event-title {
+	bottom: 100%;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+	border: 1px solid black !important;
+}
+
+.fc-daygrid-event {
+	white-space: normal !important;
+	cursor: pointer;
+	&:hover {
+		background-color: $blue-hover !important;
+	}
+}
+
+.fc-theme-standard .fc-scrollgrid {
+	border: 1px solid black !important;
+}
+
+.fc-day-today {
+	background-color: $yellow !important;
+	opacity: 0.6;
+	border: 1px solid black;
+	a {
+		color: $black;
+	}
+}
+
+.fc .fc-button-primary:hover {
+	background-color: $blue-hover;
+	border-color: none;
+	color: black;
+}
+
+.fc .fc-button-primary:active {
+	background-color: $blue-active !important;
+	border-color: none !important;
+	color: black !important;
+}
+
+.fc .fc-button-primary {
+	background-color: $blue;
+	border-color: none;
+	color: black;
+}
+
+.fc .fc-button-primary:disabled {
+	background-color: $blue;
+	border-color: none;
+	color: black;
+}

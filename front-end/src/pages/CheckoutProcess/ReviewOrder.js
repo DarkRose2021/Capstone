@@ -31,7 +31,7 @@ const ReviewOrder = () => {
 	}, []);
 
 	useEffect(() => {
-		const maxDisplayedLength = 15; // Set your desired maximum length here
+		const maxDisplayedLength = 15;
 		const uuid = uuidv4().substring(0, maxDisplayedLength);
 		setOrderID(uuid);
 	}, []);

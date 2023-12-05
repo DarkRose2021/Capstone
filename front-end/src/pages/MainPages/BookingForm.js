@@ -7,7 +7,6 @@ const BookingForm = () => {
 		register,
 		formState: { errors, isSubmitting },
 		handleSubmit,
-		watch,
 		reset,
 	} = useForm({
 		criteriaMode: "all",
