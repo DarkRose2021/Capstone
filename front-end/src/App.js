@@ -1,9 +1,9 @@
 import "./App.scss";
 import { inject } from "@vercel/analytics";
 
-import Footer from "./pages/Footer";
-import Navbar from "./pages/Navbar";
-import Popup from "./pages/Popup";
+import Footer from "./pages/OnAllPages/Footer";
+import Navbar from "./pages/OnAllPages/Navbar";
+import Popup from "./pages/OnAllPages/Popup";
 
 function App() {
 	inject();

@@ -89,7 +89,7 @@ const Admin = () => {
 	}, [bookings, searchQuery]);
 
 	function deleteUser(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/${id}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteUser/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
