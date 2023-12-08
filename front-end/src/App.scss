@@ -99,10 +99,14 @@ h2 {
 	margin: 3%;
 
 	img {
-		// height: 20%;
+		width: 100%;
 		@include border();
 		@include borderRadiusContainers;
 	}
+	.carousel-control-next:hover,
+			.carousel-control-prev:hover {
+				background-color: rgba($color: $borderbrown, $alpha: 0.7);
+			}
 }
 
 .layout {
@@ -202,7 +206,7 @@ footer {
 		margin-top: 3%;
 		background-color: $lightBrown;
 		color: $color;
-		max-height: 100%;
+		height: 100%;
 		@include border();
 		@include borderRadiusContainers;
 		h5 {

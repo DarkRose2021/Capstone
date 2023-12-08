@@ -1,57 +1,35 @@
 import React, { useEffect } from "react";
-import logo from "../../logo.png";
+import Carousel from "react-bootstrap/Carousel";
+import Image from "react-bootstrap/Image";
 
 const Home = () => {
-
 	return (
 		<div>
 			<h1>Mane Frame Photography</h1>
+
 			<div className="container">
-				<div
-					id="carouselExampleInterval"
-					className="carousel slide w-70"
-					data-bs-ride="carousel"
-				>
-					<div className="carousel-inner">
-						<div className="carousel-item active" data-bs-interval="2000">
-							<img src="/assets/home/home1.jpg" className="d-block w-100" alt="a group of horses in a field" />
-						</div>
-						<div className="carousel-item" data-bs-interval="3000">
-							<img src="/assets/home/home2.jpg" className="d-block w-100" alt="a group of people riding horses on a beach" />
-						</div>
-						<div className="carousel-item" data-bs-interval="4000">
-							<img src="/assets/home/home3.jpg" className="d-block w-100" alt="a group of horses grazing in a field" />
-						</div>
-						<div className="carousel-item" data-bs-interval="5000">
-							<img src="/assets/home/home4.jpg" className="d-block w-100" alt="a horse standing on a grassy hill" />
-						</div>
-						<div className="carousel-item" data-bs-interval="6000">
-							<img src="/assets/home/home5.jpg" className="d-block w-100" alt="a horse in a corral" />
-						</div>
-						<div className="carousel-item" data-bs-interval="7000">
-							<img src="/assets/home/home6.jpg" className="d-block w-100" alt="two horses standing in the snow" />
-						</div>
-					</div>
-					<button
-						className="carousel-control-prev"
-						type="button"
-						data-bs-target="#carouselExampleInterval"
-						data-bs-slide="prev"
-					>
-						<span className="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span className="visually-hidden">Previous</span>
-					</button>
-					<button
-						className="carousel-control-next"
-						type="button"
-						data-bs-target="#carouselExampleInterval"
-						data-bs-slide="next"
-					>
-						<span className="carousel-control-next-icon" aria-hidden="true"></span>
-						<span className="visually-hidden">Next</span>
-					</button>
-				</div>
+				<Carousel>
+					<Carousel.Item interval={2000}>
+						<Image bsPrefix="d-block w-100" src="/assets/home/home1.jpg" text="First slide" />
+					</Carousel.Item>
+					<Carousel.Item interval={3000}>
+						<Image src="/assets/home/home2.jpg" text="First slide" />
+					</Carousel.Item>
+					<Carousel.Item interval={4000}>
+						<Image src="/assets/home/home3.jpg" text="First slide" />
+					</Carousel.Item>
+					<Carousel.Item interval={5000}>
+						<Image src="/assets/home/home4.jpg" text="First slide" />
+					</Carousel.Item>
+					<Carousel.Item interval={6000}>
+						<Image src="/assets/home/home5.jpg" text="First slide" />
+					</Carousel.Item>
+					<Carousel.Item interval={7000}>
+						<Image src="/assets/home/home6.jpg" text="First slide" />
+					</Carousel.Item>
+				</Carousel>
 			</div>
+
 			<div className="intro-txt">
 				<div>
 					<p>
