@@ -3,6 +3,7 @@ import "./App.scss";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { inject } from "@vercel/analytics";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -410,6 +411,7 @@ function App() {
 					&copy; Mane Frame Photography - <a href="#top">Back to Top</a>
 				</div>
 			</footer>
+			<SpeedInsights />
 		</div>
 	);
 }
