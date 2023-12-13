@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+
 import {
 	getProductQty,
 	calculatePrice,
 	calculateTotal,
 	totalSalesTax,
+	getLastFourDigits
 } from "./CartUtils";
 
 const ReviewOrder = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
-	const [orderID, setOrderID] = useState(null);
 	const [tax, setTax] = useState(null);
 	let email = null;
 	const location = useLocation();
@@ -31,20 +31,6 @@ const ReviewOrder = () => {
 	}, []);
 
 	useEffect(() => {
-		const maxDisplayedLength = 15;
-		const uuid = uuidv4().substring(0, maxDisplayedLength);
-		setOrderID(uuid);
-	}, []);
-
-	const getLastFourDigits = (cardNumber) => {
-		// Check if cardNumber is valid and has at least 4 characters
-		if (cardNumber && cardNumber.length >= 4) {
-			return cardNumber.slice(-4); // Get the last 4 characters
-		}
-		return "****"; // Return default if card number is invalid
-	};
-
-	useEffect(() => {
 		const url = `https://mane-frame-backend.onrender.com/tax/${data.state}`;
 		fetch(url)
 			.then((r) => r.json())
@@ -52,6 +38,7 @@ const ReviewOrder = () => {
 				setTax(data);
 			})
 			.catch((err) => console.log(err));
+		console.log(data)
 	}, [data]);
 
 	let navigate = useNavigate();
@@ -65,7 +52,7 @@ const ReviewOrder = () => {
 	const continueRoute = () => {
         let path = `/confirm`;
         navigate(path, {
-            state: { data: data, products: products, cart: cart, tax: tax, id:orderID },
+            state: { data: data, products: products, cart: cart, tax: tax },
         });
     };
 
@@ -159,8 +146,9 @@ const ReviewOrder = () => {
 										<h3>Payment Info</h3>
 										<div>
 											{data.ccName}<br />
-											**** **** {getLastFourDigits(data.ccNumber)}<br />
+											**** **** {data.last4Digits}<br />
 											{data.ccExpiration}<br />
+											
 										</div>
 									</div>
 								</div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
@@ -89,8 +89,8 @@ const BookingInfo = () => {
 			const postData = {
 				dateScheduled: dateScheduled, // Use the date part
 			};
-
-			fetch(`https://mane-frame-backend.onrender.com/updateDate/${booking._id}`, {
+// https://mane-frame-backend.onrender.com
+			fetch(`http://localhost:5000/updateDate/${booking._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

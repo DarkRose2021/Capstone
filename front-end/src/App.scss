@@ -360,6 +360,9 @@ footer {
 		.total {
 			color: $yellow;
 		}
+		.hidden{
+			display: none;
+		}
 	}
 	.checkoutBtn {
 		@include button;

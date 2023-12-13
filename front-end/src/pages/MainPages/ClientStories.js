@@ -96,7 +96,6 @@ const ClientStories = () => {
 	return (
 		<div className="servicesPage">
 			<h1>Client Stories</h1>
-			{/* eventually put in to something that I can loop over */}
 			<div className="album py-5 highlight-color">
 				<div className="s-container">
 					<div

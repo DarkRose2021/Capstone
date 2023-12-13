@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ImageUploading from "react-images-uploading";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 

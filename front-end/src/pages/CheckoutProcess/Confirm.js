@@ -5,6 +5,8 @@ import {
 	calculatePrice,
 	calculateTotal,
 	totalSalesTax,
+	generateId,
+	grabDate
 } from "./CartUtils";
 
 const Confirm = (props) => {
@@ -70,15 +72,15 @@ const Confirm = (props) => {
 									<div className="orderInfo">
 										<div>
 											<h4>Order date</h4>
-											<p>{data.date}</p>
+											<p>{grabDate()}</p>
 										</div>
 										<div>
 											<h4>Order ID</h4>
-											<p>{orderID}</p>
+											<p>{generateId()}</p>
 										</div>
 										<div>
 											<h4>Payment</h4>
-											<p>**** **** **** {getLastFourDigits(data.ccNumber)}</p>
+											<p>**** **** {data.last4Digits}</p>
 										</div>
 										<div>
 											<h4>Address</h4>

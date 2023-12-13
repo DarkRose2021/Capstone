@@ -4,7 +4,7 @@
 	background-color: $lightBrown !important;
 	padding: 2%;
 	width: 40vw;
-	height: 70.8vh;
+	height: 74vh;
 	a {
 		color: $color;
 		text-decoration: none !important;
@@ -72,7 +72,8 @@
 }
 
 .fc .fc-button-primary:disabled {
-	background-color: $blue;
+	background-color: #316566;
 	border-color: none;
 	color: black;
+	cursor: not-allowed;
 }

@@ -3,6 +3,7 @@ var mongodb = require("mongodb");
 var ObjectID = require("mongodb").ObjectID;
 require("dotenv").config();
 var bcrypt = require("bcryptjs");
+const cardEncrypt = require("./cardEncryption");
 
 const connectionString = process.env.CONNECTION_STRING;
 const userCollection = "Users";
@@ -320,14 +321,14 @@ exports.dal = {
 				borderColor: "#40797A",
 			};
 			let newEvent = await eventsModel.collection.insertOne(event);
-			let newId = newEvent.insertedId.toString()
+			let newId = newEvent.insertedId.toString();
 			await bookingsModel.collection.updateOne(
 				{ _id: new mongodb.ObjectId(id) },
 				{
 					$set: {
 						EventID: newId,
-						DateScheduled: date
-					}
+						DateScheduled: date,
+					},
 				}
 			);
 		}
@@ -337,12 +338,13 @@ exports.dal = {
 			_id: new mongodb.ObjectId(id),
 		});
 	},
-	createEvent: async (date) => {
+	createEvent: async (date, id, name, session) => {
 		let event = {
 			title: "Photo shoot",
 			start: date,
 			backgroundColor: "#40797A",
 			borderColor: "#40797A",
+			bookingID: id
 		};
 		let newEvent = await eventsModel.collection.insertOne(event);
 		return newEvent;
@@ -375,10 +377,32 @@ exports.dal = {
 		return await eventsModel.find({ title: "Photo shoot" }).exec();
 	},
 	saveInfo: async (email, info) => {
-		console.log(email)
+		const user = await userModel.collection.findOne({ Email: email });
+	
+		if (user && user.CheckoutInfo && user.CheckoutInfo.ccNumber) {
+			// Card is already encrypted, no need to re-encrypt
+			console.log("Card is already encrypted");
+			return;
+		}
+	
+		const encryptedCardNumber = cardEncrypt.encryptCardNumber(info.ccNumber);
+	
+		// Exclude CVV from info
+		const { ccv, date, ...infoWithoutCVVAndDate } = info;
+		const last4Digits = info.ccNumber.slice(-4);
+	
+		// Save infoWithoutCVVAndDate to the database
 		await userModel.collection.updateOne(
 			{ Email: email },
-			{$set: {CheckoutInfo: info}}
-		)
-	}
+			{
+				$set: {
+					CheckoutInfo: {
+						...infoWithoutCVVAndDate,
+						ccNumber: encryptedCardNumber,
+						last4Digits: last4Digits,
+					},
+				},
+			}
+		);
+	},
 };

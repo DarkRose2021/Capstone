@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
 import {
@@ -24,11 +24,11 @@ const Checkout = () => {
 	});
 	const [showPopup, setShowPopup] = useState(false);
 	const [sendData, setSendData] = useState(null);
-	const [currentDate, setCurrentDate] = useState(new Date());
 	const [cart, setCart] = useState(null);
 	const [products, setProducts] = useState(null);
 	const [user, setUser] = useState(null);
 	const [tax, setTax] = useState(null);
+	const [isAddingNewCard, setIsAddingNewCard] = useState(true);
 	let email = null;
 	const location = useLocation();
 	const { data } = location.state || {};
@@ -40,22 +40,6 @@ const Checkout = () => {
 			state: { data: sendData, products: products, cart: cart, tax: tax },
 		});
 	};
-
-	useEffect(() => {
-		// Function to update the date every second
-		const interval = setInterval(() => {
-			setCurrentDate(new Date());
-		}, 3600000);
-
-		// Clean up the interval when the component unmounts
-		return () => clearInterval(interval);
-	}, []);
-
-	const formattedDate = currentDate.toLocaleDateString(undefined, {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
 
 	const handleClosePopup = () => {
 		setShowPopup(false);
@@ -87,8 +71,9 @@ const Checkout = () => {
 			setValue("ccName", data.ccName);
 			setValue("ccNumber", data.ccNumber);
 			setValue("ccExpiration", data.ccExpiration);
-			setValue("ccv", data.ccv);
 			setValue("saveInfo", data.saveInfo);
+			setIsAddingNewCard(false)
+			setShowPopup(false)
 		}
 	}, [data, setValue]);
 
@@ -105,7 +90,10 @@ const Checkout = () => {
 			setValue("zip", user.CheckoutInfo.zip);
 
 			// You can do the same for the shipping address fields if needed
-			setValue("shipFirstName", user.CheckoutInfo.shipFirstName || setSameAsBilling(true));
+			setValue(
+				"shipFirstName",
+				user.CheckoutInfo.shipFirstName || setSameAsBilling(true)
+			);
 			setValue("shipLastName", user.CheckoutInfo.shipLastName);
 			setValue("shipAddress", user.CheckoutInfo.shipAddress);
 			setValue("shipAddress2", user.CheckoutInfo.shipAddress2 || "");
@@ -116,8 +104,9 @@ const Checkout = () => {
 			setValue("ccName", user.CheckoutInfo.ccName);
 			setValue("ccNumber", user.CheckoutInfo.ccNumber);
 			setValue("ccExpiration", user.CheckoutInfo.ccExpiration);
-			setValue("ccv", user.CheckoutInfo.ccv);
 			setValue("saveInfo", user.CheckoutInfo.saveInfo);
+			setIsAddingNewCard(false)
+			setShowPopup(false)
 		}
 	}, [user, setValue]);
 
@@ -201,8 +190,10 @@ const Checkout = () => {
 	};
 
 	const onSubmit = (data) => {
-		data.date = formattedDate;
-		const endpoint = `https://mane-frame-backend.onrender.com/checkout/${user.Email}`;
+		if(user && user.CheckoutInfo) data.last4Digits = user.CheckoutInfo.last4Digits;
+		
+		// https://mane-frame-backend.onrender.com
+		const endpoint = `http://localhost:5000/checkout/${user.Email}`;
 
 		// Use the fetch API to post the data to the backend
 		fetch(endpoint, {
@@ -227,6 +218,7 @@ const Checkout = () => {
 					.send(
 						"service_iua6vej",
 						"template_kw5pkjq",
+						// Date placed: ${grabDate()}
 						{
 							to_name: `${data.firstName} ${data.lastName}`,
 							to_email: `${data.email}`,
@@ -236,7 +228,6 @@ const Checkout = () => {
 							message: `
 									Hi ${data.firstName} ${data.lastName} \n
 									Your order has been confirmed! \n
-									Date placed: ${formattedDate} \n
 									Shipping to: ${data.shipAddress ? data.shipAddress : data.address} ${
 								data.shipAddress2
 									? data.shipAddress2
@@ -277,7 +268,6 @@ const Checkout = () => {
 		if (user) {
 			getCart();
 		}
-		console.log(user)
 	}, [user]);
 
 	useEffect(() => {
@@ -312,6 +302,10 @@ const Checkout = () => {
 				.catch((err) => console.log(err));
 		}
 	}
+
+	const handleAddNewCard = () => {
+		setIsAddingNewCard(true);
+	};
 
 	return (
 		<div className="container moveItOver">
@@ -372,7 +366,7 @@ const Checkout = () => {
 														products?.map((product) => (
 															<>
 																<li
-																	key={product._id}
+																	key={product.name}
 																	className="list-group-item d-flex justify-content-between lh-sm"
 																>
 																	<div>
@@ -386,19 +380,7 @@ const Checkout = () => {
 																					updateQty(product._id, 1)
 																				}
 																			>
-																				<svg
-																					xmlns="http://www.w3.org/2000/svg"
-																					width="16"
-																					height="16"
-																					fill="currentColor"
-																					className="bi bi-plus-lg"
-																					viewBox="0 0 16 16"
-																				>
-																					<path
-																						fillRule="evenodd"
-																						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-																					/>
-																				</svg>{" "}
+																				<i class="bi bi-plus-lg"></i>{" "}
 																			</span>
 																			{getProductQty(cart, product._id)}{" "}
 																			<span
@@ -406,19 +388,7 @@ const Checkout = () => {
 																					updateQty(product._id, -1)
 																				}
 																			>
-																				<svg
-																					xmlns="http://www.w3.org/2000/svg"
-																					width="16"
-																					height="16"
-																					fill="currentColor"
-																					className="bi bi-dash-lg"
-																					viewBox="0 0 16 16"
-																				>
-																					<path
-																						fillRule="evenodd"
-																						d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-																					/>
-																				</svg>
+																				<i class="bi bi-dash-lg"></i>
 																			</span>
 																		</small>
 																	</div>
@@ -767,7 +737,6 @@ const Checkout = () => {
 														<></>
 													) : (
 														// Render the editable billing address fields if sameAsBilling is false
-
 														<>
 															<hr className="my-4" />
 															{/* <div className="form-check"> */}
@@ -1072,161 +1041,268 @@ const Checkout = () => {
 
 													<hr className="my-4" />
 													<h4 className="mb-3">Payment</h4>
-
-													<div className="row gy-3">
-														<div className="col-md-6">
-															<label htmlFor="ccName" className="form-label">
-																Name on card <span className="required">*</span>
-															</label>
-															<input
-																type="text"
-																name="ccName"
-																className={`form-control ${
-																	errors?.ccName ? "is-invalid" : ""
-																}`}
-																id="ccName"
-																placeholder="Full name as displayed on card"
-																{...register("ccName", {
-																	required: {
-																		value: true,
-																		message:
-																			"You must enter the name on the card",
-																	},
-																	validate: validateName,
-																	minLength: {
-																		value: 2,
-																		message:
-																			"Name can't be shorter than 2 characters",
-																	},
-																	maxLength: {
-																		value: 100,
-																		message:
-																			"Name can't be over 100 characters",
-																	},
-																})}
-															/>
-															<small className="text-muted">
-																Full name as displayed on card
-															</small>
-															{errors?.ccName && (
-																<div className="invalid-feedback lightError">
-																	{errors?.ccName.message}
+													{user &&
+													user.CheckoutInfo &&
+													!isAddingNewCard ||
+													data ? (
+														<>
+															<div>
+																{user.CheckoutInfo.ccName} <br />
+																**** **** {user.CheckoutInfo.last4Digits}
+																<br />
+																{user.CheckoutInfo.ccExpiration}
+																<br />
+																<button onClick={handleAddNewCard}>
+																	Add New Card
+																</button>
+															</div>
+															<div className="row gy-3 hidden">
+																<div className="col-md-6">
+																	<label
+																		htmlFor="ccName"
+																		className="form-label"
+																	>
+																		Name on card{" "}
+																		<span className="required">*</span>
+																	</label>
+																	<input
+																		type="text"
+																		name="ccName"
+																		className={`form-control ${
+																			errors?.ccName ? "is-invalid" : ""
+																		}`}
+																		id="ccName"
+																		placeholder="Full name as displayed on card"
+																		{...register("ccName", {
+																			required: {
+																				value: true,
+																				message:
+																					"You must enter the name on the card",
+																			},
+																			validate: validateName,
+																			minLength: {
+																				value: 2,
+																				message:
+																					"Name can't be shorter than 2 characters",
+																			},
+																			maxLength: {
+																				value: 100,
+																				message:
+																					"Name can't be over 100 characters",
+																			},
+																		})}
+																	/>
+																	<small className="text-muted">
+																		Full name as displayed on card
+																	</small>
+																	{errors?.ccName && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccName.message}
+																		</div>
+																	)}
 																</div>
-															)}
-														</div>
 
-														<div className="col-md-6">
-															<label htmlFor="ccNumber" className="form-label">
-																Card number <span className="required">*</span>
-															</label>
-															<input
-																type="number"
-																className={`form-control ${
-																	errors?.ccNumber ? "is-invalid" : ""
-																}`}
-																id="ccNumber"
-																name="ccNumber"
-																{...register("ccNumber", {
-																	required: "Card number is required",
-																	pattern: {
-																		value: cardNumberPattern,
-																		message: "Invalid card number",
-																	},
-																	minLength: {
-																		value: 12,
-																		message:
-																			"Card number must be at least 12 digits long",
-																	},
-																	maxLength: {
-																		value: 12,
-																		message:
-																			"Card number can't be longer that 12 digits",
-																	},
-																})}
-																placeholder="Card Number"
-															/>
-															{errors?.ccNumber && (
-																<div className="invalid-feedback lightError">
-																	{errors?.ccNumber.message}
+																<div className="col-md-3">
+																	<label
+																		htmlFor="ccExpiration"
+																		className="form-label"
+																	>
+																		Expiration{" "}
+																		<span className="required">*</span>
+																	</label>
+																	<input
+																		type="text"
+																		className={`form-control ${
+																			errors?.ccExpiration ? "is-invalid" : ""
+																		}`}
+																		id="ccExpiration"
+																		placeholder="mm/yy"
+																		{...register("ccExpiration", {
+																			required:
+																				"You must enter the expiration date",
+																			validate: /^(0[1-9]|1[0-2])\/\d{2}$/,
+																			minLength: 5,
+																			maxLength: 5,
+																		})}
+																	/>
+																	{errors?.ccExpiration && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccExpiration.message}
+																		</div>
+																	)}
 																</div>
-															)}
-														</div>
 
-														<div className="col-md-3">
-															<label
-																htmlFor="ccExpiration"
-																className="form-label"
-															>
-																Expiration <span className="required">*</span>
-															</label>
-															<input
-																type="text"
-																className={`form-control ${
-																	errors?.ccExpiration ? "is-invalid" : ""
-																}`}
-																id="ccExpiration"
-																placeholder="mm/yy"
-																{...register("ccExpiration", {
-																	required:
-																		"You must enter the expiration date",
-																	validate: /^(0[1-9]|1[0-2])\/\d{2}$/,
-																	minLength: 5,
-																	maxLength: 5,
-																})}
-															/>
-															{errors?.ccExpiration && (
-																<div className="invalid-feedback lightError">
-																	{errors?.ccExpiration.message}
+																<label
+																		htmlFor="last4Digits"
+																		hidden
+																	>
+																	</label>
+																	<input
+																		type="number"
+																		hidden
+																		value={user.CheckoutInfo.last4Digits}
+																		id="last4Digits"
+																		{...register("last4Digits")}
+																	/>
+															</div>
+														</>
+													) : (
+														<>
+															<div className="row gy-3">
+																<div className="col-md-6">
+																	<label
+																		htmlFor="ccName"
+																		className="form-label"
+																	>
+																		Name on card{" "}
+																		<span className="required">*</span>
+																	</label>
+																	<input
+																		type="text"
+																		name="ccName"
+																		className={`form-control ${
+																			errors?.ccName ? "is-invalid" : ""
+																		}`}
+																		id="ccName"
+																		placeholder="Full name as displayed on card"
+																		{...register("ccName", {
+																			required: {
+																				value: true,
+																				message:
+																					"You must enter the name on the card",
+																			},
+																			validate: validateName,
+																			minLength: {
+																				value: 2,
+																				message:
+																					"Name can't be shorter than 2 characters",
+																			},
+																			maxLength: {
+																				value: 100,
+																				message:
+																					"Name can't be over 100 characters",
+																			},
+																		})}
+																	/>
+																	<small className="text-muted">
+																		Full name as displayed on card
+																	</small>
+																	{errors?.ccName && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccName.message}
+																		</div>
+																	)}
 																</div>
-															)}
-														</div>
 
-														<div className="col-md-3">
-															<label htmlFor="ccCvv" className="form-label">
-																CVV <span className="required">*</span>
-															</label>
-															<input
-																type="number"
-																className={`form-control ${
-																	errors?.ccv ? "is-invalid" : ""
-																}`}
-																id="ccCvv"
-																name="ccv"
-																{...register("ccv", {
-																	required: "CVV is required",
-																	pattern: {
-																		value: ccvPattern,
-																		message: "Invalid CVV",
-																	},
-																	minLength: {
-																		value: 3,
-																		message: "CCV must be 3 digits long",
-																	},
-																	maxLength: {
-																		value: 3,
-																		message:
-																			"CCV can't be more than 3 digits long",
-																	},
-																})}
-																placeholder="CVV"
-															/>
-															{errors?.ccv && (
-																<div className="invalid-feedback lightError">
-																	{errors?.ccv.message}
+																<div className="col-md-6">
+																	<label
+																		htmlFor="ccNumber"
+																		className="form-label"
+																	>
+																		Card number{" "}
+																		<span className="required">*</span>
+																	</label>
+																	<input
+																		type="number"
+																		className={`form-control ${
+																			errors?.ccNumber ? "is-invalid" : ""
+																		}`}
+																		id="ccNumber"
+																		name="ccNumber"
+																		{...register("ccNumber", {
+																			required: "Card number is required",
+																			pattern: {
+																				value: cardNumberPattern,
+																				message: "Invalid card number",
+																			},
+																			minLength: {
+																				value: 12,
+																				message:
+																					"Card number must be at least 12 digits long",
+																			},
+																			maxLength: {
+																				value: 12,
+																				message:
+																					"Card number can't be longer that 12 digits",
+																			},
+																		})}
+																		placeholder="Card Number"
+																	/>
+																	{errors?.ccNumber && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccNumber.message}
+																		</div>
+																	)}
 																</div>
-															)}
-															<label hidden htmlFor="date"></label>
-															<input
-																type="text"
-																hidden
-																id="date"
-																name="date"
-																value={formattedDate}
-																disabled
-																{...register("date")}
-															/>
-														</div>
-													</div>
+
+																<div className="col-md-3">
+																	<label
+																		htmlFor="ccExpiration"
+																		className="form-label"
+																	>
+																		Expiration{" "}
+																		<span className="required">*</span>
+																	</label>
+																	<input
+																		type="text"
+																		className={`form-control ${
+																			errors?.ccExpiration ? "is-invalid" : ""
+																		}`}
+																		id="ccExpiration"
+																		placeholder="mm/yy"
+																		{...register("ccExpiration", {
+																			required:
+																				"You must enter the expiration date",
+																			validate: /^(0[1-9]|1[0-2])\/\d{2}$/,
+																			minLength: 5,
+																			maxLength: 5,
+																		})}
+																	/>
+																	{errors?.ccExpiration && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccExpiration.message}
+																		</div>
+																	)}
+																</div>
+
+																<div className="col-md-3">
+																	<label htmlFor="ccCvv" className="form-label">
+																		CVV <span className="required">*</span>
+																	</label>
+																	<input
+																		type="number"
+																		className={`form-control ${
+																			errors?.ccv ? "is-invalid" : ""
+																		}`}
+																		id="ccCvv"
+																		name="ccv"
+																		{...register("ccv", {
+																			required: "CVV is required",
+																			pattern: {
+																				value: ccvPattern,
+																				message: "Invalid CVV",
+																			},
+																			minLength: {
+																				value: 3,
+																				message: "CCV must be 3 digits long",
+																			},
+																			maxLength: {
+																				value: 3,
+																				message:
+																					"CCV can't be more than 3 digits long",
+																			},
+																		})}
+																		placeholder="CVV"
+																	/>
+																	{errors?.ccv && (
+																		<div className="invalid-feedback lightError">
+																			{errors?.ccv.message}
+																		</div>
+																	)}
+																</div>
+															</div>
+														</>
+													)}
 
 													<hr className="my-4" />
 

@@ -1,5 +1,6 @@
 import "./App.scss";
 import { inject } from "@vercel/analytics";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import Footer from "./pages/OnAllPages/Footer";
 import Navbar from "./pages/OnAllPages/Navbar";
@@ -13,6 +14,7 @@ function App() {
 			<Popup />
 			<Navbar />
 			<Footer />
+			<SpeedInsights />
 		</div>
 	);
 }
