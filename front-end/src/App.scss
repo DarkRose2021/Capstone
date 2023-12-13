@@ -1,21 +1,6 @@
 @import "../src/index.scss";
 
-a {
-	color: $blue;
-	font-weight: bold;
-}
-a:hover {
-	color: $blue-hover;
-	font-weight: bold;
-}
-a:active {
-	color: $blue-active;
-	font-weight: bold;
-}
-a:visited {
-	color: $blue;
-	font-weight: bold;
-}
+@import "./Styles/links.scss";
 
 .error,
 .invalid-feedback,
@@ -114,10 +99,14 @@ h2 {
 	margin: 3%;
 
 	img {
-		// height: 20%;
+		width: 100%;
 		@include border();
 		@include borderRadiusContainers;
 	}
+	.carousel-control-next:hover,
+			.carousel-control-prev:hover {
+				background-color: rgba($color: $borderbrown, $alpha: 0.7);
+			}
 }
 
 .layout {
@@ -186,67 +175,6 @@ footer {
 	}
 }
 
-.contact {
-	.flex {
-		margin-top: 3%;
-		display: flex;
-		flex-direction: row;
-		margin-left: 15%;
-		margin-right: auto;
-		.form {
-			@include border();
-			@include borderRadiusContainers;
-			margin-left: 10%;
-			width: 25%;
-			background-color: $lightBrown;
-			padding: 2%;
-			@include button;
-			div {
-				h3 {
-					text-align: center;
-					color: $yellow;
-				}
-				form {
-					margin: 1%;
-				}
-				input,
-				textarea {
-					margin: 2%;
-					width: 100%;
-					@include borderRadius();
-				}
-				.btn {
-					width: 100%;
-					background-color: $blue;
-					border: none;
-					padding: 1% 2%;
-					margin: 2%;
-					@include borderRadius();
-					font-size: 1.2em;
-				}
-				.btn:hover {
-					background-color: $blue-hover;
-					color: black;
-				}
-				.btn:active {
-					background-color: $blue-active;
-					color: black;
-				}
-				h4 {
-					margin-top: 2%;
-					text-align: center;
-					a {
-						font-weight: bold;
-					}
-				}
-			}
-			.calenderDiv {
-				background-color: $lightBrown !important;
-			}
-		}
-	}
-}
-
 .modal-content {
 	background-color: $lightBrown;
 	@include button;
@@ -261,84 +189,7 @@ footer {
 	}
 }
 
-.fc {
-	@include borderRadiusContainers;
-	@include border;
-	background-color: $lightBrown !important;
-	padding: 2%;
-	width: 40vw;
-	height: 70.8vh;
-	a {
-		color: $color;
-		text-decoration: none !important;
-	}
-	th {
-		background-color: $darkbrown;
-		a {
-			color: $blue;
-		}
-	}
-}
-
-.fc-bg-event {
-	background-color: #9e7b9b !important;
-	opacity: 75% !important;
-	white-space: normal !important;
-}
-
-.fc-event-title {
-	bottom: 100%;
-}
-
-.fc-theme-standard td,
-.fc-theme-standard th {
-	border: 1px solid black !important;
-}
-
-.fc-daygrid-event {
-	white-space: normal !important;
-	cursor: pointer;
-	&:hover {
-		background-color: $blue-hover !important;
-	}
-}
-
-.fc-theme-standard .fc-scrollgrid {
-	border: 1px solid black !important;
-}
-
-.fc-day-today {
-	background-color: $yellow !important;
-	opacity: 0.6;
-	border: 1px solid black;
-	a {
-		color: $black;
-	}
-}
-
-.fc .fc-button-primary:hover {
-	background-color: $blue-hover;
-	border-color: none;
-	color: black;
-}
-
-.fc .fc-button-primary:active {
-	background-color: $blue-active !important;
-	border-color: none !important;
-	color: black !important;
-}
-
-.fc .fc-button-primary {
-	background-color: $blue;
-	border-color: none;
-	color: black;
-}
-
-.fc .fc-button-primary:disabled {
-	background-color: $blue;
-	border-color: none;
-	color: black;
-}
+@import "./Styles/contact.scss";
 
 .row {
 	width: 100%;
@@ -355,7 +206,7 @@ footer {
 		margin-top: 3%;
 		background-color: $lightBrown;
 		color: $color;
-		max-height: 100%;
+		height: 100%;
 		@include border();
 		@include borderRadiusContainers;
 		h5 {
@@ -490,7 +341,7 @@ footer {
 		.text-muted {
 			color: #8e8e8e !important;
 		}
-		.productDiv{
+		.productDiv {
 			max-height: 78% !important;
 		}
 		.cart {
@@ -508,6 +359,9 @@ footer {
 		}
 		.total {
 			color: $yellow;
+		}
+		.hidden{
+			display: none;
 		}
 	}
 	.checkoutBtn {
@@ -828,112 +682,9 @@ footer {
 	}
 }
 
-.order-con {
-	@include flex-center;
-	hr {
-		color: #000;
-		opacity: 100%;
-	}
-	.order {
-		background-color: $lightBrown;
-		@include border;
-		@include borderRadiusContainers;
-		padding: 1%;
-	}
-	.orderInfo {
-		@include flex-between;
-		flex-direction: row;
-		h4 {
-			color: $yellow;
-			text-align: center;
-		}
-	}
-	.conProducts {
-		flex-direction: row;
-		.prices {
-			float: right;
-			color: $yellow;
-			font-weight: bold;
-		}
-		.qty {
-			margin-left: 1%;
-		}
-		.text-muted {
-			color: #8e8e8e !important;
-		}
-	}
-	.total {
-		text-align: right;
-		color: $yellow;
-	}
+@import "./Styles/order.scss";
 
-	.centerInfo {
-		@include button;
-		&.with-shipping{
-			@include flex-between();			
-		}
-		&.without-shipping{
-			@include flex-center();
-			flex-direction: row;
-			div{
-				width: 50%;
-				div{
-					width: 100%;
-				}
-			}
-		}
-		div {
-			text-align: center;
-		}
-	}
-
-	.centerBtn{
-		@extend.centerInfo;
-		@include flex-between();
-	}
-}
-
-.bookingInfo {
-	@include flex-center;
-	.info {
-		.btn {
-			background-color: $blue;
-			border: none;
-			padding: 1% 2%;
-			margin: 2%;
-			@include borderRadius();
-			width: 97%;
-			font-size: 1.2em;
-		}
-		.btn:hover {
-			background-color: $blue-hover;
-		}
-		.btn:active {
-			background-color: $blue-active;
-		}
-		.smallBtn {
-			width: 30%;
-			font-size: medium;
-		}
-		.react-datepicker__input-container input {
-			@include border-radius;
-			// width: 50%;
-		}
-		background-color: $lightBrown;
-		@include border;
-		@include borderRadiusContainers;
-		padding: 1%;
-		max-width: 90vw;
-		b {
-			color: $yellow;
-		}
-		.message {
-			max-width: 95%;
-			word-wrap: normal;
-			word-break: keep-all;
-		}
-	}
-}
+@import "./Styles/bookingInfo.scss";
 
 .react-datepicker__day--holidays {
 	background-color: #9e7b9b !important;
@@ -949,97 +700,40 @@ footer {
 	}
 }
 
-.loading-container {
-	@include flex-center;
+@import "./Styles/loading.scss";
+
+.scrollBtn {
+	position: fixed;
+	bottom: 50px;
+	right: 20px;
+	padding: 10px;
+	outline: none;
+	background-color: $blue;
+	color: $black;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+	z-index: 100;
+	&:hover {
+		background-color: $blue-hover;
+		color: $black;
+	}
 }
 
-@keyframes ldio-t5ijoz38lif {
-	0% {
-		opacity: 1;
+.scrollBtnMobile {
+	position: fixed;
+	bottom: 50px;
+	right: 13px;
+	// padding: 10px;
+	outline: none;
+	color: $blue;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 30px;
+	&:hover {
+		color: $blue-hover;
 	}
-	100% {
-		opacity: 0;
-	}
 }
-.ldio-t5ijoz38lif div {
-	left: 113.4px;
-	top: 35.28px;
-	position: absolute;
-	animation: ldio-t5ijoz38lif linear 0.8130081300813008s infinite;
-	background: #e5cd75;
-	width: 25.2px;
-	height: 55.44px;
-	border-radius: 12.6px / 27.72px;
-	transform-origin: 12.6px 90.72px;
-}
-.ldio-t5ijoz38lif div:nth-child(1) {
-	transform: rotate(0deg);
-	animation-delay: -0.7317073170731707s;
-	background: #e5cd75;
-}
-.ldio-t5ijoz38lif div:nth-child(2) {
-	transform: rotate(36deg);
-	animation-delay: -0.6504065040650406s;
-	background: #06a6a8;
-}
-.ldio-t5ijoz38lif div:nth-child(3) {
-	transform: rotate(72deg);
-	animation-delay: -0.5691056910569106s;
-	background: #e5cd75;
-}
-.ldio-t5ijoz38lif div:nth-child(4) {
-	transform: rotate(108deg);
-	animation-delay: -0.4878048780487805s;
-	background: #06a6a8;
-}
-.ldio-t5ijoz38lif div:nth-child(5) {
-	transform: rotate(144deg);
-	animation-delay: -0.4065040650406504s;
-	background: #e5cd75;
-}
-.ldio-t5ijoz38lif div:nth-child(6) {
-	transform: rotate(180deg);
-	animation-delay: -0.3252032520325203s;
-	background: #06a6a8;
-}
-.ldio-t5ijoz38lif div:nth-child(7) {
-	transform: rotate(216deg);
-	animation-delay: -0.24390243902439024s;
-	background: #e5cd75;
-}
-.ldio-t5ijoz38lif div:nth-child(8) {
-	transform: rotate(252deg);
-	animation-delay: -0.16260162601626016s;
-	background: #06a6a8;
-}
-.ldio-t5ijoz38lif div:nth-child(9) {
-	transform: rotate(288deg);
-	animation-delay: -0.08130081300813008s;
-	background: #e5cd75;
-}
-.ldio-t5ijoz38lif div:nth-child(10) {
-	transform: rotate(324deg);
-	animation-delay: 0s;
-	background: #06a6a8;
-}
-.loadingio-spinner-spinner-la1rcf32xa {
-	width: 252px;
-	height: 252px;
-	display: inline-block;
-	overflow: hidden;
-	background: none;
-}
-.ldio-t5ijoz38lif {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	transform: translateZ(0) scale(1);
-	backface-visibility: hidden;
-	transform-origin: 0 0; /* see note above */
-}
-.ldio-t5ijoz38lif div {
-	box-sizing: content-box;
-}
-/* generated by https://loading.io/ */
 
-@import "media.scss";
+@import "./Styles/media.scss";

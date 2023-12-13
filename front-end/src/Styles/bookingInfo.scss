@@ -1,0 +1,41 @@
+.bookingInfo {
+	@include flex-center;
+	.info {
+		.btn {
+			background-color: $blue;
+			border: none;
+			padding: 1% 2%;
+			margin: 2%;
+			@include borderRadius();
+			width: 97%;
+			font-size: 1.2em;
+		}
+		.btn:hover {
+			background-color: $blue-hover;
+		}
+		.btn:active {
+			background-color: $blue-active;
+		}
+		.smallBtn {
+			width: 30%;
+			font-size: medium;
+		}
+		.react-datepicker__input-container input {
+			@include border-radius;
+			// width: 50%;
+		}
+		background-color: $lightBrown;
+		@include border;
+		@include borderRadiusContainers;
+		padding: 1%;
+		max-width: 90vw;
+		b {
+			color: $yellow;
+		}
+		.message {
+			max-width: 95%;
+			word-wrap: normal;
+			word-break: keep-all;
+		}
+	}
+}

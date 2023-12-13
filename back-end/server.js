@@ -455,8 +455,8 @@ app.get("/tax/:state", (req, res) => {
 		default:
 			return "Invalid state name";
 	}
-	tax = Number((tax / 100)).toPrecision(2);
-	return res.json(tax);
+	tax = Number((tax / 100)).toFixed(2);
+	return res.json(tax.toFixed(2));
 });
 
 app.get("/bookings", async (req, res) => {
@@ -481,9 +481,12 @@ app.get("/contacted/:id", async (req, res) => {
 app.post("/updateDate/:id", async (req, res) => {
 	let id = req.params.id;
 	let date = req.body.dateScheduled;
-	await dal.changeDateScheduled(id, date);
-	// await dal.createEvent(date)
 	let booking = await dal.findBooking(id);
+	console.log(booking)
+	if (booking) await dal.changeDateScheduled(id, date);
+	
+	await dal.createEvent(date)
+	booking = await dal.findBooking(id);
 	res.json({ Booking: booking });
 });
 
