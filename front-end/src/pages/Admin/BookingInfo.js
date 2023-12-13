@@ -90,7 +90,7 @@ const BookingInfo = () => {
 				dateScheduled: dateScheduled, // Use the date part
 			};
 // https://mane-frame-backend.onrender.com
-			fetch(`http://localhost:5000/updateDate/${booking._id}`, {
+			fetch(`https://mane-frame-backend.onrender.com/updateDate/${booking._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

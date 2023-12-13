@@ -193,7 +193,7 @@ const Checkout = () => {
 		if(user && user.CheckoutInfo) data.last4Digits = user.CheckoutInfo.last4Digits;
 		
 		// https://mane-frame-backend.onrender.com
-		const endpoint = `http://localhost:5000/checkout/${user.Email}`;
+		const endpoint = `https://mane-frame-backend.onrender.com/checkout/${user.Email}`;
 
 		// Use the fetch API to post the data to the backend
 		fetch(endpoint, {
