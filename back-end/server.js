@@ -482,7 +482,6 @@ app.post("/updateDate/:id", async (req, res) => {
 	let id = req.params.id;
 	let date = req.body.dateScheduled;
 	let booking = await dal.findBooking(id);
-	console.log(booking)
 	if (booking) await dal.changeDateScheduled(id, date);
 	
 	await dal.createEvent(date)
