@@ -179,7 +179,7 @@ const Contact = () => {
 					{selectedEvent && (
 						<div>
 							<span>{selectedEvent.title}</span> <br />
-							<span>Client: {selectedEvent.extendedProps.clientName}</span><br />
+							<span>Client: {selectedEvent.extendedProps.name}</span><br />
 							<span>Session: {selectedEvent.extendedProps.session}</span><br />
 							<span>Date: {selectedEvent.start.toISOString().split("T")[0]}</span>
 						</div>

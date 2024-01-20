@@ -21,7 +21,7 @@ const Footer = () => {
 						INFORMATION ON THIS WEBSITE
 					</b>
 				</span>
-				&copy; Mane Frame Photography - <ScrollToTop />
+				&copy; Mane Frame Photography 2024 <ScrollToTop />
 			</div>
 		</footer>
 	);
