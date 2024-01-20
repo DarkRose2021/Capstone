@@ -253,7 +253,7 @@ const Admin = () => {
 																<b>Event Name:</b> {event.title}
 															</h3>
 															<h3>
-																<b>Client Name:</b> {event.clientName}
+																<b>Client Name:</b> {event.name}
 															</h3>
 															<h3>
 																<b>Session Type:</b> {event.session}

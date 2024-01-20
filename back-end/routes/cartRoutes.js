@@ -220,6 +220,6 @@ module.exports = (app) => {
 				return "Invalid state name";
 		}
 		tax = Number(tax / 100).toFixed(2);
-		return res.json(tax.toFixed(2));
+		return res.json(tax);
 	});
 };

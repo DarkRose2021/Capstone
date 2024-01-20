@@ -44,6 +44,7 @@ const BookingForm = () => {
 		if (isSubmitting) {
 			return;
 		}
+		// https://mane-frame-backend.onrender.com
 
 		fetch("https://mane-frame-backend.onrender.com/bookingInfo", {
 			method: "POST",

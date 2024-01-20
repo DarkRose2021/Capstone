@@ -1,18 +1,20 @@
 const { mongoose, Schema } = require("mongoose");
-var mongodb = require("mongodb");
-var ObjectID = require("mongodb").ObjectID;
+const mongodb = require("mongodb");
+const ObjectID = mongodb.ObjectID;
 require("dotenv").config();
-var bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const cardEncrypt = require("./cardEncryption");
 
-const connectionString = process.env.CONNECTION_STRING;
-const userCollection = "Users";
-const productCollection = "Products";
-const serviceCollection = "Services";
-const bookingCollection = "Bookings";
-const eventsCollection = "Events";
+const config = {
+	connectionString: process.env.CONNECTION_STRING,
+	userCollection: "Users",
+	productCollection: "Products",
+	serviceCollection: "Services",
+	bookingCollection: "Bookings",
+	eventsCollection: "Events",
+};
 
-mongoose.connect(connectionString, {
+mongoose.connect(config.connectionString, {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
 });
@@ -34,9 +36,8 @@ const user = new Schema(
 		Products: [{ ProductID: String, Qty: Number }],
 		CheckoutInfo: Object,
 	},
-	{ collection: userCollection }
+	{ collection: config.userCollection }
 );
-
 const userModel = mongoose.model("user", user);
 
 const products = new Schema(
@@ -49,7 +50,7 @@ const products = new Schema(
 		SelectedImage: String,
 		Alt: String,
 	},
-	{ collection: productCollection }
+	{ collection: config.productCollection }
 );
 const productsModel = mongoose.model("products", products);
 
@@ -61,7 +62,7 @@ const services = new Schema(
 		img: String,
 		price: [String],
 	},
-	{ collection: serviceCollection }
+	{ collection: config.serviceCollection }
 );
 const servicesModel = mongoose.model("services", services);
 
@@ -80,7 +81,7 @@ const bookings = new Schema(
 		DateScheduled: String,
 		EventID: String,
 	},
-	{ collection: bookingCollection }
+	{ collection: config.bookingCollection }
 );
 const bookingsModel = mongoose.model("bookings", bookings);
 
@@ -91,7 +92,7 @@ const events = new Schema(
 		backgroundColor: String,
 		borderColor: String,
 	},
-	{ collection: eventsCollection }
+	{ collection: config.eventsCollection }
 );
 const eventsModel = mongoose.model("events", events);
 
@@ -137,7 +138,7 @@ exports.dal = {
 
 	editRoles: async (id, roles) => {
 		let values = { Roles: roles };
-		userModel.collection.updateOne(
+		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
 			{ $set: values }
 		);
@@ -145,7 +146,7 @@ exports.dal = {
 
 	editImgs: async (id, images) => {
 		let values = { Images: images };
-		userModel.collection.updateOne(
+		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
 			{ $set: values }
 		);
@@ -174,7 +175,7 @@ exports.dal = {
 		return await productsModel.collection.insertOne(data);
 	},
 	addImgs: async (id, pictures) => {
-		userModel.collection.updateOne(
+		await userModel.collection.updateOne(
 			{ _id: new mongodb.ObjectId(id) },
 			{ $push: { Images: { $each: pictures } } }
 		);
@@ -338,13 +339,18 @@ exports.dal = {
 			_id: new mongodb.ObjectId(id),
 		});
 	},
-	createEvent: async (date, id, name, session) => {
+	createEvent: async (date, id) => {
+		let bookingInfo = await bookingsModel.collection.findOne({
+			_id: new mongodb.ObjectId(id),
+		});
 		let event = {
 			title: "Photo shoot",
 			start: date,
 			backgroundColor: "#40797A",
 			borderColor: "#40797A",
-			bookingID: id
+			bookingID: id,
+			name: bookingInfo.Name,
+			session: bookingInfo.Session
 		};
 		let newEvent = await eventsModel.collection.insertOne(event);
 		return newEvent;
@@ -378,19 +384,19 @@ exports.dal = {
 	},
 	saveInfo: async (email, info) => {
 		const user = await userModel.collection.findOne({ Email: email });
-	
+
 		if (user && user.CheckoutInfo && user.CheckoutInfo.ccNumber) {
 			// Card is already encrypted, no need to re-encrypt
 			console.log("Card is already encrypted");
 			return;
 		}
-	
+
 		const encryptedCardNumber = cardEncrypt.encryptCardNumber(info.ccNumber);
-	
+
 		// Exclude CVV from info
 		const { ccv, date, ...infoWithoutCVVAndDate } = info;
 		const last4Digits = info.ccNumber.slice(-4);
-	
+
 		// Save infoWithoutCVVAndDate to the database
 		await userModel.collection.updateOne(
 			{ Email: email },
