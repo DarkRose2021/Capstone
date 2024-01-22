@@ -10,22 +10,22 @@ const Home = () => {
 			<div className="container">
 				<Carousel>
 					<Carousel.Item interval={2000}>
-						<Image bsPrefix="d-block w-100" src="/assets/home/home1.jpg" text="First slide" />
+						<Image bsPrefix="d-block w-100" src="/assets/home/home1.jpg" alt="group of horses in front of a mountain" />
 					</Carousel.Item>
 					<Carousel.Item interval={3000}>
-						<Image src="/assets/home/home2.jpg" text="First slide" />
+						<Image src="/assets/home/home2.jpg" alt="a group of people riding horses on a beach" />
 					</Carousel.Item>
 					<Carousel.Item interval={4000}>
-						<Image src="/assets/home/home3.jpg" text="First slide" />
+						<Image src="/assets/home/home3.jpg" alt="group of horses in front of a mountain"/>
 					</Carousel.Item>
 					<Carousel.Item interval={5000}>
-						<Image src="/assets/home/home4.jpg" text="First slide" />
+						<Image src="/assets/home/home4.jpg" alt="A brown horse on a hill" />
 					</Carousel.Item>
 					<Carousel.Item interval={6000}>
-						<Image src="/assets/home/home5.jpg" text="First slide" />
+						<Image src="/assets/home/home5.jpg" alt="A brown horse tied to a fence" />
 					</Carousel.Item>
 					<Carousel.Item interval={7000}>
-						<Image src="/assets/home/home6.jpg" text="First slide" />
+						<Image src="/assets/home/home6.jpg" alt="Two horses in the snow" />
 					</Carousel.Item>
 				</Carousel>
 			</div>
