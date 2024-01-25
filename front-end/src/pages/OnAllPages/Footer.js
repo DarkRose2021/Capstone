@@ -11,6 +11,7 @@ const Footer = () => {
 						href="https://www.pexels.com/"
 						target="_blank"
 						rel="noopener noreferrer"
+						aria-label="Pexels – link opens in a new tab."
 					>
 						Pexels
 					</a>

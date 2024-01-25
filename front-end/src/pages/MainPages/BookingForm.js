@@ -79,6 +79,7 @@ const BookingForm = () => {
 						</label>
 						<br />
 						<input
+						aria-required
 							id="name"
 							name="name"
 							type="text"
@@ -115,6 +116,7 @@ const BookingForm = () => {
 						</label>
 						<br />
 						<input
+						aria-required
 							id="email"
 							name="email"
 							type="email"
@@ -150,6 +152,7 @@ const BookingForm = () => {
 						</label>
 						<br />
 						<input
+						aria-required
 							id="phnumber"
 							name="phnumber"
 							type="tel"
@@ -178,6 +181,7 @@ const BookingForm = () => {
 						</label>
 						<br />
 						<input
+						aria-required
 							id="location"
 							name="location"
 							type="text"
@@ -233,6 +237,7 @@ const BookingForm = () => {
 						</label>
 						<br />
 						<select
+						aria-required
 							id="session"
 							name="session"
 							defaultValue=""
