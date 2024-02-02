@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../OnAllPages/Loading";
+import DisplayUsers from "./DisplayUsers";
+import DisplayEvents from "./DisplayEvents";
+import DisplayBookings from "./DisplayBookings";
 
 const Admin = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -30,7 +33,7 @@ const Admin = () => {
 	}, []);
 
 	function listUsers() {
-		setSearchQuery("")
+		setSearchQuery("");
 		setLoading(true);
 		setBtnUserPressed(true);
 		setBtnEventsPressed(false);
@@ -101,7 +104,7 @@ const Admin = () => {
 	}
 
 	function getBookings() {
-		setSearchQuery("")
+		setSearchQuery("");
 		setLoading(true);
 		setAllUsers([]);
 		setEvents([]);
@@ -152,102 +155,40 @@ const Admin = () => {
 								)}
 
 								<div className="users">
+									{/* Users */}
 									{searchQuery === "" && allUsers ? (
-										allUsers.map((user) => (
-											<div key={user._id} className="user">
-												<h3>Name: {user.Name}</h3>
-												<h3>Email: {user.Email}</h3>
-												<h3>
-													Roles:{" "}
-													{user.Roles?.map((role, index) => (
-														<>{role}, </>
-													))}
-												</h3>
-												<h3>Disabled: {user.Disabled ? "Yes" : "No"}</h3>
-
-												<Link to={`/edit/${user._id}`}>
-													<button>Edit Roles</button>
-												</Link>
-												<button onClick={() => deleteUser(user._id)}>
-													{user.Disabled ? "Enable User" : "Disable User"}
-												</button>
-												{user.Roles?.includes("Client") ? (
-													<Link to={`/editImages/${user._id}`}>
-														<button>Edit Pictures</button>
-													</Link>
-												) : (
-													<></>
-												)}
-												{user.Roles?.includes("Client") ? (
-													<Link to={`/ShowImages/${user._id}`}>
-														<button>Show Pictures</button>
-													</Link>
-												) : (
-													<></>
-												)}
-											</div>
-										))
+										<>
+											{allUsers.map((user) => (
+												<DisplayUsers
+													key={user._id}
+													user={user}
+													deleteUser={deleteUser}
+												/>
+											))}
+										</>
 									) : bookings.length === 0 && filteredUsers.length > 0 ? (
-										filteredUsers.map((user) => (
-											<div key={user._id} className="user">
-												<h3>Name: {user.Name}</h3>
-												<h3>Email: {user.Email}</h3>
-												<h3>
-													Roles:{" "}
-													{user.Roles?.map((role, index) => (
-														<>{role}, </>
-													))}
-												</h3>
-												<h3>Disabled: {user.Disabled ? "Yes" : "No"}</h3>
-
-												<Link to={`/edit/${user._id}`}>
-													<button>Edit Roles</button>
-												</Link>
-												<button onClick={() => deleteUser(user._id)}>
-													{user.Disabled ? "Enable User" : "Disable User"}
-												</button>
-												{user.Roles?.includes("Client") ? (
-													<Link to={`/editImages/${user._id}`}>
-														<button>Edit Pictures</button>
-													</Link>
-												) : (
-													<></>
-												)}
-												{user.Roles?.includes("Client") ? (
-													<Link to={`/ShowImages/${user._id}`}>
-														<button>Show Pictures</button>
-													</Link>
-												) : (
-													<></>
-												)}
-											</div>
-										))
+										<>
+											{filteredUsers.map((user) => (
+												<DisplayUsers
+													key={user._id}
+													user={user}
+													deleteUser={deleteUser}
+												/>
+											))}
+										</>
 									) : (
-										// <p className="error">No matching users found.</p>
 										<></>
 									)}
 								</div>
 
 								<div className="users">
+									{/* Events */}
 									{events && btnEventsPressed ? (
 										<>
 											{events.length > 0 ? (
 												<>
 													{events.map((event) => (
-														<div key={event._id} className="user">
-															<h3>
-																<b>Event Name:</b> {event.title}
-															</h3>
-															<h3>
-																<b>Client Name:</b> {event.name}
-															</h3>
-															<h3>
-																<b>Session Type:</b> {event.session}
-															</h3>
-															<h3>
-																<b>Date:</b> {event.start}
-															</h3>
-														</div>
+														<DisplayEvents key={event._id} event={event} />
 													))}
 												</>
 											) : (
@@ -287,6 +228,7 @@ const Admin = () => {
 								)}
 
 								<div className="users">
+									{/* Bookings */}
 									{searchQuery === "" && bookings ? (
 										<>
 											{bookings && btnBookingPressed ? (
@@ -294,34 +236,10 @@ const Admin = () => {
 													{bookings.length > 0 ? (
 														<>
 															{bookings.map((booking) => (
-																<div key={booking._id} className="user">
-																	<h3>
-																		<b>Sender's Name:</b> {booking.Name}
-																	</h3>
-																	<h3>
-																		<b>Sender's Email:</b> {booking.Email}
-																	</h3>
-																	<h3>
-																		<b>Approved:</b>{" "}
-																		{booking.Approved ? "Yes" : "No"}
-																	</h3>
-																	<h3>
-																		<b>Contacted:</b>{" "}
-																		{booking.Contacted ? "Yes" : "No"}
-																	</h3>
-																	<h3>
-																		<b>Date Requested:</b> {booking.DateBooked}
-																	</h3>
-																	<h3>
-																		<b>Date Scheduled:</b>{" "}
-																		{booking.DateScheduled
-																			? booking.DateScheduled
-																			: "Not Scheduled"}
-																	</h3>
-																	<Link to={`/BookingInfo/${booking._id}`}>
-																		<button>View More Info</button>
-																	</Link>
-																</div>
+																<DisplayBookings
+																	key={booking._id}
+																	booking={booking}
+																/>
 															))}
 														</>
 													) : (
@@ -338,33 +256,10 @@ const Admin = () => {
 										<>
 											{filteredBookings.length > 0 ? (
 												filteredBookings.map((booking) => (
-													<div key={booking._id} className="user">
-														<h3>
-															<b>Sender's Name:</b> {booking.Name}
-														</h3>
-														<h3>
-															<b>Sender's Email:</b> {booking.Email}
-														</h3>
-														<h3>
-															<b>Approved:</b> {booking.Approved ? "Yes" : "No"}
-														</h3>
-														<h3>
-															<b>Contacted:</b>{" "}
-															{booking.Contacted ? "Yes" : "No"}
-														</h3>
-														<h3>
-															<b>Date Requested:</b> {booking.DateBooked}
-														</h3>
-														<h3>
-															<b>Date Scheduled:</b>{" "}
-															{booking.DateScheduled
-																? booking.DateScheduled
-																: "Not Scheduled"}
-														</h3>
-														<Link to={`/BookingInfo/${booking._id}`}>
-															<button>View More Info</button>
-														</Link>
-													</div>
+													<DisplayBookings
+														key={booking._id}
+														booking={booking}
+													/>
 												))
 											) : (
 												<p className="error">No matching bookings found.</p>
