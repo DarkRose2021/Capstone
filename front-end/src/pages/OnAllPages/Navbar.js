@@ -2,28 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import logo from "../../logo.png";
-
-import Home from "../MainPages/Home";
-import About from "../MainPages/About";
-import Contact from "../MainPages/Contact";
-import Services from "../MainPages/Services";
-import Team from "../MainPages/Team";
-import Login from "../MainPages/Login";
-import Signin from "../MainPages/Signin";
-import Checkout from "../CheckoutProcess/Checkout";
-import Products from "../CheckoutProcess/Products";
-import ClientPics from "../Client/ClientPics";
-import Admin from "../Admin/Admin";
-import Cart from "../CheckoutProcess/Cart";
-import ClientStories from "../MainPages/ClientStories";
-import Confirm from "../CheckoutProcess/Confirm";
-import EditRoles from "../Admin/EditRoles";
-import NotFound from "../ErrorPages/NotFound";
-import EditImages from "../Admin/EditImages";
-import ShowClientPics from "../Admin/ShowClientPics";
-import BookingForm from "../MainPages/BookingForm";
-import BookingInfo from "../Admin/BookingInfo";
-import ReviewOrder from "../CheckoutProcess/ReviewOrder";
+import routes from "./routes";
 
 const Navbar = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -67,6 +46,7 @@ const Navbar = () => {
 	}, [isMobile]);
 
 	return (
+		// switch to react-bootstrap
 		<div className="layout">
 			<BrowserRouter>
 				<header>
@@ -312,28 +292,9 @@ const Navbar = () => {
 				</header>
 				<div>
 					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/services" element={<Services />} />
-						<Route path="/contact" element={<Contact />} />
-						<Route path="/team" element={<Team />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/signup" element={<Signin />} />
-						<Route path="/admin" element={<Login />} />
-						<Route path="/checkout" element={<Checkout />} />
-						<Route path="/products" element={<Products />} />
-						<Route path="/client-pictures" element={<ClientPics />} />
-						<Route path="/adminHome" element={<Admin />} />
-						<Route path="/cart" element={<Cart />} />
-						<Route path="/clientStories" element={<ClientStories />} />
-						<Route path="/confirm" element={<Confirm />} />
-						<Route path="/edit/:id" element={<EditRoles />} />
-						<Route path="/editImages/:id" element={<EditImages />} />
-						<Route path="/ShowImages/:id" element={<ShowClientPics />} />
-						<Route path="/BookingForm" element={<BookingForm />} />
-						<Route path="/BookingInfo/:id" element={<BookingInfo />} />
-						<Route path="/ReviewOrder" element={<ReviewOrder />} />
-						<Route path="*" element={<NotFound />} />
+						{routes.map((route) => (
+							<Route key={route.path} {...route} />
+						))}
 					</Routes>
 				</div>
 			</BrowserRouter>
