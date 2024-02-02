@@ -58,22 +58,7 @@ const ShowClientPics = () => {
 			{roles?.includes("Admin") ? (
 				<>
 					{loading ? ( // Display loading animation while loading is true
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							{user ? (
