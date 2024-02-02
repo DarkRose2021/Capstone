@@ -6,6 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import emailjs from "emailjs-com";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Loading from "../OnAllPages/Loading";
 
 const Contact = () => {
 	const [values, setValues] = useState({
@@ -76,22 +77,7 @@ const Contact = () => {
 			<h1>Contact Us</h1>
 			<div className="flex">
 				{loading ? ( // Display loading animation while loading is true
-					<div className="loading-container">
-						<div className="loadingio-spinner-spinner-la1rcf32xa">
-							<div className="ldio-t5ijoz38lif">
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-							</div>
-						</div>
-					</div>
+					<Loading />
 				) : (
 					<>
 						<div className="calenderDiv">

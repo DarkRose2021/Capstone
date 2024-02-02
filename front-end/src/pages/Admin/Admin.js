@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const Admin = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -129,22 +130,7 @@ const Admin = () => {
 						</div>
 					</div>
 					{loading ? ( // Display loading animation while loading is true
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							<div>

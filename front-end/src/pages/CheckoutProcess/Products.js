@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const Products = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -124,22 +125,7 @@ const Products = () => {
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					{loading ? (
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							<h1>Products</h1>

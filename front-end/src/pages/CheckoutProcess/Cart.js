@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getProductQty, calculatePrice, calculateTotal } from "./CartUtils";
+import Loading from "../OnAllPages/Loading";
 
 const Cart = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -129,22 +130,7 @@ const Cart = () => {
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					{loading ? (
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							{errorMsg ? (

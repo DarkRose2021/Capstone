@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import Loading from "../OnAllPages/Loading";
 
 const BookingInfo = () => {
 	let { id } = useParams();
@@ -123,22 +124,7 @@ const BookingInfo = () => {
 			{roles?.includes("Admin") ? (
 				<>
 					{loading ? ( // Display loading animation while loading is true
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							{booking ? (

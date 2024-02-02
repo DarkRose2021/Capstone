@@ -8,6 +8,7 @@ import {
 	calculateTotal,
 	calculateTotalItems,
 } from "./CartUtils";
+import Loading from "../OnAllPages/Loading";
 
 const Checkout = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -328,22 +329,7 @@ const Checkout = () => {
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
 					{loading ? ( // Display loading animation while loading is true
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							{cart?.Products.length > 0 ? (

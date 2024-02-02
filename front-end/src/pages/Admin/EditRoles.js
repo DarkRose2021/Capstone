@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const EditRoles = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -33,7 +34,7 @@ const EditRoles = () => {
 			.then((data) => data.json())
 			.then((data) => {
 				setUser(data.User[0]);
-				setLoading(false); // Set loading to false when the data is received
+				setLoading(false);
 			})
 			.catch((err) => console.log(err));
 	}
@@ -102,22 +103,7 @@ const EditRoles = () => {
 			{roles?.includes("Admin") ? (
 				<>
 					{loading ? ( // Display loading animation while loading is true
-						<div className="loading-container">
-							<div className="loadingio-spinner-spinner-la1rcf32xa">
-								<div className="ldio-t5ijoz38lif">
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-						</div>
+						<Loading />
 					) : (
 						<>
 							{user ? <h1>Editing {user.Name}'s Roles</h1> : <></>}

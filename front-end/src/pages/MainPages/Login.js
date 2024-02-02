@@ -3,6 +3,7 @@ import { Navigate, useLocation, Link } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -61,22 +62,7 @@ const Login = () => {
 	return (
 		<div className="login">
 			{loading ? ( // Display loading animation while loading is true
-				<div className="loading-container">
-					<div className="loadingio-spinner-spinner-la1rcf32xa">
-						<div className="ldio-t5ijoz38lif">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
-				</div>
+				<Loading />
 			) : (
 				<>
 					{location.pathname.toLowerCase() === "/admin" ? (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const ShowClientPics = () => {
 	const [loggedIn, setLoggedIn] = useState(false);

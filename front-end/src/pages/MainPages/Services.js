@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "../OnAllPages/Loading";
 
 const Services = () => {
 	const [services, setServices] = useState(null);
@@ -32,22 +33,7 @@ const Services = () => {
 		<div className="servicesPage">
 			<h1>Services</h1>
 			{loading ? ( // Display loading animation while loading is true
-				<div className="loading-container">
-					<div className="loadingio-spinner-spinner-la1rcf32xa">
-						<div className="ldio-t5ijoz38lif">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
-				</div>
+					<Loading />
 			) : (
 				<div className="album py-5 highlight-color">
 					<div className="s-container">

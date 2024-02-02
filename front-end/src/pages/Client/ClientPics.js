@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { saveAs } from "file-saver";
+import Loading from "../OnAllPages/Loading";
 
 const ClientPics = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -48,22 +49,7 @@ const ClientPics = () => {
 		<div>
 			{roles?.includes("Client") ? (
 				// loading ? ( // Display loading animation while loading is true
-				// 	<div className="loading-container">
-				// 		<div class="loadingio-spinner-spinner-la1rcf32xa">
-				// 			<div class="ldio-t5ijoz38lif">
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 				<div></div>
-				// 			</div>
-				// 		</div>
-				// 	</div>
+				// <Loading />
 				// ) : (
 				// 	<>
 				// 		{pics && pics.length > 0 ? (
