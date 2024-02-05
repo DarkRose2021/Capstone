@@ -553,6 +553,7 @@ footer {
 
 .editImgsCont {
 	@include button;
+	@include linkButton;
 	.upload__image-wrapper {
 		div {
 			@include flex-center();

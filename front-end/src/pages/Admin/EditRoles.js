@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import Loading from "../OnAllPages/Loading";
 
 const EditRoles = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [loading, setLoading] = useState(true);
+
+	const location = useLocation();
+	const id = location.state?.userId;
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -24,7 +27,6 @@ const EditRoles = () => {
 		Admin: false,
 		User: true,
 	});
-	let { id } = useParams();
 	const [user, setUser] = useState(null);
 	const [msg, setMsg] = useState(null);
 

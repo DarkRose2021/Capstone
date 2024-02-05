@@ -109,3 +109,28 @@ input[type=number] {
     background-color: $blue-active;
   }
 }
+
+@mixin linkButton{
+  a {
+    background-color: $blue;
+    color: black;
+    font-weight:lighter;
+    border: none;
+    text-decoration: none;
+    padding: 1% 2%;
+    margin: 2%;
+    @include borderRadius();
+  }
+  a:hover {
+    background-color: $blue-hover;
+    font-weight:lighter;
+    text-decoration: none;
+    color: black;
+  }
+  a:active {
+    font-weight:lighter;
+    text-decoration: none;
+    background-color: $blue-active;
+    color: black;
+  }
+}

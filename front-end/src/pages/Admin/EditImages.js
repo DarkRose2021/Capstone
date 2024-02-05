@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ImageUploading from "react-images-uploading";
-import { useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -23,11 +23,13 @@ const uploadImagesToBackend = async (images, id) => {
 };
 
 const EditImages = () => {
+	const location = useLocation();
+	const id = location.state?.userId;
+
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [user, setUser] = useState(null);
 	const [msg, setMsg] = useState(null);
-	let { id } = useParams();
 
 	useEffect(() => {
 		const handleStorage = () => {
@@ -56,7 +58,7 @@ const EditImages = () => {
 	};
 
 	useEffect(() => {
-		let getUrl = `http://localhost:5000/findUser/${id}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUser/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -64,12 +66,6 @@ const EditImages = () => {
 			})
 			.catch((err) => console.log(err));
 	}, []);
-
-	const navigate = useNavigate();
-
-	const handleShowPictures = () => {
-		navigate(`/ShowImages/${id}`);
-	};
 
 	return (
 		<div className="editImgsCont">
@@ -131,7 +127,7 @@ const EditImages = () => {
 										&nbsp;
 										<button onClick={handleUploadImages}>Upload Images</button>
 										&nbsp;
-										<button onClick={handleShowPictures}>Show Pictures</button>
+										<Link to={'/ShowImages'} state={{userId: id}}>Show Pictures</Link>
 									</div>
 									<div className="upload__image-wrapper">
 										<div className="flex">

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loading from "../OnAllPages/Loading";
 
 const ShowClientPics = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [loading, setLoading] = useState(true);
-	let { id } = useParams();
+	
+	const location = useLocation();
+	const id = location.state?.userId;
 
 	useEffect(() => {
 		const handleStorage = () => {
