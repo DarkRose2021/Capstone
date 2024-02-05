@@ -8,7 +8,9 @@ I made this with Reactjs, Nodejs/Expressjs backend, and a Mongodb database. I pu
 
 # Future Roadmap
     [] Move away from local storage to either sessions or cookies
-    [] Go through all files and code and restructure to be cleaner and more organized
+    [x] Go through all files and code and restructure to be cleaner and more organized
+    [] Turn more things into components
+    [] Make it more dynamic for smaller and bigger monitors
 
 # How to run the project
 If you want to run this on your computer then:
