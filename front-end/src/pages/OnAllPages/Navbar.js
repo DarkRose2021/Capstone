@@ -146,7 +146,7 @@ const Navbar = () => {
 																)}
 															</li>
 
-															{loggedIn === true && roles.includes("Client") ? (
+															{(loggedIn === true && roles.includes("Client")) || (loggedIn === true && roles.includes("Admin") && roles.includes("Client")) ? (
 																<li>
 																	<Link
 																		to="/client-pictures"

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -12,7 +13,7 @@ import Loading from "../OnAllPages/Loading";
 import states from "./states";
 
 const Checkout = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [sameAsBilling, setSameAsBilling] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -51,7 +52,6 @@ const Checkout = () => {
 
 	useEffect(() => {
 		if (data) {
-			// Prepopulate the form with data from the location
 			setValue("firstName", data.firstName);
 			setValue("lastName", data.lastName);
 			setValue("email", data.email);
@@ -61,7 +61,6 @@ const Checkout = () => {
 			setValue("state", data.state);
 			setValue("zip", data.zip);
 
-			// You can do the same for the shipping address fields if needed
 			setValue("shipFirstName", data.shipFirstName || setSameAsBilling(true));
 			setValue("shipLastName", data.shipLastName);
 			setValue("shipAddress", data.shipAddress);
@@ -81,7 +80,6 @@ const Checkout = () => {
 
 	useEffect(() => {
 		if (user && user.CheckoutInfo && data == null) {
-			// Prepopulate the form with data from the location
 			setValue("firstName", user.CheckoutInfo.firstName);
 			setValue("lastName", user.CheckoutInfo.lastName);
 			setValue("email", user.CheckoutInfo.email);
@@ -91,7 +89,6 @@ const Checkout = () => {
 			setValue("state", user.CheckoutInfo.state);
 			setValue("zip", user.CheckoutInfo.zip);
 
-			// You can do the same for the shipping address fields if needed
 			setValue(
 				"shipFirstName",
 				user.CheckoutInfo.shipFirstName || setSameAsBilling(true)
@@ -129,11 +126,11 @@ const Checkout = () => {
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
-				// console.log(data[0].Products)
 				setCart(data[0]);
 			})
 			.catch((err) => console.log(err));
 	}
+	
 
 	function loadAPI() {
 		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
@@ -141,7 +138,7 @@ const Checkout = () => {
 			.then((data) => data.json())
 			.then((data) => {
 				setUser(data.User);
-				setLoading(false); // Set loading to false when the data is received
+				setLoading(false);
 			})
 			.catch((err) => console.log(err));
 	}
@@ -150,7 +147,6 @@ const Checkout = () => {
 		let ids = [];
 		const productsArray = cart.Products;
 
-		// Loop through the Products array and extract ProductID values
 		for (const product of productsArray) {
 			const productId = product.ProductID;
 			ids.push(productId);
@@ -293,7 +289,7 @@ const Checkout = () => {
 		let oldQty = getProductQty(cart, id);
 		let newQty = oldQty + delta;
 
-		if (newQty == 0) {
+		if (newQty === 0) {
 			deleteItem(user._id, id);
 		} else {
 			const url = `https://mane-frame-backend.onrender.com/changeQty/${user._id}/${id}/${newQty}`;
@@ -330,7 +326,7 @@ const Checkout = () => {
 			)}
 			{roles?.includes("Admin") || roles?.includes("Client") ? (
 				<>
-					{loading ? ( // Display loading animation while loading is true
+					{loading ? (
 						<Loading />
 					) : (
 						<>

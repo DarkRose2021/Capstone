@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'react-bootstrap/Image';
 
 const About = () => {
 	return (
@@ -6,7 +7,7 @@ const About = () => {
 			<h1>About The Owner</h1>
 			<div className="about-txt">
 				<div>
-					<img src="/assets/AboutMe.png" alt="a person petting a horse" />
+					<Image src="/assets/AboutMe.png" alt="a person petting a horse" rounded />
 					<p>
 						Hi there, my name is Katie King, and I am the proud owner of Mane
 						Frame Photography. Ever since I was a child, I have been captivated

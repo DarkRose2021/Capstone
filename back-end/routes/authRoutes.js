@@ -13,7 +13,7 @@ module.exports = (app) => {
 			if (!found) {
 				// No user found with the given email
 				res.json({ Message: "Invalid Email or password" });
-				return; // Return to avoid further execution
+				return;
 			}
 
 			if (found.Disabled) {

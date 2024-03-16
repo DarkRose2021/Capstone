@@ -26,7 +26,7 @@ const ShowClientPics = () => {
 	const [pics, setPics] = useState(null);
 
 	function loadAPI() {
-		let getUrl = `http://localhost:5000/findUser/${id}`;
+		let getUrl = `https://mane-frame-backend.onrender.com/findUser/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -43,7 +43,7 @@ const ShowClientPics = () => {
 
 	function deleteImage(id, imageUrl) {
 		setLoading(true)
-		const getUrl = `http://localhost:5000/deleteImages/${id}/${imageUrl}`;
+		const getUrl = `https://mane-frame-backend.onrender.com/deleteImages/${id}/${imageUrl}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {

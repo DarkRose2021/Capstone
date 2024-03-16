@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
 import { saveAs } from "file-saver";
 import Loading from "../OnAllPages/Loading";
 
 const ClientPics = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [loading, setLoading] = useState(true);
 	let email = null;
@@ -13,20 +12,23 @@ const ClientPics = () => {
 		const handleStorage = () => {
 			if (localStorage.length > 0) {
 				setLoggedIn(true);
-				setRoles(localStorage.getItem("Roles"));
+				const rolesFromStorage = localStorage.getItem("Roles");
+				setRoles(rolesFromStorage);
 				email = localStorage.getItem("Valid Email");
 			}
 		};
 
-		window.addEventListener("storage", handleStorage());
-		return () => window.removeEventListener("storage", handleStorage());
+		handleStorage();
+
+		window.addEventListener("storage", handleStorage);
+		return () => window.removeEventListener("storage", handleStorage);
 	}, []);
 
-	const [user, setUser] = useState(null);
+	const [, setUser] = useState(null);
 	const [pics, setPics] = useState(null);
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -47,27 +49,33 @@ const ClientPics = () => {
 
 	return (
 		<div>
-			{roles?.includes("Client") ? (
-				// loading ? ( // Display loading animation while loading is true
-				// <Loading />
-				// ) : (
-				// 	<>
-				// 		{pics && pics.length > 0 ? (
-				// 			<h1>Your Pictures</h1>
-				// 		) : (
-				// 			<h1>No pictures to show right now</h1>
-				// 		)}
-				// 		<div className="pics">
-				// 			{pics?.map((pic) => (
-				// 				<a onClick={() => downloadImage(pic.url, pic.name)}>
-				// 					<img src={pic.url} />
-				// 				</a>
-				// 			))}
-				// 		</div>
-				// 		<br />
-				// 	</>
-				// )
-				<h2 className="error">This page currently isn't working. Please give the team some time to fix it!</h2>
+			{roles?.includes("Client") ||
+			(roles?.includes("Client") && roles?.includes("Admin")) ? (
+				// actually connected to the database
+				// 	loading ? ( // Display loading animation while loading is true
+				// 		<Loading />
+				// 	) : (
+				// 		<>
+				// 			{pics && pics.length > 0 ? (
+				// 				<h1>Your Pictures</h1>
+				// 			) : (
+				// 				<h1>No pictures to show right now</h1>
+				// 			)}
+				// 			<div className="pics">
+				// 				{pics?.map((pic) => (
+				// 					<a onClick={() => downloadImage(pic.url, pic.name)}>
+				// 						<img src={pic.url} />
+				// 					</a>
+				// 				))}
+				// 			</div>
+				// 			<br />
+				// 		</>
+				// 	)
+
+				<h2 className="error">
+					This page currently isn't working. Please give the team some time to
+					fix it!
+				</h2>
 			) : (
 				<>
 					<h1>You don't have permission to view this page</h1>

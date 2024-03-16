@@ -5,10 +5,8 @@ const Popup = () => {
 	const [showPopup, setShowPopup] = useState(false);
 
 	useEffect(() => {
-		// Check local storage for the flag
 		const popupShown = localStorage.getItem("popupShown");
 
-		// If the flag is not set, show the pop-up
 		if (!popupShown) {
 			setShowPopup(true);
 		}
@@ -16,7 +14,6 @@ const Popup = () => {
 
 	const handleClosePopup = () => {
 		setShowPopup(false);
-		// Set the flag in local storage when the user closes the pop-up
 		localStorage.setItem("popupShown", "true");
 	};
 

@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
 import Loading from "../OnAllPages/Loading";
 
 const Products = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [, setLoggedIn] = useState(false);
 	const [roles, setRoles] = useState(null);
 	const [user, setUser] = useState(null);
 	const [products, setProducts] = useState(null);
@@ -36,7 +36,7 @@ const Products = () => {
 			.then((data) => data.json())
 			.then((data) => {
 				setProducts(data);
-				setLoading(false); // Set loading to false when the data is received
+				setLoading(false); 
 			})
 			.catch((err) => console.log(err));
 	}

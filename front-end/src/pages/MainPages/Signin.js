@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState(false);
+	const [, setLoading] = useState(false);
 	const {
 		register,
 		formState: { errors },
@@ -35,7 +35,7 @@ const Signin = () => {
 	};
 
 	const [user, setUser] = useState({});
-	const [checkStorage, setCheckStorage] = useState(false);
+	const [, setCheckStorage] = useState(false);
 	const [passwordMatch, setPasswordMatch] = useState();
 	const [emailMatch, setEmailMatch] = useState();
 

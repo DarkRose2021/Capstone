@@ -9,7 +9,7 @@ const Login = () => {
 	const navigate = useNavigate();
 	const [user, SetUser] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const [checkStorage, setCheckStorage] = useState(false);
+	const [, setCheckStorage] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const {
 		register,
@@ -20,7 +20,6 @@ const Login = () => {
 	});
 
 	const location = useLocation();
-	// https://mane-frame-backend.onrender.com
 
 	const onSubmit = (data) => {
 		setLoading(true);
@@ -35,7 +34,7 @@ const Login = () => {
 			.then((result) => {
 				console.log(result);
 				SetUser(result);
-				setLoading(false); // Set loading to false when the data is received
+				setLoading(false);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -48,7 +47,7 @@ const Login = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user && user.Message != "Invalid Email or password" && user.User) {
+		if (user && user.Message !== "Invalid Email or password" && user.User) {
 			window.localStorage.setItem(
 				"Valid Email",
 				JSON.stringify(user.User.Email)
@@ -61,7 +60,7 @@ const Login = () => {
 
 	return (
 		<div className="login">
-			{loading ? ( // Display loading animation while loading is true
+			{loading ? ( 
 				<Loading />
 			) : (
 				<>

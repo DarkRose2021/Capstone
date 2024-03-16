@@ -7,7 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 const uploadImagesToBackend = async (images, id) => {
 	// Send the images to the backend using an API call
 	try {
-		await fetch(`http://localhost:5000/editImgs/${id}`, {
+		await fetch(`https://mane-frame-backend.onrender.com/editImgs/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

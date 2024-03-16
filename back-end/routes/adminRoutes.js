@@ -59,7 +59,7 @@ module.exports = (app) => {
 
 				updatedImageArray.push({
 					name: imageName,
-					url: `http://localhost:5000/images/${userId}/${imageName}`,
+					url: `https://mane-frame-backend.onrender.com/images/${userId}/${imageName}`,
 				});
 			}
 
