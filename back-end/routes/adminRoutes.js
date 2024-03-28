@@ -12,13 +12,21 @@ module.exports = (app) => {
 		res.json({ User: user });
 	});
 
+	const path = require("path");
+
 	app.post("/editImgs/:id", async (req, res) => {
 		try {
 			const userId = req.params.id;
 			const images = req.body.images;
 
 			const updatedImageArray = [];
-			const userImagePath = path.join(__dirname, "public", "images", userId);
+			const userImagePath = path.join(
+				__dirname,
+				"..",
+				"public",
+				"images",
+				userId
+			); // Adjusting the path to go one level up
 
 			// Check if the directory exists, if not, create it
 			try {
@@ -87,11 +95,18 @@ module.exports = (app) => {
 	app.get("/deleteImages/:id/:imageUrl", async (req, res) => {
 		let id = req.params.id;
 		let imageUrl = req.params.imageUrl;
-		const userImagePath = path.join(__dirname, "public", "images", id, "/");
+		const userImagePath = path.join(
+			__dirname,
+			"..",
+			"public",
+			"images",
+			id,
+			"/"
+		);
 		dal.deleteImage(id, imageUrl);
 		let user = await dal.findUser(id);
 
-		fs.unlink(userImagePath + imageUrl, (err) => {
+		fsPromises.unlink(userImagePath + imageUrl, (err) => {
 			if (err) {
 				throw err;
 			}
