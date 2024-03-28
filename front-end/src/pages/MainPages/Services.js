@@ -6,7 +6,7 @@ const Services = () => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const url = `https://mane-frame-backend.onrender.com/services`;
+		const url = `http://localhost:5000/services`;
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {

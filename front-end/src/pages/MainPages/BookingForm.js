@@ -44,9 +44,9 @@ const BookingForm = () => {
 		if (isSubmitting) {
 			return;
 		}
-		// https://mane-frame-backend.onrender.com
+		// http://localhost:5000
 
-		fetch("https://mane-frame-backend.onrender.com/bookingInfo", {
+		fetch("http://localhost:5000/bookingInfo", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

@@ -31,7 +31,7 @@ const ReviewOrder = () => {
 	}, []);
 
 	useEffect(() => {
-		const url = `https://mane-frame-backend.onrender.com/tax/${data.state}`;
+		const url = `http://localhost:5000/tax/${data.state}`;
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {

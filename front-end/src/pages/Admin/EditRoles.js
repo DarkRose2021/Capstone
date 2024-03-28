@@ -28,7 +28,7 @@ const EditRoles = () => {
 	const [msg, setMsg] = useState(null);
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUser/${id}`;
+		let getUrl = `http://localhost:5000/findUser/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -74,7 +74,7 @@ const EditRoles = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		let url = `https://mane-frame-backend.onrender.com/editRoles/${id}`;
+		let url = `http://localhost:5000/editRoles/${id}`;
 		fetch(url, {
 			method: "POST",
 			headers: {

@@ -19,11 +19,11 @@ const Login = () => {
 	});
 
 	const location = useLocation();
-	// https://mane-frame-backend.onrender.com
+	// http://localhost:5000
 
 	const onSubmit = (data) => {
 		setLoading(true);
-		fetch(`https://mane-frame-backend.onrender.com/login`, {
+		fetch(`http://localhost:5000/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

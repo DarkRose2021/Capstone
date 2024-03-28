@@ -30,7 +30,7 @@ const Products = () => {
 	}, []);
 
 	function getProducts() {
-		let url = `https://mane-frame-backend.onrender.com/products`;
+		let url = `http://localhost:5000/products`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
@@ -41,7 +41,7 @@ const Products = () => {
 	}
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -70,7 +70,7 @@ const Products = () => {
 			items: items,
 		};
 
-		let getUrl = `https://mane-frame-backend.onrender.com/addToCart/${JSON.stringify(
+		let getUrl = `http://localhost:5000/addToCart/${JSON.stringify(
 			dataToSend
 		)}`;
 		fetch(getUrl, {

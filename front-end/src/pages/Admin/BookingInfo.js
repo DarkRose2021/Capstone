@@ -27,7 +27,7 @@ const BookingInfo = () => {
 	}, []);
 
 	useEffect(() => {
-		let getUrl = `https://mane-frame-backend.onrender.com/findBooking/${id}`;
+		let getUrl = `http://localhost:5000/findBooking/${id}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {
@@ -62,7 +62,7 @@ const BookingInfo = () => {
 	};
 
 	function changeApproved(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/approve/${id}`;
+		const getUrl = `http://localhost:5000/approve/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -73,7 +73,7 @@ const BookingInfo = () => {
 	}
 
 	function changeContacted(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/contacted/${id}`;
+		const getUrl = `http://localhost:5000/contacted/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -89,8 +89,8 @@ const BookingInfo = () => {
 			const postData = {
 				dateScheduled: dateScheduled, // Use the date part
 			};
-// https://mane-frame-backend.onrender.com
-			fetch(`https://mane-frame-backend.onrender.com/updateDate/${booking._id}`, {
+// http://localhost:5000
+			fetch(`http://localhost:5000/updateDate/${booking._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

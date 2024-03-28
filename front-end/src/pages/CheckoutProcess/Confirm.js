@@ -39,7 +39,7 @@ const Confirm = (props) => {
 	};
 
 	useEffect(() => {
-		const url = `https://mane-frame-backend.onrender.com/tax/${data.state}`;
+		const url = `http://localhost:5000/tax/${data.state}`;
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {
@@ -50,7 +50,7 @@ const Confirm = (props) => {
 
 	useEffect(() => {
 		let id = cart._id;
-		let url = `https://mane-frame-backend.onrender.com/clearCart/${id}`;
+		let url = `http://localhost:5000/clearCart/${id}`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {})

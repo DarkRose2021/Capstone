@@ -36,7 +36,7 @@ const Admin = () => {
 		setBtnBookingPressed(false);
 		setBookings([]);
 		setEvents([]);
-		fetch("https://mane-frame-backend.onrender.com/listUsers")
+		fetch("http://localhost:5000/listUsers")
 			.then((response) => response.json())
 			.then((result) => {
 				setAllUsers(result);
@@ -51,7 +51,7 @@ const Admin = () => {
 		setBtnEventsPressed(true);
 		setBookings([]);
 		setAllUsers([]);
-		fetch("https://mane-frame-backend.onrender.com/getSomeEvents")
+		fetch("http://localhost:5000/getSomeEvents")
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result.Events);
@@ -89,7 +89,7 @@ const Admin = () => {
 	}, [bookings, searchQuery]);
 
 	function deleteUser(id) {
-		const getUrl = `https://mane-frame-backend.onrender.com/deleteUser/${id}`;
+		const getUrl = `http://localhost:5000/deleteUser/${id}`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -107,7 +107,7 @@ const Admin = () => {
 		setBtnUserPressed(false);
 		setBtnEventsPressed(false);
 		setBtnBookingPressed(true);
-		const getUrl = `https://mane-frame-backend.onrender.com/bookings`;
+		const getUrl = `http://localhost:5000/bookings`;
 		fetch(getUrl)
 			.then((r) => r.json())
 			.then((data) => {

@@ -25,7 +25,7 @@ const ClientPics = () => {
 	const [pics, setPics] = useState(null);
 
 	function loadAPI() {
-		let getUrl = `https://mane-frame-backend.onrender.com/findUserEmail/${email}`;
+		let getUrl = `http://localhost:5000/findUserEmail/${email}`;
 		fetch(getUrl)
 			.then((data) => data.json())
 			.then((data) => {

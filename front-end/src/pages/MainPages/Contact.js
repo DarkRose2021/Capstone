@@ -41,7 +41,7 @@ const Contact = () => {
 	};
 
 	useEffect(() => {
-		let url = `https://mane-frame-backend.onrender.com/getEvents`;
+		let url = `http://localhost:5000/getEvents`;
 		fetch(url)
 			.then((data) => data.json())
 			.then((data) => {
